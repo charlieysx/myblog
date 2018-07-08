@@ -1,43 +1,91 @@
 <template>
   <div id="home">
-    <img src="~IMAGES/avatar.jpg">
-    <el-button type="primary" @click="good">点我试试<i class="iconfont icon-eye"></i></el-button>
+    <article-card
+      v-for="(article, index) in articles"
+      :key="index"
+      :article="article" />
   </div>
 </template>
 
 <script>
 
+import articleCard from 'COMMON/articleCard/articleCard'
+
 export default {
   name: 'home',
+  components: {
+    articleCard
+  },
   data () {
     return {
-      name: 'Good Lucky~'
+      articles: [
+        {
+          title: '这是标题',
+          publishTime: '2018-07-08',
+          classify: {
+            id: 0,
+            name: 'vue'
+          },
+          subMessage: '这是文章简介'
+        },
+        {
+          title: '这是标题',
+          publishTime: '2018-07-08',
+          classify: {
+            id: 0,
+            name: 'vue'
+          },
+          subMessage: '这是文章简介'
+        },
+        {
+          title: '这是标题',
+          publishTime: '2018-07-08',
+          classify: {
+            id: 0,
+            name: 'vue'
+          },
+          subMessage: '这是文章简介'
+        },
+        {
+          title: '这是标题',
+          publishTime: '2018-07-08',
+          classify: {
+            id: 0,
+            name: 'vue'
+          },
+          subMessage: '这是文章简介'
+        },
+        {
+          title: '这是标题',
+          publishTime: '2018-07-08',
+          classify: {
+            id: 0,
+            name: 'vue'
+          },
+          subMessage: '这是文章简介'
+        },
+        {
+          title: '这是标题',
+          publishTime: '2018-07-08',
+          classify: {
+            id: 0,
+            name: 'vue'
+          },
+          subMessage: '这是文章简介'
+        }
+      ]
     }
   },
   methods: {
-    good () {
-      this.$message({
-        message: this.name,
-        type: 'success'
-      })
-    }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
 @import '~STYLUS/color.styl'
+*
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
 #home
   position: relative
-  width: 1170px
-  min-height: calc(110vh - 110px)
-  margin: 0 auto
-  display: flex
-  flex-direction: column
-  align-items: center
-  justify-content: center
-  img
-    width: 100px
-    height: 100px
-    margin: 50px
+  padding: 30px 10px
 </style>
