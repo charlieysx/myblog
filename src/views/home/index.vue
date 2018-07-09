@@ -102,7 +102,7 @@ export default {
   methods: {
     pageChange (currentPage) {
       this.scrollToTop()
-      this.searchParams.page = currentPage - 1
+      this.page = currentPage - 1
       this.currentPage = currentPage
     }
   }

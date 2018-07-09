@@ -29,7 +29,9 @@ const webpackConfig = merge(baseWebpackConfig, {
     'vue': 'Vue',
     'vue-router': 'VueRouter',
     'element-ui': 'element-ui',
-    'moment': 'moment'
+    'moment': 'moment',
+    'highlight.js': 'hljs',
+    'marked': 'marked'
   },
   devtool: config.build.productionSourceMap ? config.build.devtool : false,
   output: {

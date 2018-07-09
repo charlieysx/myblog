@@ -104,7 +104,7 @@ import 'highlight.js/styles/googlecode.css'
 let Highlight = {}
 Highlight.install = function (Vue, options) {
   Vue.directive('highlight', function (el) {
-    let blocks = el.querySelectorAll('pre code')let blocks = el.querySelectorAll('pre code')let blocks = el.querySelectorAll('pre code')let blocks = el.querySelectorAll('pre code')
+    let blocks = el.querySelectorAll('pre code')
     blocks.forEach((block) => {
       Hljs.highlightBlock(block)
     })
@@ -239,13 +239,29 @@ export default Highlight
         font-size: 12px
         margin-right: 5px
         border-radius: 5px
-        .iconfont
-          font-size: 12px
+        position: relative
+        margin-left: 10px
+        line-height: 1
         transition: all .3s
         cursor: pointer
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
         &:hover
+          &:before
+            border-right: 12px solid lighten($color-main, 10%)
           background-color: lighten($color-main, 10%)
+        &:before
+          position: absolute
+          left: -9px
+          top: 0
+          width: 0
+          height: 0
+          content: ""
+          border-top: 11px solid transparent
+          border-bottom: 11px solid transparent
+          border-right: 12px solid $color-main
+          transition: all .3s
+        .iconfont
+          font-size: 12px
     .pre-next-wrap
       width: 100%
       padding-top: 25px
