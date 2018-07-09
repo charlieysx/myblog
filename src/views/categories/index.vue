@@ -5,7 +5,8 @@
       <div 
         v-for="(category, index) in categories"
         :key="index"
-        class="category-item">
+        class="category-item"
+        @click="toList('category', category)">
         {{ category.name }}
         <span>{{ category.count }}篇</span>
       </div>
@@ -19,7 +20,8 @@
         :style="{
           fontSize: getFontSize(tag.count),
           color: getColor(tag.count)
-        }">
+        }"
+        @click="toList('tag', tag)">
         {{ tag.name }}
       </div>
     </div>
@@ -148,6 +150,15 @@ export default {
         alpha = 1
       }
       return 'rgba(38, 42, 48, ' + alpha + ')'
+    },
+    toList (type, item) {
+      this.$router.push({
+        name: 'articleList',
+        params: {
+          type: type,
+          itemId: '111'
+        }
+      })
     }
   }
 }

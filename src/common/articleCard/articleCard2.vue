@@ -7,13 +7,17 @@
       <div class="article-info">
         <i class="iconfont icon-calendar"></i>
         <span class="info-item">发表于 {{ article.publishTime }}</span>
+        <span class="line">|</span>
+        <i class="iconfont icon-folder"></i>
+        <span class="info-item">分类于 <span class="classify" @click="toList('category', article.classify)">{{ article.classify.name }}</span></span>
       </div>
       <div class="article-sub-message">{{ article.subMessage }}</div>
       <div class="tags">
         <div
           v-for="(tag, index) in article.tags"
           :key="index"
-          class="tag">
+          class="tag"
+           @click="toList('tag', tag)">
           <i class="iconfont icon-tag"></i>
           {{ tag.name }}
         </div>
@@ -39,6 +43,15 @@ export default {
         name: 'article',
         params: {
           articleId: '1'
+        }
+      })
+    },
+    toList (type, item) {
+      this.$router.push({
+        name: 'articleList',
+        params: {
+          type: type,
+          itemId: '111'
         }
       })
     }
@@ -102,6 +115,8 @@ export default {
       flex-direction: row
       justify-content: flex-start
       align-items: flex-end
+      .line
+        margin: 0 8px
       .info-item
         .classify
           color: #666666
@@ -136,13 +151,14 @@ export default {
         transition: all .3s
         position: relative
         margin-left: 10px
+        margin-top: 10px
         line-height: 1
         cursor: pointer
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
         &:hover
           &:before
-            border-right: 12px solid lighten($color-main, 10%)
-          background-color: lighten($color-main, 10%)
+            border-right: 12px solid lighten($color-main, 20%)
+          background-color: lighten($color-main, 20%)
         &:before
           position: absolute
           left: -9px

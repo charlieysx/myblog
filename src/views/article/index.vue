@@ -10,7 +10,7 @@
           <span class="info-item">发表于 {{ article.publishTime }}</span>
           <span class="line">|</span>
           <i class="iconfont icon-folder"></i>
-          <span class="info-item">分类于 <span class="classify">{{ article.classify.name }}</span></span>
+          <span class="info-item">分类于 <span class="classify" @click="toList('category', article.classify)">{{ article.classify.name }}</span></span>
         </div>
         <div class="article-sub-message">{{ article.subMessage }}</div>
       </div>
@@ -35,7 +35,8 @@
         <div
           v-for="(tag, index) in article.tags"
           :key="index"
-          class="tag">
+          class="tag"
+           @click="toList('tag', tag)">
           <i class="iconfont icon-tag"></i>
           {{ tag.name }}
         </div>
@@ -119,6 +120,15 @@ export default Highlight
   created() {
   },
   methods: {
+    toList (type, item) {
+      this.$router.push({
+        name: 'articleList',
+        params: {
+          type: type,
+          itemId: '111'
+        }
+      })
+    }
   }
 }
 </script>
@@ -241,6 +251,7 @@ export default Highlight
         border-radius: 5px
         position: relative
         margin-left: 10px
+        margin-top: 10px
         line-height: 1
         transition: all .3s
         cursor: pointer

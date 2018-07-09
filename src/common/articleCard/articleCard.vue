@@ -14,7 +14,7 @@
         <span class="info-item">发表于 {{ article.publishTime }}</span>
         <span class="line">|</span>
         <i class="iconfont icon-folder"></i>
-        <span class="info-item">分类于 <span class="classify">{{ article.classify.name }}</span></span>
+        <span class="info-item">分类于 <span class="classify" @click="toList('category', article.classify)">{{ article.classify.name }}</span></span>
       </div>
       <div class="article-sub-message">{{ article.subMessage }}</div>
       <div class="read-more" @click="showArticle">阅读全文 >></div>
@@ -46,6 +46,15 @@ export default {
         name: 'article',
         params: {
           articleId: '1'
+        }
+      })
+    },
+    toList (type, item) {
+      this.$router.push({
+        name: 'articleList',
+        params: {
+          type: type,
+          itemId: '111'
         }
       })
     }
