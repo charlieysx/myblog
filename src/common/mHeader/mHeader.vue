@@ -63,19 +63,14 @@ export default {
           to: 'home'
         },
         {
-          name: '分类',
-          icon: 'icon-classify',
-          to: 'classify'
-        },
-        {
-          name: '标签',
+          name: '分类/标签',
           icon: 'icon-tag',
-          to: 'tag'
+          to: 'categories'
         },
         {
           name: '归档',
-          icon: 'icon-all-archive',
-          to: 'allarchive'
+          icon: 'icon-archives',
+          to: 'archives'
         },
         {
           name: '关于',

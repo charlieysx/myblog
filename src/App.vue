@@ -10,7 +10,7 @@
       </div>
       <!-- content 结束 -->
       <!-- footer -->
-      <!-- <Footer></Footer> -->
+      <m-footer />
       <!-- footer 结束 -->
     </div>
     <right-nav />
@@ -45,13 +45,15 @@ import {
 import { scroll } from 'MIXINS/scroll'
 
 import mHeader from 'COMMON/mHeader/mHeader'
+import mFooter from 'COMMON/mFooter/mFooter'
 import rightNav from 'COMMON/rightNav/rightNav'
 
 export default {
   name: 'app',
   components: {
     mHeader,
-    rightNav
+    rightNav,
+    mFooter
   },
   mixins: [scroll],
   data () {
@@ -117,7 +119,7 @@ export default {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
 #appindex
   width: 100%
-  height: 100%
+  min-height: 100%
   min-width: 320px
   display: flex
   flex-direction: row
@@ -129,8 +131,8 @@ export default {
       max-width: 1000px
       min-width: 320px
       margin: 0 auto
-      height: calc(100vh - 60px)
       padding: 0 10px
+      min-height: calc(100vh - 120px)
   .to-top
     position: fixed
     width: 24px

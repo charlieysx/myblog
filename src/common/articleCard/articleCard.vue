@@ -1,7 +1,14 @@
 <template>
   <div id="article-card">
     <div class="article-card-wrap">
-      <div class="article-title">{{ article.title }}</div>
+      <div class="article-cover"
+        :style="{
+          backgroundImage: 'url(' + getCover + ')'
+        }">
+        <div class="article-title">
+          <span @click="showArticle">{{ article.title }}</span>
+        </div>
+      </div>
       <div class="article-info">
         <i class="iconfont icon-calendar"></i>
         <span class="info-item">发表于 {{ article.publishTime }}</span>
@@ -10,7 +17,7 @@
         <span class="info-item">分类于 <span class="classify">{{ article.classify.name }}</span></span>
       </div>
       <div class="article-sub-message">{{ article.subMessage }}</div>
-      <div class="read-more">阅读全文 >></div>
+      <div class="read-more" @click="showArticle">阅读全文 >></div>
     </div>
   </div>
 </template>
@@ -22,9 +29,26 @@ export default {
   props: ['article'],
   data () {
     return {
+      defaultCover: 'http://img1.imgtn.bdimg.com/it/u=3249428919,1915053740&fm=200&gp=0.jpg'
+    }
+  },
+  computed: {
+    getCover () {
+      if (this.article && this.article.cover) {
+        return this.article.cover
+      }
+      return this.defaultCover
     }
   },
   methods: {
+    showArticle () {
+      this.$router.push({
+        name: 'article',
+        params: {
+          articleId: '1'
+        }
+      })
+    }
   }
 }
 </script>
@@ -39,48 +63,70 @@ export default {
   &:last-child
     margin-bottom: 0px
   box-shadow: 0px 0px 5px 0px rgba(38, 42, 48, .1)
-  min-height: 182px
+  min-height: 603px
   @media (max-width: 768px)
-    min-height: 174px
+    min-height: 285.5px
     padding: 10px
   line-height: 1.2
   .article-card-wrap
+    position: relative
     animation: show .8s
-    .article-title
+    .article-cover
       position: relative
-      margin-top: 10px
-      margin-bottom: 20px
-      font-size: 26px
-      @media (max-width: 768px)
-        font-size: 20px
-      font-weight: bold
-      display: inline-block
-      cursor: pointer
-      -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
-      &:after
-        content: ""
-        position: absolute
-        bottom: 0
+      width: 100%
+      background-position: center
+      background-size: cover
+      &:before
+        top: 0
         left: 0
         width: 100%
-        height: 2px
-        background-color: $color-main
-        visibility: hidden
-        transform: scaleX(0)
-        transition-duration: .2s
-        transition-timing-function: ease
-      &:hover
-        &:after
-          visibility: visible
-          transform: scaleX(1)
-          transition-duration: .2s
-          transition-timing-function: ease
+        padding-top: 50%
+        content: ' '
+        background: rgba(0, 0, 0, .5)
+        display: block
+      .article-title
+        position: absolute
+        font-size: 24px
+        width: 100%
+        height: 100%
+        top: 0
+        left: 0
+        @media (max-width: 768px)
+          font-size: 18px
+        font-weight: bold
+        color: $color-white
+        display: flex
+        align-items: center
+        justify-content: center
+        padding: 10px
+        span
+          position: relative
+          cursor: pointer
+          -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+          &:after
+            content: ""
+            position: absolute
+            bottom: 0px
+            left: 0
+            width: 100%
+            height: 2px
+            background-color: $color-white
+            visibility: hidden
+            transform: scaleX(0)
+            transition-duration: .2s
+            transition-timing-function: ease
+          &:hover
+            &:after
+              visibility: visible
+              transform: scaleX(1)
+              transition-duration: .2s
+              transition-timing-function: ease
 
     .article-info
       font-size: 14px
       @media (max-width: 768px)
         font-size: 12px
-      margin-bottom: 20px
+      margin: 20px 0px
       color: #999999
       display: flex
       flex-direction: row

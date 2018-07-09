@@ -14,6 +14,8 @@
     "axios": "^0.18.0",
     "element-ui": "^2.3.4",
     "flex.css": "^1.1.7",
+    "highlight.js": "^9.12.0",
+    "marked": "^0.4.0",
     "moment": "^2.22.1",
     "normalize.css": "^8.0.0",
     "nprogress": "^0.2.0",
