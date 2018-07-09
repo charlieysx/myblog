@@ -7,6 +7,29 @@
       'width': showRightNav ? '320px' : '0px',
       'transition': 'all .3s'
     }">
+      <img class="avatar" src="~IMAGES/avatar.jpg"/>
+      <p class="name">CodeBear</p>
+      <p class="motto">认识，了解，探索，超越</p>
+      <div class="menu-wrap">
+        <span class="menu-item" @click="toView('archives')">
+          <p class="count">27</p>
+          <p>文章</p>
+        </span>
+        <span class="menu-item" @click="toView('categories')">
+          <p class="count">10</p>
+          <p>分类</p>
+        </span>
+        <span class="menu-item" @click="toView('categories')">
+          <p class="count">124</p>
+          <p>标签</p>
+        </span>
+      </div>
+      <div class="social-wrap">
+        <a class="social-item" href="https://github.com/CB-ysx" target="_blank">
+          <i class="iconfont icon-github"></i>
+          github
+        </a>
+      </div>
     </div>
     <div class="toggle" @click="toggle" @mouseover="setLineData" @mouseout="setLineData">
       <span
@@ -141,6 +164,11 @@ export default {
       } else {
         this.toggleLineData = this.lineStyle.normalLineData
       }
+    },
+    toView (to) {
+      this.$router.push({
+        name: to
+      })
     }
   }
 }
@@ -160,6 +188,70 @@ export default {
     background-color: $color-main
     color: $color-white
     z-index: 1000
+    display: flex
+    flex-direction: column
+    align-items: center
+    padding-top: 30px
+    overflow: hidden
+    .avatar
+      border: 4px solid $color-white
+      border-radius: 50%
+      width: 100px
+      height: 100px
+    .name
+      color: $color-white
+      padding: 15px
+      font-size: 18px
+      font-weight: bold
+    .motto
+      color: #999999
+      padding: 5px 15px
+      font-size: 14px
+      font-weight: bold
+    .menu-wrap
+      display: flex
+      flex-direction: row
+      align-items: center
+      margin-top: 15px
+      .menu-item
+        display: flex
+        flex-direction: column
+        align-items: center
+        border-right: 1px solid #555555
+        font-size: 14px
+        padding: 0 15px
+        color: #999999
+        transition: all .3s
+        cursor: pointer
+        font-weight: bold
+        &:last-child
+          border-right: 0px
+        &:hover
+          color: $color-white
+        .count
+          margin-bottom: 5px
+          font-size: 20px
+    .social-wrap
+      padding: 20px
+      display: flex
+      flex-direction: row
+      align-items: center
+      flex-wrap: wrap
+      .social-item
+        padding: 8px
+        border: 1px solid #fc6423
+        border-radius: 5px
+        font-size: 14px
+        line-height: 1
+        color: #fc6423
+        transition: all .3s
+        cursor: pointer
+        &:hover
+          background-color: #fc6423
+          color: $color-white
+        .iconfont
+          font-size: 14px
+
   .toggle
     position: fixed
     width: 24px
