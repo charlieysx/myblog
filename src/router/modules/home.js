@@ -5,7 +5,11 @@ const articleList = r => require.ensure([], () => r(require('VIEWS/categories/ar
 
 export default [
   {
-    path: '/',
+    path: '*',
+    redirect: '/home'
+  },
+  {
+    path: '/home',
     name: 'home',
     component: home
   },
