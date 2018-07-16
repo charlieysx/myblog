@@ -17,7 +17,7 @@
       <md-preview :contents="article.contents" />
       <div class="money-wrap">
         <p>如果我的文章对您有帮助！有钱的捧个钱场，没钱的捧个人场，谢谢您！</p>
-        <div class="money-btn" @click="showQrcode = !showQrcode">打赏</div>
+        <div class="money-btn" @click="showQrcode = !showQrcode">赞赏支持</div>
         <transition name="slide-fade">
           <div class="qrcode-wrap" v-show="showQrcode">
             <span class="qrcode">

@@ -1,9 +1,16 @@
-const article = r => require.ensure([], () => r(require('VIEWS/article/index.vue')), 'article')
+const adminHome = r => require.ensure([], () => r(require('VIEWS/admin/adminHome/index.vue')), 'adminHome')
 
 export default [
   {
+    path: '/admin/*',
+    redirect: '/admin'
+  },
+  {
     path: '/admin',
-    name: 'article',
-    component: article
+    name: 'adminHome',
+    component: adminHome,
+    meta: {
+      requireAuth: true
+    }
   }
 ]

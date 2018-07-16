@@ -26,16 +26,14 @@
         </span>
       </div>
     </div>
-    <div class="mobile-tab-wrap" v-if="!isPc" 
-      :style="{
-        height: showMobileTabs ? (28 * tabs.length) + 'px' : '0px',
-        opacity: showMobileTabs ? '1' : '0'
-      }">
-      <div class="tab" v-for="(tab, index) in tabs" :key="index" @click="selectTab(tab)">
-        <i class="iconfont" :class="tab.icon"></i>
-        <span>{{ tab.name }}</span>
+    <el-collapse-transition>
+      <div class="mobile-tab-wrap" v-show="!isPc&&showMobileTabs">
+        <div class="tab" v-for="(tab, index) in tabs" :key="index" @click="selectTab(tab)">
+          <i class="iconfont" :class="tab.icon"></i>
+          <span>{{ tab.name }}</span>
+        </div>
       </div>
-    </div>
+    </el-collapse-transition>
   </div>
 </template>
 
@@ -226,7 +224,7 @@ export default {
   .mobile-tab-wrap
     width: 100%
     transition: all .3s
-    overflow: hidden
+    // overflow: hidden
     border-top: 1px solid #eeeeee
     .tab
       position: relative

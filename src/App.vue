@@ -1,6 +1,7 @@
 <template>
   <div id="appindex">
-    <div class="content-wrap">
+    <!-- 博客页面 -->
+    <div class="content-wrap" v-if="!isAdminWrap">
       <!-- header -->
       <m-header />
       <!-- header 结束 -->
@@ -13,7 +14,21 @@
       <m-footer />
       <!-- footer 结束 -->
     </div>
-    <right-nav />
+    <right-nav v-if="!isAdminWrap" />
+    <!-- 博客页面 结束 -->
+
+    <!-- 博客后台管理页面 -->
+    <div class="admin-wrap" v-if="isAdminWrap">
+      <leftMenu />
+      <!-- content -->
+      <div class="view-wrap">
+        <router-view></router-view>
+      </div>
+      <!-- content 结束 -->
+    </div>
+    <!-- 博客后台管理页面 结束 -->
+
+    <!-- 返回顶部 -->
     <transition name="slide-fade">
       <div class="to-top" @click="scrollToTop" v-show="showScrollToTop">
         <span
@@ -28,6 +43,12 @@
         </span>
       </div>
     </transition>
+    <!-- 返回顶部 结束 -->
+    <!-- 登录注册 -->
+    <transition name="fade">
+      <!-- <auth-layout v-show="!isLogin&&isAdminWrap"></auth-layout> -->
+    </transition>
+    <!-- 登录注册 结束 -->
   </div>
 </template>
 
@@ -47,13 +68,17 @@ import { scroll } from 'MIXINS/scroll'
 import mHeader from 'COMMON/mHeader/mHeader'
 import mFooter from 'COMMON/mFooter/mFooter'
 import rightNav from 'COMMON/rightNav/rightNav'
+import authLayout from 'VIEWS/admin/auth/layout'
+import leftMenu from 'VIEWS/admin/leftMenu/leftMenu'
 
 export default {
   name: 'app',
   components: {
     mHeader,
     rightNav,
-    mFooter
+    mFooter,
+    authLayout,
+    leftMenu
   },
   mixins: [scroll],
   data () {
@@ -79,6 +104,12 @@ export default {
     }
   },
   watch: {
+  },
+  computed: {
+    ...mapGetters([
+      'isAdminWrap',
+      'isLogin'
+    ])
   },
   mounted() {
     this.updateScreen()
@@ -115,8 +146,6 @@ export default {
 
 <style lang="stylus">
 @import '~STYLUS/color.styl'
-*
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
 #appindex
   width: 100%
   min-height: 100%
@@ -124,6 +153,15 @@ export default {
   display: flex
   flex-direction: row
   position: absolute
+  .admin-wrap
+    width: 100%
+    position: relative
+    display: flex
+    flex-direction: row
+    .view-wrap
+      flex: 1
+      min-width: 311px
+      height: calc(100vh)
   .content-wrap
     flex: 1
     position: relative
@@ -163,5 +201,10 @@ export default {
 .slide-fade-enter
 .slide-fade-leave-to
   transform: translateY(20px)
+  opacity: 0
+
+.fade-enter-active, .fade-leave-active
+  transition: opacity .3s
+.fade-enter, .fade-leave-to
   opacity: 0
 </style>

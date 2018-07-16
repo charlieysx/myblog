@@ -1,6 +1,8 @@
 import {
   SCREEN_CHANGE,
-  SHOW_RIGHT_NAV
+  SHOW_RIGHT_NAV,
+  IS_ADMIN_WRAP,
+  ADMIN_LEFT_MENU_ACTIVE_ITEM
 } from '../mutation-types'
 
 const state = {
@@ -8,7 +10,9 @@ const state = {
     width: 0,
     height: 0
   },
-  showRightNav: false
+  showRightNav: false,
+  isAdminWrap: false,
+  adminLeftMenuActiveItem: '1'
 }
 
 const getters = {
@@ -17,6 +21,12 @@ const getters = {
   },
   showRightNav (state) {
     return state.showRightNav
+  },
+  isAdminWrap (state) {
+    return state.isAdminWrap
+  },
+  adminLeftMenuActiveItem (state) {
+    return state.adminLeftMenuActiveItem
   }
 }
 
@@ -26,12 +36,21 @@ const mutations = {
   },
   [SHOW_RIGHT_NAV] (state, data) {
     state.showRightNav = data
+  },
+  [IS_ADMIN_WRAP] (state, data) {
+    state.isAdminWrap = data
+  },
+  [ADMIN_LEFT_MENU_ACTIVE_ITEM] (state, data) {
+    state.adminLeftMenuActiveItem = data
   }
 }
 
 const actions = {
   setShowRightNav (store, show) {
     store.state.showRightNav = show
+  },
+  setIsAdminWrap (store, isAdminWrap) {
+    store.state.isAdminWrap = isAdminWrap
   }
 }
 
