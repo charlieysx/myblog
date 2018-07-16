@@ -134,7 +134,6 @@ export default {
     }
   },
   created() {
-    this.$store.commit('ADMIN_LEFT_MENU_ACTIVE_ITEM', '1')
   },
   methods: {
   }

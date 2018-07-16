@@ -1,20 +1,23 @@
 <template>
-  <div id="article-preview">
-    <p>文章预览</p>
+  <div id="web-config-about">
+    <p>编辑"关于我"页面</p>
+    <div>
+
+    </div>
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'article-preview',
+  name: 'web-config-about',
   components: {
   },
   data () {
     return {
     }
   },
-  created() {
+  created () {
   },
   methods: {
   }
@@ -24,7 +27,7 @@ export default {
 <style lang="stylus" scoped>
 @import '~STYLUS/color.styl'
 @import '~STYLUS/mixin.styl'
-#article-preview
+#web-config-about
   position: relative
   padding-top: 52px
   > p

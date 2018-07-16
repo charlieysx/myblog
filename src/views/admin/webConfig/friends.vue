@@ -1,20 +1,23 @@
 <template>
-  <div id="article-preview">
-    <p>文章预览</p>
+  <div id="web-config-friends">
+    <p>友链管理</p>
+    <div>
+
+    </div>
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'article-preview',
+  name: 'web-config-friends',
   components: {
   },
   data () {
     return {
     }
   },
-  created() {
+  created () {
   },
   methods: {
   }
@@ -24,7 +27,7 @@ export default {
 <style lang="stylus" scoped>
 @import '~STYLUS/color.styl'
 @import '~STYLUS/mixin.styl'
-#article-preview
+#web-config-friends
   position: relative
   padding-top: 52px
   > p

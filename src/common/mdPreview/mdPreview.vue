@@ -15,8 +15,11 @@ export default {
   data() {
     return  {
       imgList: [],
-      htmlContent: ''
+      htmlContent: '',
+      imageCurrentIndex: 0
     }
+  },
+  components: {
   },
   created() {
     this.htmlContent = this.markdownHtml(this.contents)
@@ -38,8 +41,7 @@ export default {
       })
     },
     showBigImg(e) {
-      let index = e.target.indexTag
-      console.log(index, this.imgList[index])
+      this.imageCurrentIndex = e.target.indexTag
     }
   }
 }

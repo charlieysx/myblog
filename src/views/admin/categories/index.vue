@@ -1,13 +1,13 @@
 <template>
-  <div id="article-preview">
-    <p>文章预览</p>
+  <div id="category-tag">
+    <p>分类/标签</p>
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'article-preview',
+  name: 'category-tag',
   components: {
   },
   data () {
@@ -24,7 +24,7 @@ export default {
 <style lang="stylus" scoped>
 @import '~STYLUS/color.styl'
 @import '~STYLUS/mixin.styl'
-#article-preview
+#category-tag
   position: relative
   padding-top: 52px
   > p

@@ -1,14 +1,15 @@
 <template>
   <div id="left-menu" :style="{width: collapseMenu ? '64px' : '240px'}">
     <div class="wrap">
-    <el-menu 
-      class="menu" 
+    <el-menu
+      router
+      class="menu"
       background-color="#262a30"
       text-color="#a7b1c2"
       active-text-color="#ffffff"
-      :default-active="adminLeftMenuActiveItem"
+      :default-active="$route.path"
       :collapse="collapseMenu">
-      <el-menu-item index="1" @click="toPage('adminHome')">
+      <el-menu-item index="/admin">
         <i class="iconfont icon-home"></i>
         <span slot="title">仪表盘</span>
       </el-menu-item>
@@ -17,24 +18,29 @@
           <i class="iconfont icon-article"></i>
           <span slot="title">文章</span>
         </template>
-        <el-menu-item index="2-1"><i class="iconfont icon-article-edit"></i>写文章</el-menu-item>
-        <el-menu-item index="2-2"><i class="iconfont icon-article-manage"></i>文章管理</el-menu-item>
-        <el-menu-item index="2-3"><i class="iconfont icon-drafts"></i>草稿箱</el-menu-item>
+        <el-menu-item index="/admin/article/publish"><i class="iconfont icon-article-edit"></i>写文章</el-menu-item>
+        <el-menu-item index="/admin/article/manage"><i class="iconfont icon-article-manage"></i>文章管理</el-menu-item>
+        <el-menu-item index="/admin/article/drafts"><i class="iconfont icon-drafts"></i>草稿箱</el-menu-item>
       </el-submenu>
-      <el-menu-item index="3">
+      <el-menu-item index="/admin/categories">
         <i class="iconfont icon-tag"></i>
         <span slot="title">分类/标签</span>
       </el-menu-item>
-      <el-menu-item index="4">
-        <i class="iconfont icon-config"></i>
-        <span slot="title">网站配置</span>
-      </el-menu-item>
+      <el-submenu index="4">
+        <template slot="title">
+          <i class="iconfont icon-config"></i>
+          <span slot="title">网站配置</span>
+        </template>
+        <el-menu-item index="/admin/webConfig"><i class="iconfont icon-base-config"></i>基本配置</el-menu-item>
+        <el-menu-item index="/admin/webConfig/about"><i class="iconfont icon-about"></i>关于我</el-menu-item>
+        <el-menu-item index="/admin/webConfig/friends"><i class="iconfont icon-friends-link"></i>友链管理</el-menu-item>
+      </el-submenu>
       <el-submenu index="5">
         <template slot="title">
           <i class="iconfont icon-other"></i>
           <span slot="title">其他</span>
         </template>
-        <el-menu-item index="6-1" @click="signOut"><i class="iconfont icon-signout"></i>退出</el-menu-item>
+        <el-menu-item :route="$route.path" index="0" @click="signOut"><i class="iconfont icon-signout"></i>退出</el-menu-item>
       </el-submenu>
     </el-menu>
     <div class="collapse-wrap" @click="toggleCollapse" @mouseover="setLineData" @mouseout="setLineData">
@@ -147,13 +153,12 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'screen',
-      'adminLeftMenuActiveItem'
+      'screen'
     ])
   },
   methods: {
     signOut () {
-      //
+      console.log('退出')
     },
     toggleCollapse () {
       this.collapseMenu = !this.collapseMenu

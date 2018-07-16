@@ -8,5 +8,3 @@ export const SHOW_RIGHT_NAV = 'SHOW_RIGHT_NAV'
 export const IS_ADMIN_WRAP = 'IS_ADMIN_WRAP'
 // 管理员是否登录
 export const IS_LOGIN = 'IS_LOGIN'
-// 管理员页面 打开的菜单
-export const ADMIN_LEFT_MENU_ACTIVE_ITEM = 'ADMIN_LEFT_MENU_ACTIVE_ITEM'
