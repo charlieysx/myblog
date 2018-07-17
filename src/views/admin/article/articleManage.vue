@@ -18,9 +18,10 @@
           label="封面图"
           width="62">
           <template slot-scope="scope">
-            <img 
+            <img
               :src="scope.row.cover" 
-              style="width: 100%;height: 31px; cursor: pointer">
+              style="width: 100%;height: 31px; cursor: pointer"
+              @click="previewImg">
           </template>
         </el-table-column>
         <el-table-column
@@ -167,20 +168,23 @@ export default {
     this.total = this.articleList.length
   },
   methods: {
-    formatTime (row, column, cellValue, index) {
+    formatTime(row, column, cellValue, index) {
       return cellValue ? moment(parseInt(cellValue) * 1000).format('YYYY-MM-DD HH:ss') : '-'
     },
-    formatStatus (value) {
+    formatStatus(value) {
       return value == '0' ? '已发布' : (value == '1' ? '已删除' : '待发布')
     },
-    edit (article) {
+    edit(article) {
     },
-    under (article) {
+    under(article) {
     },
-    pageChange (currentPage) {
+    pageChange(currentPage) {
       this.scrollToTop()
       this.params.page = currentPage - 1
       this.currentPage = currentPage
+    },
+    previewImg(e) {
+      this.$photoPreview.open(0, [{src: e.target.src, w: 41, h: 31, target: e.target}])
     }
   }
 }

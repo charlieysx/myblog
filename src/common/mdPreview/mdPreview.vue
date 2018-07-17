@@ -15,8 +15,7 @@ export default {
   data() {
     return  {
       imgList: [],
-      htmlContent: '',
-      imageCurrentIndex: 0
+      htmlContent: ''
     }
   },
   components: {
@@ -35,13 +34,18 @@ export default {
       let imgDomList = document.getElementById('markdown-preview-body').getElementsByTagName('img')
       this.imgList = []
       Array.prototype.slice.call(imgDomList).forEach((img, index) => {
-        this.imgList.push(img.src)
         img.indexTag = index
         img.onclick = this.showBigImg
+        this.imgList.push({
+          src: img.src,
+          w: img.width,
+          h: img.height,
+          target: img
+        })
       })
     },
     showBigImg(e) {
-      this.imageCurrentIndex = e.target.indexTag
+      this.$photoPreview.open(e.target.indexTag, this.imgList)
     }
   }
 }

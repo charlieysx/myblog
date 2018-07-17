@@ -19,6 +19,7 @@
     "moment": "^2.22.1",
     "normalize.css": "^8.0.0",
     "nprogress": "^0.2.0",
+    "photoswipe": "^4.1.2",
     "qs": "^6.5.1",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",

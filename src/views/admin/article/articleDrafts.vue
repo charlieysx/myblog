@@ -21,7 +21,8 @@
             <img
               v-if="scope.row.cover"
               :src="scope.row.cover" 
-              style="width: 100%;height: 31px; cursor: pointer">
+              style="width: 100%;height: 31px; cursor: pointer"
+              @click="previewImg">
           </template>
         </el-table-column>
         <el-table-column
@@ -169,6 +170,9 @@ export default {
       this.scrollToTop()
       this.params.page = currentPage - 1
       this.currentPage = currentPage
+    },
+    previewImg(e) {
+      this.$photoPreview.open(0, [{src: e.target.src, w: 41, h: 31, target: e.target}])
     }
   }
 }

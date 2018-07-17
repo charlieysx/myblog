@@ -9,6 +9,7 @@ import store from './store/index'
 import { sync } from 'vuex-router-sync'
 import validator from 'UTIL/validator'
 import Highlight from 'UTIL/mHighlight'
+import photoPreview from 'COMMON/photoPreview'
 import 'UTIL/filters'
 if (process.env.NODE_ENV === 'development') {
   require('./ElementUI')
@@ -19,6 +20,7 @@ Vue.config.productionTip = false
 Vue.use(Vuex)
 Vue.use(validator)
 Vue.use(Highlight)
+Vue.use(photoPreview)
 
 sync(store, router)
 
