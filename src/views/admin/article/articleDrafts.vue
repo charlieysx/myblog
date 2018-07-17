@@ -9,10 +9,12 @@
         size="mini"
         style="width: 100%">
         <el-table-column
-          prop="title"
           label="标题"
           show-overflow-tooltip
           min-width="200">
+          <template slot-scope="scope">
+            <div style="cursor: pointer;" @click="preview(scope.row)">{{ scope.row.title }}</div>
+          </template>
         </el-table-column>
         <el-table-column
           label="封面图"
@@ -173,6 +175,14 @@ export default {
     },
     previewImg(e) {
       this.$photoPreview.open(0, [{src: e.target.src, w: 41, h: 31, target: e.target}])
+    },
+    preview (article) {
+      this.$router.push({
+        name: 'articlePreview',
+        params: {
+          articleId: '1'
+        }
+      })
     }
   }
 }
@@ -196,10 +206,23 @@ export default {
     z-index: 1000
   .article-table-wrap
     width: 100%
+    animation: show .8s
     .pagination
       width: 100%
       margin-top: 20px
       display: flex
       display: -webkit-flex
       justify-content: center
+
+
+@keyframes show {
+  from {
+    margin-top: -10px;
+    opacity: 0;
+  }
+  to {
+    margin-top: 0px;
+    opacity: 1;
+  }
+}
 </style>

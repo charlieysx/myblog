@@ -158,6 +158,7 @@ export default {
     z-index: 1000
   .card-wrap
     position: relative
+    animation: show .8s
     margin: 10px
     display: flex
     flex-direction: row
@@ -226,4 +227,16 @@ export default {
       &:hover
         background-color: $color-main
         color: $color-white
+
+
+@keyframes show {
+  from {
+    margin-top: 0px;
+    opacity: 0;
+  }
+  to {
+    margin-top: 10px;
+    opacity: 1;
+  }
+}
 </style>
