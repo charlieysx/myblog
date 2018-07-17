@@ -44,17 +44,18 @@
       </div>
     </transition>
     <!-- 返回顶部 结束 -->
-    <!-- 登录注册 -->
+    <!-- 登录 -->
     <transition name="fade">
-      <!-- <auth-layout v-show="!isLogin&&isAdminWrap"></auth-layout> -->
+      <login-layout v-show="!isLogin&&isAdminWrap"></login-layout>
     </transition>
-    <!-- 登录注册 结束 -->
+    <!-- 登录 结束 -->
   </div>
 </template>
 
 <script>
 import {
-  SCREEN_CHANGE
+  SCREEN_CHANGE,
+  SHOW_TOKEN_ERROR
 } from 'STORE/mutation-types'
 
 import {
@@ -68,7 +69,7 @@ import { scroll } from 'MIXINS/scroll'
 import mHeader from 'COMMON/mHeader/mHeader'
 import mFooter from 'COMMON/mFooter/mFooter'
 import rightNav from 'COMMON/rightNav/rightNav'
-import authLayout from 'VIEWS/admin/auth/layout'
+import loginLayout from 'VIEWS/admin/auth/login'
 import leftMenu from 'VIEWS/admin/leftMenu/leftMenu'
 
 export default {
@@ -77,7 +78,7 @@ export default {
     mHeader,
     rightNav,
     mFooter,
-    authLayout,
+    loginLayout,
     leftMenu
   },
   mixins: [scroll],
@@ -104,11 +105,22 @@ export default {
     }
   },
   watch: {
+    tokenError (value) {
+      if (value) {
+        this.$store.commit(SHOW_TOKEN_ERROR, false)
+        this.message = this.$message({
+          showClose: true,
+          message: '账号过期，请重新登录',
+          type: 'error'
+        })
+      }
+    }
   },
   computed: {
     ...mapGetters([
       'isAdminWrap',
-      'isLogin'
+      'isLogin',
+      'tokenError'
     ])
   },
   mounted() {

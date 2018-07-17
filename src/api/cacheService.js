@@ -8,11 +8,11 @@ const ssCache = new Cache({storage: 'sessionStorage'})
 
 const KEYS = {
   token: 'ak',
-  userInfo: 'userInfo'
+  adminInfo: 'adminInfo'
 }
 
 // 这里改为自己的nameSpace，比如项目名称
-const nameSpace = 'VUEBASE'
+const nameSpace = 'CBBLOG'
 
 for (let i in KEYS) {
   if (KEYS.hasOwnProperty(i)) {
@@ -54,4 +54,4 @@ export function removeAccessToken () {
   lsCache.delete(KEYS.token)
 }
 
-export const cachedUserInfo = new CommonStorage(KEYS.userInfo, 0)
+export const cachedAdminInfo = new CommonStorage(KEYS.adminInfo, 0)

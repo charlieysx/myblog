@@ -1,3 +1,4 @@
+import api from 'API/index'
 import {
   SCREEN_CHANGE,
   SHOW_RIGHT_NAV,
@@ -43,6 +44,15 @@ const actions = {
   },
   setIsAdminWrap (store, isAdminWrap) {
     store.state.isAdminWrap = isAdminWrap
+  },
+  uploadToQiniu (store, params) {
+    return api.uploadToQiniu(params)
+      .then((data) => {
+        return Promise.resolve(data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
   }
 }
 

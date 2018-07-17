@@ -4,6 +4,8 @@
     <div class="edit-wrap">
       <mavon-editor class="editor"
         v-model="value"
+        ref=md
+        @imgAdd="$imgAdd"
         :toolbars="{
           bold: true, // 粗体
           italic: true, // 斜体
@@ -20,7 +22,7 @@
           imagelink: true, // 图片链接
           code: true, // code
           table: true, // 表格
-          fullscreen: true, // 全屏编辑
+          fullscreen: false, // 全屏编辑
           readmodel: true, // 沉浸式阅读
           htmlcode: false, // 展示html源码
           help: true, // 帮助
@@ -29,9 +31,9 @@
           trash: true, // 清空
           save: false, // 保存（触发events中的save事件）
           navigation: false, // 导航目录
-          alignleft: true, // 左对齐
-          aligncenter: true, // 居中
-          alignright: true, // 右对齐
+          alignleft: false, // 左对齐
+          aligncenter: false, // 居中
+          alignright: false, // 右对齐
           subfield: true, // 单双栏模式
           preview: true, // 预览
         }"/>
@@ -40,6 +42,11 @@
 </template>
 
 <script>
+import {
+  mapActions,
+  mapGetters
+} from 'vuex'
+
 import { mavonEditor } from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 
@@ -86,6 +93,38 @@ export default Highlight
   created() {
   },
   methods: {
+    ...mapActions([
+      'getQiniuToken',
+      'uploadToQiniu'
+    ]),
+    $imgAdd(pos, $file) {
+      this.getQiniuToken(true)
+        .then((data) => {
+          let formParams = new FormData()
+          formParams.append('token', data.token)
+          formParams.append('file', $file)
+          this.startUploadImg(formParams, pos)
+        })
+        .catch((err) => {
+          this.error(err.msg)
+        })
+    },
+    startUploadImg (formParams, pos) {
+      this.uploadToQiniu(formParams)
+        .then((qiniuData) => {
+          this.$refs.md.$img2Url(pos, qiniuData.imgUrl)
+        })
+        .catch((err) => {
+          this.error('上传失败')
+        })
+    },
+    error (err) {
+      this.message = this.$message({
+        showClose: true,
+        message: err,
+        type: 'error'
+      })
+    }
   }
 }
 </script>
@@ -128,4 +167,6 @@ export default Highlight
 <style lang="stylus">
 .v-note-wrapper
   z-index: 900 !important
+[type="button"]
+  -webkit-appearance: none
 </style>
