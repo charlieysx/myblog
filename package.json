@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "cropperjs": "^1.4.1",
     "element-ui": "^2.3.4",
     "flex.css": "^1.1.7",
     "highlight.js": "^9.12.0",

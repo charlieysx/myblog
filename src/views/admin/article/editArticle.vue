@@ -1,11 +1,19 @@
 <template>
   <div id="edit-article">
-    <p>编辑文章</p>
+    <div class="header-wrap">
+      编辑文章
+      <div class="action-btn-wrap">
+        <span>发布</span>
+        <span>保存</span>
+      </div>
+    </div>
     <div class="edit-wrap">
       <mavon-editor class="editor"
         v-model="value"
         ref=md
         @imgAdd="$imgAdd"
+        :boxShadow="false"
+        defaultOpen="edit"
         :toolbars="{
           bold: true, // 粗体
           italic: true, // 斜体
@@ -37,6 +45,35 @@
           subfield: true, // 单双栏模式
           preview: true, // 预览
         }"/>
+      <div class="input-wrap">
+        <div class="fix-input-wrap">
+          <UP class="upload-cover" 
+            :default-img="params.imageUrl"
+            ratio="2"
+            WHRatio="2"
+            maxWidth="300"
+            maxHeight="150"
+            @uploadSuccess="uploadSuccess"></UP>
+          <el-input
+            class="input-title"
+            size="mini"
+            placeholder="请输入文章标题">
+          </el-input>
+          <el-input
+            class="input-title"
+            type="textarea"
+            size="mini"
+            :rows="6"
+            :maxlength="150"
+            resize="none"
+            placeholder="请输入文章简介">
+          </el-input>
+          <div class="encrypt-wrap">
+            加密阅读：
+            <el-checkbox size="mini"></el-checkbox>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -49,45 +86,24 @@ import {
 
 import { mavonEditor } from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
+import UP from 'COMMON/upload/upCover.vue'
 
 export default {
   name: 'edit-article',
   components: {
-    mavonEditor
+    mavonEditor,
+    UP
   },
   data () {
     return {
-      value: `### 一、前言
-
->本来想做个微信小程序，实现一键生成海报图片（可替换文字、图片，不需要用户排版），所以后台管理系统上需要实现一个制作海报模板的功能（“简单版ps”），写了挺长时间的，逻辑太多了，现在写得差不多了，但是由于各种事情项目一直没有进展，估计是没能做完了，所以把这个“简单版ps”开源出来。
-
-### 二、界面
-
-![](https://user-gold-cdn.xitu.io/2018/6/13/163f7dea6cd6e2af?w=1919&h=958&f=jpeg&s=86423)
-![](https://user-gold-cdn.xitu.io/2018/6/13/163f7dee7b1c62f6?w=1919&h=959&f=jpeg&s=273501)
-
-### 三、动态效果图
-
-![](https://user-gold-cdn.xitu.io/2018/6/13/163f7e2439b9e35b?w=1220&h=832&f=gif&s=4549591)
-
-### 四、测试代码高亮
-
-\`\`\`js
-import Hljs from 'highlight.js'
-import 'highlight.js/styles/googlecode.css'
-
-let Highlight = {}
-Highlight.install = function (Vue, options) {
-  Vue.directive('highlight', function (el) {
-    let blocks = el.querySelectorAll('pre code')
-    blocks.forEach((block) => {
-      Hljs.highlightBlock(block)
-    })
-  })
-}
-export default Highlight
-\`\`\`
-`
+      value: '',
+      params: {
+        title: '',
+        info: '',
+        imageUrl: '',
+        content: '',
+        from: ''
+      }
     }
   },
   created() {
@@ -124,6 +140,9 @@ export default Highlight
         message: err,
         type: 'error'
       })
+    },
+    uploadSuccess (url) {
+      this.params.imageUrl = url
     }
   }
 }
@@ -134,8 +153,8 @@ export default Highlight
 #edit-article
   position: relative
   padding-top: 52px
-  > p
-    position: fixed
+  .header-wrap
+    position: absolute
     width: 100%
     top: 0
     padding: 18px
@@ -144,11 +163,62 @@ export default Highlight
     background-color: $color-white
     box-shadow: 1px 1px 10px 1px rgba(38, 42, 48, .1)
     z-index: 1000
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+    align-items: center
+    .action-btn-wrap
+      > span
+        padding: 5px 10px
+        margin-right: 5px
+        font-size: 14px
+        cursor: pointer
+        background-color: $color-main
+        color: $color-white
+        border-radius: 8px
+        &:hover
+          background-color: lighten($color-main, 10%)
+        &:last-child
+          margin-right: 0px
   .edit-wrap
     padding: 30px 10px
+    padding-top: 10px
     animation: show .8s
+    display: flex
+    flex-direction: row
+    @media (max-width: 1324px)
+      flex-direction: column-reverse
+    .input-wrap
+      position: relative
+      width: 300px
+      margin-left: 10px
+      transition: all .3s
+      @media (max-width: 1324px)
+        width: 100%
+        margin-left: 0px
+        margin-bottom: 10px
+      .fix-input-wrap
+        position: relative
+        width: 300px
+        height: calc(100vh - 112px)
+        transition: all .3s
+        display: flex
+        flex-direction: column
+        align-items: center
+        @media (max-width: 1324px)
+          width: 100%
+          height: auto
+        .upload-cover
+          margin-bottom: 10px
+        .input-title
+          margin-bottom: 10px
+        .encrypt-wrap
+          color: #606266
+          font-size: 14px
+          width: 100%
+          margin-bottom: 10px
     .editor
-      min-width: calc(100% - 84px)
+      min-width: calc(100% - 310px)
       height: calc(100vh - 112px)
 
 
@@ -166,7 +236,7 @@ export default Highlight
 
 <style lang="stylus">
 .v-note-wrapper
-  z-index: 900 !important
+  z-index: 1 !important
 [type="button"]
   -webkit-appearance: none
 </style>

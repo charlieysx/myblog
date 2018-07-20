@@ -98,7 +98,7 @@ export default {
 
 ### 四、测试代码高亮
 
-\`\`\`
+\`\`\`javascript
 import Hljs from 'highlight.js'
 import 'highlight.js/styles/googlecode.css'
 
