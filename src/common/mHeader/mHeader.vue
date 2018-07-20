@@ -78,7 +78,7 @@ export default {
         {
           name: '友链',
           icon: 'icon-friends-link',
-          to: 'friendslink'
+          to: 'friends'
         }
       ],
       lineStyle: {

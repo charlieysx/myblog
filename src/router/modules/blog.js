@@ -4,6 +4,7 @@ const archives = r => require.ensure([], () => r(require('VIEWS/blog/archives/in
 const articleList = r => require.ensure([], () => r(require('VIEWS/blog/categories/articleList.vue')), 'articleList')
 const article = r => require.ensure([], () => r(require('VIEWS/blog/article/index.vue')), 'article')
 const about = r => require.ensure([], () => r(require('VIEWS/blog/about/index.vue')), 'about')
+const friends = r => require.ensure([], () => r(require('VIEWS/blog/friends/index.vue')), 'friends')
 
 export default [
   {
@@ -29,6 +30,11 @@ export default [
     path: '/about',
     name: 'about',
     component: about
+  },
+  {
+    path: '/friends',
+    name: 'friends',
+    component: friends
   },
   {
     path: '/list/:type/:itemId',
