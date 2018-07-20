@@ -3,76 +3,99 @@
     <div class="header-wrap">
       网站基本信息配置
       <div class="action-btn-wrap">
-        <span>提交</span>
+        <span @click="commit">提交</span>
       </div>
     </div>
     <div class="edit-wrap">
       <UP class="upload-cover" 
-        :default-img="params.imageUrl"
+        :default-img="params.avatar"
         ratio="1"
         WHRatio="1"
         maxWidth="100"
         maxHeight="100"
         tip="上传头像"
-        @uploadSuccess="uploadSuccess"></UP>
+        @uploadSuccess="uploadAvatar"></UP>
       <el-input
         class="input-title"
         size="mini"
+        v-model="params.blogName"
         placeholder="请输入网站名称">
         <template slot="prepend">网站名称</template>
       </el-input>
       <el-input
         class="input-title"
         size="mini"
+        v-model="params.github"
         placeholder="请输入github地址">
         <template slot="prepend">github</template>
       </el-input>
+      <el-input
+        class="input-title"
+        type="textarea"
+        size="mini"
+        :rows="6"
+        :maxlength="150"
+        resize="none"
+        v-model="params.sign"
+        placeholder="请输入个性签名">
+      </el-input>
       <div class="label-wrap">
         设置阅读密码：
-        <el-checkbox size="mini" v-model="setPassword"></el-checkbox>
+        <el-checkbox size="mini" v-model="params.settingPassword"></el-checkbox>
       </div>
       <el-input
         class="input-title"
         size="mini"
-        v-if="setPassword"
+        type="password"
+        v-if="params.settingPassword && hadOldPassword"
+        v-model="params.oldPassword"
         placeholder="请输入原密码">
         <template slot="prepend">原密码</template>
       </el-input>
       <el-input
         class="input-title"
         size="mini"
-        v-if="setPassword"
+        type="password"
+        v-if="params.settingPassword"
+        v-model="params.viewPassword"
         placeholder="请输入新密码">
         <template slot="prepend">新密码</template>
       </el-input>
       <el-input
         class="input-title"
         size="mini"
-        v-if="setPassword"
+        type="password"
+        v-if="params.settingPassword"
+        v-model="newPassword"
         placeholder="请再次输入新密码">
         <template slot="prepend">新密码</template>
       </el-input>
       <UP class="upload-cover" 
-        :default-img="params.imageUrl"
+        :default-img="params.wxpayQrcode"
         ratio="1"
         WHRatio="1"
         maxWidth="100"
         maxHeight="100"
         tip="上传微信二维码"
-        @uploadSuccess="uploadSuccess"></UP>
+        @uploadSuccess="uploadWxpayQrcode"></UP>
       <UP class="upload-cover" 
-        :default-img="params.imageUrl"
+        :default-img="params.alipayQrcode"
         ratio="1"
         WHRatio="1"
         maxWidth="100"
         maxHeight="100"
         tip="上传支付宝二维码"
-        @uploadSuccess="uploadSuccess"></UP>
+        @uploadSuccess="uploadAlipayQrcode"></UP>
     </div>
   </div>
 </template>
 
 <script>
+import {
+  mapActions,
+  mapGetters
+} from 'vuex'
+
 import UP from 'COMMON/upload/upCover.vue'
 
 export default {
@@ -83,16 +106,83 @@ export default {
   data () {
     return {
       params: {
-        imageUrl: ''
+        blogName: '',
+        avatar: '',
+        sign: '',
+        wxpayQrcode: '',
+        alipayQrcode: '',
+        github: '',
+        sign: '',
+        settingPassword: false,
+        viewPassword: '',
+        oldPassword: ''
       },
-      setPassword: false
+      newPassword: '',
+      hadOldPassword: false
     }
   },
   created () {
+    this.getBlogConfig()
+      .then((data) => {
+        if (data) {
+          this.hadOldPassword = data.hadOldPassword
+          this.params = data
+          delete this.params['hadOldPassword']
+        }
+      })
+      .catch(()=> {})
   },
   methods: {
-    uploadSuccess (url) {
-      this.params.imageUrl = url
+    ...mapActions([
+      'getBlogConfig',
+      'modifyBlogConfig'
+    ]),
+    uploadAvatar(url) {
+      this.params.avatar = url
+    },
+    uploadWxpayQrcode(url) {
+      this.params.wxpayQrcode = url
+    },
+    uploadAlipayQrcode(url) {
+      this.params.alipayQrcode = url
+    },
+    commit() {
+      if (this.params.settingPassword) {
+        if (this.params.viewPassword.length < 6) {
+          this.$message({
+            type: 'error',
+            message: '密码不能小于6位'
+          })
+          return
+        } else if (this.params.viewPassword !== this.newPassword) {
+          this.$message({
+            type: 'error',
+            message: '两个新密码不匹配'
+          })
+          return
+        }
+      }
+      const loading = this.$loading({
+        lock: true,
+        text: '',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
+      this.modifyBlogConfig(this.params)
+        .then((data) => {
+          loading.close()
+          this.$message({
+            type: 'success',
+            message: '已更新'
+          })
+        })
+        .catch((err) => {
+          loading.close()
+          this.$message({
+            type: 'error',
+            message: err.msg
+          })
+        })
     }
   }
 }

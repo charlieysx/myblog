@@ -46,7 +46,7 @@
     <!-- 返回顶部 结束 -->
     <!-- 登录 -->
     <transition name="fade">
-      <login-layout v-show="!isLogin&&isAdminWrap"></login-layout>
+      <login-layout v-if="!isLogin&&isAdminWrap"></login-layout>
     </transition>
     <!-- 登录 结束 -->
   </div>

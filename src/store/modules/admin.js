@@ -8,7 +8,8 @@ import {
 import {
   saveAccessToken,
   getAccessToken,
-  cachedAdminInfo
+  cachedAdminInfo,
+  removeAccessToken
 } from 'API/cacheService'
 
 const state = {
@@ -62,10 +63,68 @@ const actions = {
       })
   },
   /**
+   * 退出登录
+   */
+  adminSignOut (store) {
+    console.log('退出登录')
+    removeAccessToken()
+    cachedAdminInfo.delete()
+    this.$store.commit(IS_LOGIN, false)
+    this.$store.commit(SET_ADMIN_INFO, {})
+  },
+  /**
    * 获取七牛token
    */
   getQiniuToken (store, withWater = true) {
     return api.getQiniuToken(withWater)
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+  /**
+   * 获取博客配置
+   */
+  getBlogConfig (store) {
+    return api.getBlogConfig()
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+  /**
+   * 修改博客配置
+   */
+  modifyBlogConfig (store, params) {
+    return api.modifyBlogConfig(params)
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+  /**
+   * 获取 关于我 页面
+   */
+  getAboutMe (store) {
+    return api.getAboutMe()
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+  /**
+   * 修改 关于我 页面
+   */
+  modifyAboutMe (store, content) {
+    return api.modifyAboutMe(content)
       .then((data) => {
         return Promise.resolve(data.data)
       })

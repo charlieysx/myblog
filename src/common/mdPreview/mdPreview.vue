@@ -24,6 +24,12 @@ export default {
     this.htmlContent = this.markdownHtml(this.contents)
     setTimeout(this.getImg, 1000)
   },
+  watch: {
+    contents (content) {
+      this.htmlContent = this.markdownHtml(this.contents)
+      setTimeout(this.getImg, 1000)
+    }
+  },
   mounted() {
   },
   methods: {

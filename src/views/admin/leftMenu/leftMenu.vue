@@ -157,8 +157,19 @@ export default {
     ])
   },
   methods: {
+    ...mapActions([
+      'adminSignOut'
+    ]),
     signOut () {
-      console.log('退出')
+      this.$confirm('是否退出', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(() => {
+          console.log('退出登录...')
+          this.adminSignOut()
+        }).catch(()=>{})
     },
     toggleCollapse () {
       this.collapseMenu = !this.collapseMenu

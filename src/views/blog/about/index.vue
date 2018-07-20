@@ -6,7 +6,7 @@
           关于我
         </p>
       </div>
-      <md-preview :contents="about.contents" />
+      <md-preview :contents="content" />
       <div class="money-wrap">
         <p>如果我的文章对您有帮助！有钱的捧个钱场，没钱的捧个人场，谢谢您！</p>
         <div class="money-btn" @click="showQrcode = !showQrcode">赞赏支持</div>
@@ -28,6 +28,9 @@
 </template>
 
 <script>
+import {
+  mapActions
+} from 'vuex'
 
 import mdPreview from 'COMMON/mdPreview/mdPreview'
 
@@ -39,44 +42,20 @@ export default {
   data () {
     return {
       showQrcode: false,
-      about: {
-        contents: `### 一、前言
-
->本来想做个微信小程序，实现一键生成海报图片（可替换文字、图片，不需要用户排版），所以后台管理系统上需要实现一个制作海报模板的功能（“简单版ps”），写了挺长时间的，逻辑太多了，现在写得差不多了，但是由于各种事情项目一直没有进展，估计是没能做完了，所以把这个“简单版ps”开源出来。
-
-### 二、界面
-
-![](https://user-gold-cdn.xitu.io/2018/6/13/163f7dea6cd6e2af?w=1919&h=958&f=jpeg&s=86423)
-![](https://user-gold-cdn.xitu.io/2018/6/13/163f7dee7b1c62f6?w=1919&h=959&f=jpeg&s=273501)
-
-### 三、动态效果图
-
-![](https://user-gold-cdn.xitu.io/2018/6/13/163f7e2439b9e35b?w=1220&h=832&f=gif&s=4549591)
-
-### 四、测试代码高亮
-
-\`\`\`javascript
-import Hljs from 'highlight.js'
-import 'highlight.js/styles/googlecode.css'
-
-let Highlight = {}
-Highlight.install = function (Vue, options) {
-  Vue.directive('highlight', function (el) {
-    let blocks = el.querySelectorAll('pre code')
-    blocks.forEach((block) => {
-      Hljs.highlightBlock(block)
-    })
-  })
-}
-export default Highlight
-\`\`\`
-`
-      }
+      content: ''
     }
   },
   created() {
+    this.getAboutMe()
+      .then((data) => {
+        this.content = data.aboutMeContent
+      })
+      .catch(()=> {})
   },
   methods: {
+    ...mapActions([
+      'getAboutMe'
+    ])
   }
 }
 </script>

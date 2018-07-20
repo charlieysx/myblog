@@ -85,22 +85,29 @@ export default {
       },
       withCredentials: false
     })
+  },
+  /**
+   * 获取博客配置
+   */
+  getBlogConfig () {
+    return axios.get('a/webConfig')
+  },
+  /**
+   * 修改博客配置
+   */
+  modifyBlogConfig (params) {
+    return axios.post('a/webConfig/modify', Qs.stringify(params))
+  },
+  /**
+   * 获取 关于我 页面
+   */
+  getAboutMe () {
+    return axios.get('a/webConfig/getAbout')
+  },
+  /**
+   * 修改 关于我 页面
+   */
+  modifyAboutMe (content) {
+    return axios.post('a/webConfig/modifyAbout', Qs.stringify({aboutMeContent: content}))
   }
-
-  // /**
-  //  * 获取按字母排序的城市
-  //  */
-  // getCitySort () {
-  //   return axios.get('c/city/sort')
-  // },
-  // /**
-  //  * 获取热门的城市
-  //  */
-  // getHotCity (count) {
-  //   return axios.get('c/city/hot', {
-  //     params: {
-  //       count: count
-  //     }
-  //   })
-  // }
 }
