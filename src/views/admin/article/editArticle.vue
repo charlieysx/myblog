@@ -68,9 +68,46 @@
             resize="none"
             placeholder="请输入文章简介">
           </el-input>
-          <div class="encrypt-wrap">
-            加密阅读：
+          <div class="label-wrap">
+            阅读加密：
             <el-checkbox size="mini"></el-checkbox>
+          </div>
+          <div class="label-wrap">
+            分类：
+            <el-select
+              v-model="categoryValue"
+              filterable
+              allow-create
+              default-first-option
+              size="mini"
+              placeholder="请选择文章分类">
+              <el-option
+                v-for="item in options5"
+                size="mini"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </div>
+          <div class="label-wrap">
+            标签：
+            <el-select
+              v-model="tagValue"
+              filterable
+              allow-create
+              default-first-option
+              size="mini"
+              multiple
+              placeholder="请选择文章标签">
+              <el-option
+                v-for="item in options5"
+                size="mini"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
           </div>
         </div>
       </div>
@@ -103,7 +140,19 @@ export default {
         imageUrl: '',
         content: '',
         from: ''
-      }
+      },
+      options5: [{
+        value: 'HTML',
+        label: 'HTML'
+      }, {
+        value: 'CSS',
+        label: 'CSS'
+      }, {
+        value: 'JavaScript',
+        label: 'JavaScript'
+      }],
+      categoryValue: '',
+      tagValue: []
     }
   },
   created() {
@@ -212,11 +261,13 @@ export default {
           margin-bottom: 10px
         .input-title
           margin-bottom: 10px
-        .encrypt-wrap
+        .label-wrap
           color: #606266
           font-size: 14px
           width: 100%
           margin-bottom: 10px
+          .el-select
+            width: calc(100% - 46.7px) !important
     .editor
       min-width: calc(100% - 310px)
       height: calc(100vh - 112px)
