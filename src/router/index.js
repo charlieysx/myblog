@@ -2,8 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from 'STORE/index'
 
-import home from './modules/home'
-import article from './modules/article'
+import blog from './modules/blog'
 import admin from './modules/admin'
 
 import NProgress from 'nprogress'
@@ -20,8 +19,7 @@ Vue.use(VueRouter)
 
 const routes = [
   ...admin,
-  ...home,
-  ...article
+  ...blog
 ]
 
 const router = new VueRouter({

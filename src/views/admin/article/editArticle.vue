@@ -53,6 +53,7 @@
             WHRatio="2"
             maxWidth="300"
             maxHeight="150"
+            tip="上传文章封面图"
             @uploadSuccess="uploadSuccess"></UP>
           <el-input
             class="input-title"

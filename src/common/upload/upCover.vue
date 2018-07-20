@@ -23,7 +23,7 @@
         <img :src="imageUrl" class="cover" v-if="imageUrl">
         <div class="img-mask-default" :class="{'img-mask': imageUrl}">
           <i class="el-icon-upload"></i>
-          <div>上传封面图</div>
+          <div>{{ tip }}</div>
         </div>
       </div>
     </el-upload>
@@ -58,7 +58,10 @@ export default {
       default: 1
     },
     maxWidth: String,
-    maxHeight: String
+    maxHeight: String,
+    tip: {
+      default: '上传图片'
+    }
   },
   data () {
     return {
@@ -186,12 +189,14 @@ export default {
           top: 0
           width: 100%
           height: 100%
+          padding-left: 10px
+          padding-right: 10px
           background-color: $color-white
           color: #555555
           display: flex
           flex-direction: column
           justify-content: center
-          font-size: 14px
+          font-size: 12px
           transition: all .2s linear
           .el-icon-upload
             font-size: 18px

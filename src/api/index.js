@@ -13,9 +13,13 @@ import {
   SHOW_TOKEN_ERROR
 } from 'STORE/mutation-types'
 
-const API_ROOT = '/localapi'
+/* eslint-disable */
+const API_ROOT = 'http://blogapi.codebear.cn/index.php'
+const API_ROOT_DEV = '/localapi'
 
-axios.defaults.baseURL = API_ROOT
+/* eslint-enable */
+axios.defaults.baseURL = (process.env.NODE_ENV === 'production' ? API_ROOT : API_ROOT_DEV)
+
 axios.defaults.headers.Accept = 'application/json'
 
 // Add a request interceptor

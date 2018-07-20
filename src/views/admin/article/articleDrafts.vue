@@ -13,7 +13,7 @@
           show-overflow-tooltip
           min-width="200">
           <template slot-scope="scope">
-            <div style="cursor: pointer;" @click="preview(scope.row)">{{ scope.row.title }}</div>
+            <div class="article-title" @click="preview(scope.row)">{{ scope.row.title }}</div>
           </template>
         </el-table-column>
         <el-table-column
@@ -79,7 +79,6 @@
               type="danger"
               icon="el-icon-delete"
               circle
-              v-if="scope.row.status != '1'"
               @click="under(scope.row)">
             </el-button>
           </template>
@@ -132,15 +131,6 @@ export default {
           status: 2,
           category: '',
           cover: 'http://img1.imgtn.bdimg.com/it/u=3249428919,1915053740&fm=200&gp=0.jpg'
-        },
-        {
-          title: '第一篇文章',
-          createTime: '1531733525',
-          updateTime: '1531733525',
-          deleteTime: '1531733525',
-          status: 1,
-          category: '',
-          cover: ''
         }
       ],
       params: {
@@ -165,8 +155,20 @@ export default {
       return cellValue ? cellValue : '-'
     },
     edit (article) {
+      this.$router.push({
+        name: 'editArticle',
+        params: {
+          articleId: '1'
+        }
+      })
     },
     under (article) {
+      this.showDialog('此操作将彻底删除该文章，不可恢复, 是否继续?', ()=> {
+        this.$message({
+          type: 'success',
+          message: '已删除'
+        })
+      })
     },
     pageChange (currentPage) {
       this.scrollToTop()
@@ -183,6 +185,16 @@ export default {
           articleId: '1'
         }
       })
+    },
+    showDialog(tip, next) {
+      this.$confirm(tip, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(() => {
+          next()
+        }).catch(()=>{})
     }
   }
 }
@@ -214,6 +226,11 @@ export default {
       display: -webkit-flex
       justify-content: center
 
+
+.article-title
+  cursor: pointer
+  &:hover
+    color: #29b6f6
 
 @keyframes show {
   from {

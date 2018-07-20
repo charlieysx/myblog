@@ -1,14 +1,15 @@
 <template>
-  <div id="web-config-friends">
-    <div class="header-wrap">
-      友链管理（共计：{{ total }}条）
-      <div class="action-btn-wrap">
-        <span @click="add">新增</span>
-      </div>
-    </div>
-    <div class="friends-table-wrap">
+  <div id="article-list">
+    <p>
+      <span @click="$router.go(-1)">
+        <i class="el-icon-arrow-left"></i>
+        返回
+      </span>
+      {{ type === 'category' ? '分类' : '标签' }} '{{ name }}' 的文章(共计:{{ total }}篇)
+    </p>
+    <div class="article-table-wrap">
       <el-table
-        :data="friendsList"
+        :data="articleList"
         border
         stripe
         size="mini"
@@ -18,14 +19,23 @@
           show-overflow-tooltip
           min-width="200">
           <template slot-scope="scope">
-            <a class="friends-title" :href="scope.row.url" target="_blank">{{ scope.row.name }}</a>
+            <div class="article-title" @click="preview(scope.row)">{{ scope.row.title }}</div>
           </template>
         </el-table-column>
         <el-table-column
-          prop="type"
-          label="分类"
-          show-overflow-tooltip
-          width="120">
+          label="封面图"
+          width="62">
+          <template slot-scope="scope">
+            <img
+              :src="scope.row.cover" 
+              style="width: 100%;height: 31px; cursor: pointer"
+              @click="previewImg">
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="pageview"
+          label="阅读量"
+          width="60">
         </el-table-column>
         <el-table-column
           prop="createTime"
@@ -87,7 +97,7 @@
       <!-- 分页 -->
       <div
         class="pagination"
-        v-show="friendsList.length > 0">
+        v-show="articleList.length > 0">
         <el-pagination
           background
           layout="prev, pager, next"
@@ -99,40 +109,6 @@
       </div>
       <!-- 分页 结束 -->
     </div>
-    <el-dialog title="编辑" class="edit-dialog" :visible.sync="dialogFormVisible">
-      <el-input
-        class="input-title"
-        size="mini"
-        placeholder="请输入友链名称">
-      </el-input>
-      <el-input
-        class="input-title"
-        size="mini"
-        placeholder="请输入友链链接">
-      </el-input>
-      <div class="label-wrap">
-        分类：
-        <el-select
-          v-model="categoryValue"
-          filterable
-          allow-create
-          default-first-option
-          size="mini"
-          placeholder="请选择文章分类">
-          <el-option
-            v-for="item in options5"
-            size="mini"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
-      </div>
-      <div slot="footer" class="dialog-footer">
-        <el-button size="mini" @click="dialogFormVisible = false">取 消</el-button>
-        <el-button size="mini" type="primary" @click="commit">确 定</el-button>
-      </div>
-    </el-dialog>
   </div>
 </template>
 
@@ -141,32 +117,34 @@ import moment from 'moment'
 import { scroll } from 'MIXINS/scroll'
 
 export default {
-  name: 'web-config-friends',
+  name: 'article-list',
   components: {
   },
   mixins: [scroll],
   data () {
     return {
-      friendsList: [
+      articleList: [
         {
-          name: '友链1',
-          url: '',
+          title: '第一篇文章第一篇文章第一篇文章',
           createTime: '1531733525',
           publishTime: '1531733525',
           updateTime: '1531733525',
           deleteTime: '',
           status: 0,
-          type: 'test'
+          pageview: 10,
+          category: 'test',
+          cover: 'http://img1.imgtn.bdimg.com/it/u=3249428919,1915053740&fm=200&gp=0.jpg'
         },
         {
-          name: '友链2',
-          url: '',
+          title: '第一篇文章',
           createTime: '1531733525',
           publishTime: '1531733525',
           updateTime: '1531733525',
           deleteTime: '',
           status: 0,
-          type: 'testtest'
+          pageview: 100,
+          category: 'test',
+          cover: 'http://img1.imgtn.bdimg.com/it/u=3249428919,1915053740&fm=200&gp=0.jpg'
         }
       ],
       params: {
@@ -175,35 +153,30 @@ export default {
       },
       currentPage: 0,
       total: 0,
-      dialogFormVisible: false,
-      options5: [{
-        value: 'HTML',
-        label: 'HTML'
-      }, {
-        value: 'CSS',
-        label: 'CSS'
-      }, {
-        value: 'JavaScript',
-        label: 'JavaScript'
-      }],
-      categoryValue: ''
+      type: 'tag',
+      name: '数据结构与算法'
     }
   },
   created() {
-    this.total = this.friendsList.length
+    this.total = this.articleList.length
   },
   methods: {
     formatTime(row, column, cellValue, index) {
       return cellValue ? moment(parseInt(cellValue) * 1000).format('YYYY-MM-DD HH:ss') : '-'
     },
     formatStatus(value) {
-      return value == '0' ? '已发布' : '已删除'
+      return value == '0' ? '已发布' : (value == '1' ? '已删除' : '待发布')
     },
     edit(article) {
-      this.dialogFormVisible = true
+      this.$router.push({
+        name: 'editArticle',
+        params: {
+          articleId: '1'
+        }
+      })
     },
     under(article) {
-      this.showDialog('此操作会将该友链标记为删除，不再显示, 是否继续?', ()=> {
+      this.showDialog('此操作会将该文章标记为删除，不再显示, 是否继续?', ()=> {
         this.$message({
           type: 'success',
           message: '已删除'
@@ -215,6 +188,17 @@ export default {
       this.params.page = currentPage - 1
       this.currentPage = currentPage
     },
+    previewImg(e) {
+      this.$photoPreview.open(0, [{src: e.target.src, w: 41, h: 31, target: e.target}])
+    },
+    preview (article) {
+      this.$router.push({
+        name: 'articlePreview',
+        params: {
+          articleId: '1'
+        }
+      })
+    },
     showDialog(tip, next) {
       this.$confirm(tip, '提示', {
           confirmButtonText: '确定',
@@ -224,13 +208,6 @@ export default {
         }).then(() => {
           next()
         }).catch(()=>{})
-    },
-    commit() {
-      this.dialogFormVisible = false
-      //
-    },
-    add() {
-      this.dialogFormVisible = true
     }
   }
 }
@@ -238,11 +215,11 @@ export default {
 
 <style lang="stylus" scoped>
 @import '~STYLUS/color.styl'
-#web-config-friends
+#article-list
   position: relative
   padding-top: 52px
-  .header-wrap
-    position: absolute
+  > p
+    position: fixed
     width: 100%
     top: 0
     padding: 18px
@@ -251,24 +228,17 @@ export default {
     background-color: $color-white
     box-shadow: 1px 1px 10px 1px rgba(38, 42, 48, .1)
     z-index: 1000
-    display: flex
-    flex-direction: row
-    justify-content: space-between
-    align-items: center
-    .action-btn-wrap
-      > span
-        padding: 5px 10px
+    @media (max-width: 760px)
+      font-size: 12px
+      padding: 18px 5px
+    > span
+      margin-right: 20px
+      cursor: pointer
+      font-size: 14px
+      @media (max-width: 760px)
+        font-size: 12px
         margin-right: 5px
-        font-size: 14px
-        cursor: pointer
-        background-color: $color-main
-        color: $color-white
-        border-radius: 8px
-        &:hover
-          background-color: lighten($color-main, 10%)
-        &:last-child
-          margin-right: 0px
-  .friends-table-wrap
+  .article-table-wrap
     width: 100%
     animation: show .8s
     .pagination
@@ -277,12 +247,10 @@ export default {
       display: flex
       justify-content: center
 
-.friends-title
+.article-title
   cursor: pointer
   &:hover
     color: #29b6f6
-a
-  color: #555555
 
 @keyframes show {
   from {
@@ -294,22 +262,4 @@ a
     opacity: 1;
   }
 }
-</style>
-
-<style lang="stylus">
-.edit-dialog
-  .el-dialog
-    margin: 0 auto !important
-    width: calc(100% - 30px)
-    max-width: 400px
-    margin-top: 15vh !important
-  .input-title
-    margin-bottom: 10px
-  .label-wrap
-    color: #606266
-    font-size: 14px
-    width: 100%
-    margin-bottom: 10px
-    .el-select
-      width: calc(100% - 46.7px) !important
 </style>

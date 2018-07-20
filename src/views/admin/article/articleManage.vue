@@ -1,5 +1,5 @@
 <template>
-  <div id="edit-article">
+  <div id="article-manage">
     <p>文章管理（共计：{{ total }}篇）</p>
     <div class="article-table-wrap">
       <el-table
@@ -13,7 +13,7 @@
           show-overflow-tooltip
           min-width="200">
           <template slot-scope="scope">
-            <div style="cursor: pointer;" @click="preview(scope.row)">{{ scope.row.title }}</div>
+            <div class="article-title" @click="preview(scope.row)">{{ scope.row.title }}</div>
           </template>
         </el-table-column>
         <el-table-column
@@ -117,7 +117,7 @@ import moment from 'moment'
 import { scroll } from 'MIXINS/scroll'
 
 export default {
-  name: 'edit-article',
+  name: 'article-manage',
   components: {
   },
   mixins: [scroll],
@@ -177,8 +177,20 @@ export default {
       return value == '0' ? '已发布' : (value == '1' ? '已删除' : '待发布')
     },
     edit(article) {
+      this.$router.push({
+        name: 'editArticle',
+        params: {
+          articleId: '1'
+        }
+      })
     },
     under(article) {
+      this.showDialog('此操作会将该文章标记为删除，不再显示, 是否继续?', ()=> {
+        this.$message({
+          type: 'success',
+          message: '已删除'
+        })
+      })
     },
     pageChange(currentPage) {
       this.scrollToTop()
@@ -195,6 +207,16 @@ export default {
           articleId: '1'
         }
       })
+    },
+    showDialog(tip, next) {
+      this.$confirm(tip, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(() => {
+          next()
+        }).catch(()=>{})
     }
   }
 }
@@ -202,8 +224,7 @@ export default {
 
 <style lang="stylus" scoped>
 @import '~STYLUS/color.styl'
-@import '~STYLUS/mixin.styl'
-#edit-article
+#article-manage
   position: relative
   padding-top: 52px
   > p
@@ -223,9 +244,12 @@ export default {
       width: 100%
       margin-top: 20px
       display: flex
-      display: -webkit-flex
       justify-content: center
 
+.article-title
+  cursor: pointer
+  &:hover
+    color: #29b6f6
 
 @keyframes show {
   from {

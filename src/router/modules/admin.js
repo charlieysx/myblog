@@ -7,6 +7,7 @@ const adminCategories = r => require.ensure([], () => r(require('VIEWS/admin/cat
 const webConfig = r => require.ensure([], () => r(require('VIEWS/admin/webConfig/index.vue')), 'webConfig')
 const webConfigAbout = r => require.ensure([], () => r(require('VIEWS/admin/webConfig/about.vue')), 'webConfigAbout')
 const webConfigFriends = r => require.ensure([], () => r(require('VIEWS/admin/webConfig/friends.vue')), 'webConfigFriends')
+const adminArticleList = r => require.ensure([], () => r(require('VIEWS/admin/categories/articleList.vue')), 'adminArticleList')
 
 export default [
   {
@@ -85,6 +86,14 @@ export default [
     path: '/admin/webConfig/friends',
     name: 'webConfigFriends',
     component: webConfigFriends,
+    meta: {
+      requireAuth: true
+    }
+  },
+  {
+    path: '/admin/list/:type/:itemId',
+    name: 'adminArticleList',
+    component: adminArticleList,
     meta: {
       requireAuth: true
     }

@@ -17,7 +17,7 @@ module.exports = {
         pathRewrite: {
             '^/localapi': ''
         }
-    }
+      }
     },
 
     // Various Dev Server settings

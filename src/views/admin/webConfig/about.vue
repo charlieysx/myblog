@@ -189,4 +189,16 @@ export default {
     .editor
       min-width: calc(100% - 310px)
       height: calc(100vh - 80px)
+
+
+@keyframes show {
+  from {
+    margin-top: -10px;
+    opacity: 0;
+  }
+  to {
+    margin-top: 0px;
+    opacity: 1;
+  }
+}
 </style>
