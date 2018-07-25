@@ -299,6 +299,7 @@ export default {
       this.publishArticle(params)
         .then((data) => {
           this.toast('已发布')
+          this.updateRoute('articlePreview', data)
         })
         .catch((err) => {
           this.toast(err.msg, 'error')
@@ -309,6 +310,7 @@ export default {
       this.saveArticle(params)
         .then((data) => {
           this.toast('已保存')
+          this.updateRoute('editArticle', data)
         })
         .catch((err) => {
           this.toast(err.msg, 'error')
@@ -334,7 +336,7 @@ export default {
       }
       this.modifyArticle(params)
         .then((data) => {
-          this.toast('已修改')
+          this.toast('已更新')
         })
         .catch((err) => {
           this.toast(err.msg, 'error')
@@ -345,6 +347,14 @@ export default {
         showClose: true,
         message: msg,
         type: type
+      })
+    },
+    updateRoute(name, articleId) {
+      this.$router.push({
+        name: name,
+        query: {
+          id: articleId
+        }
       })
     }
   }

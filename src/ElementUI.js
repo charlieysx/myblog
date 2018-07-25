@@ -65,6 +65,7 @@ import {
   Notification
 } from 'element-ui'
 
+import 'element-ui/lib/theme-chalk/index.css'
 import CollapseTransition from 'element-ui/lib/transitions/collapse-transition'
 Vue.component(CollapseTransition.name, CollapseTransition)
 

@@ -21,11 +21,11 @@
         <transition name="slide-fade">
           <div class="qrcode-wrap" v-show="showQrcode">
             <span class="qrcode">
-              <img src='~IMAGES/wechatpay.jpg'/>
+              <img src=''/>
               <p>微信支付</p>
             </span>
             <span class="qrcode">
-              <img src='~IMAGES/alipay.jpg'/>
+              <img src=''/>
               <p>支付宝支付</p>
             </span>
           </div>

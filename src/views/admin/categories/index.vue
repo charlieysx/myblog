@@ -57,7 +57,7 @@
                   icon="el-icon-edit"
                   type="primary"
                   circle
-                  v-if="scope.row.canDel"
+                  v-if="scope.row.canDel === '1'"
                   @click="editCategory(scope.row)">
                 </el-button>
                 <el-button
@@ -65,7 +65,7 @@
                   type="danger"
                   icon="el-icon-delete"
                   circle
-                  v-if="scope.row.canDel"
+                  v-if="scope.row.canDel === '1'"
                   @click="underCategory(scope.row)">
                 </el-button>
               </template>

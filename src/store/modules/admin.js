@@ -66,11 +66,10 @@ const actions = {
    * 退出登录
    */
   adminSignOut (store) {
-    console.log('退出登录')
     removeAccessToken()
     cachedAdminInfo.delete()
-    this.$store.commit(IS_LOGIN, false)
-    this.$store.commit(SET_ADMIN_INFO, {})
+    store.commit(IS_LOGIN, false)
+    store.commit(SET_ADMIN_INFO, {})
   },
   /**
    * 获取七牛token

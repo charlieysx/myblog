@@ -18,12 +18,12 @@
         </el-table-column>
         <el-table-column
           label="封面图"
-          width="62">
+          width="61">
           <template slot-scope="scope">
             <img
               v-if="scope.row.cover"
               :src="scope.row.cover" 
-              style="width: 100%;height: 31px; cursor: pointer"
+              style="width: 100%;height: 20px; cursor: pointer"
               @click="previewImg">
           </template>
         </el-table-column>
@@ -188,7 +188,7 @@ export default {
         })
     },
     previewImg(e) {
-      this.$photoPreview.open(0, [{src: e.target.src, w: 41, h: 31, target: e.target}])
+      this.$photoPreview.open(0, [{src: e.target.src, w: 40, h: 20, target: e.target}])
     },
     preview (article) {
       this.$router.push({

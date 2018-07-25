@@ -168,7 +168,6 @@ export default {
           type: 'warning',
           center: true
         }).then(() => {
-          console.log('退出登录...')
           this.adminSignOut()
         }).catch(()=>{})
     },
