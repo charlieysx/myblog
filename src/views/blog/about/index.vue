@@ -7,17 +7,17 @@
         </p>
       </div>
       <md-preview :contents="content" />
-      <div class="money-wrap">
+      <div class="money-wrap" v-if="qrcode">
         <p>如果我的文章对您有帮助！有钱的捧个钱场，没钱的捧个人场，谢谢您！</p>
         <div class="money-btn" @click="showQrcode = !showQrcode">赞赏支持</div>
         <transition name="slide-fade">
           <div class="qrcode-wrap" v-show="showQrcode">
             <span class="qrcode">
-              <img src='~IMAGES/wechatpay.jpg'/>
+              <img :src='qrcode.wxpayQrcode'/>
               <p>微信支付</p>
             </span>
             <span class="qrcode">
-              <img src='~IMAGES/alipay.jpg'/>
+              <img :src='qrcode.alipayQrcode'/>
               <p>支付宝支付</p>
             </span>
           </div>
@@ -42,19 +42,21 @@ export default {
   data () {
     return {
       showQrcode: false,
-      content: ''
+      content: '',
+      qrcode: ''
     }
   },
   created() {
-    this.getAboutMe()
+    this.getBlogAboutMe()
       .then((data) => {
         this.content = data.aboutMeContent
+        this.qrcode = data.qrcode
       })
       .catch(()=> {})
   },
   methods: {
     ...mapActions([
-      'getAboutMe'
+      'getBlogAboutMe'
     ])
   }
 }

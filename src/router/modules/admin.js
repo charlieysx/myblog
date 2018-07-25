@@ -1,6 +1,7 @@
 const adminHome = r => require.ensure([], () => r(require('VIEWS/admin/adminHome/index.vue')), 'adminHome')
 const editArticle = r => require.ensure([], () => r(require('VIEWS/admin/article/editArticle.vue')), 'editArticle')
 const articleManage = r => require.ensure([], () => r(require('VIEWS/admin/article/articleManage.vue')), 'articleManage')
+const articleDeleted = r => require.ensure([], () => r(require('VIEWS/admin/article/articleDeleted.vue')), 'articleDeleted')
 const articleDrafts = r => require.ensure([], () => r(require('VIEWS/admin/article/articleDrafts.vue')), 'articleDrafts')
 const articlePreview = r => require.ensure([], () => r(require('VIEWS/admin/article/articlePreview.vue')), 'articlePreview')
 const adminCategories = r => require.ensure([], () => r(require('VIEWS/admin/categories/index.vue')), 'adminCategories')
@@ -27,7 +28,7 @@ export default [
     }
   },
   {
-    path: '/admin/article/edit/:articleId',
+    path: '/admin/article/edit',
     name: 'editArticle',
     component: editArticle,
     meta: {
@@ -43,6 +44,14 @@ export default [
     }
   },
   {
+    path: '/admin/article/deleted',
+    name: 'articleDeleted',
+    component: articleDeleted,
+    meta: {
+      requireAuth: true
+    }
+  },
+  {
     path: '/admin/article/drafts',
     name: 'articleDrafts',
     component: articleDrafts,
@@ -51,7 +60,7 @@ export default [
     }
   },
   {
-    path: '/admin/article/preview/:articleId',
+    path: '/admin/article/preview',
     name: 'articlePreview',
     component: articlePreview,
     meta: {
@@ -91,7 +100,7 @@ export default [
     }
   },
   {
-    path: '/admin/list/:type/:itemId',
+    path: '/admin/articlelist',
     name: 'adminArticleList',
     component: adminArticleList,
     meta: {

@@ -1,6 +1,6 @@
 <template>
   <div id="admin-home">
-    <p>仪表盘</p>
+    <p>首页</p>
     <div class="card-wrap">
       <icon-card 
         v-for="(item, index) in messageCards"
@@ -9,24 +9,29 @@
         :icon="item.icon"
         :topMessage="item.topMessage"
         :middleMessage="item.middleMessage"
-        :bottomMessage="item.bottomMessage" />
+        :bottomMessage="item.bottomMessage"
+        :to="item.to" />
     </div>
     <div class="card-wrap">
       <message-card title="最新文章">
         <div slot="content">
           <div class="article-content" v-for="(article, index) in newestArticleList" :key="index">
-            <span class="article-title">{{ article.title }}</span>
-            <span class="time"><i class="iconfont icon-calendar"></i>{{ article.publishTime }}</span>
+            <span class="article-title" @click="$router.push({name: 'articlePreview', query:{id: article.id}})">{{ article.title }}</span>
+            <span class="time"><i class="iconfont icon-calendar"></i>{{ article.publishTime | time }}</span>
           </div>
-          <p class="more">更多</p>
+          <p class="more" @click="$router.push({name: 'articleManage'})">更多</p>
         </div>
       </message-card>
       <message-card title="系统日志">
         <div slot="content">
           <div class="log-content" v-for="(log, index) in sysLogList" :key="index">
-            {{ log.time }} => {{ log.content }}
+            <p>ip地址: {{ log.ip }}</p>
+            {{ log.time | time }} => {{ log.content }}
           </div>
-          <p class="more" v-if="sysLogList.length >= 10">更多</p>
+          <p class="more-log">
+            <span v-if="logParams.page > 0 && !loadLogMore" @click="getLog(logParams.page - 1)">上一页</span>
+            <span v-if="hadMoreLog && !loadLogMore" @click="getLog(logParams.page + 1)">下一页</span>
+          </p>
         </div>
       </message-card>
     </div>
@@ -34,6 +39,11 @@
 </template>
 
 <script>
+import {
+  mapActions,
+  mapGetters
+} from 'vuex'
+
 import iconCard from 'VIEWS/admin/adminHome/iconCard'
 import messageCard from 'VIEWS/admin/adminHome/messageCard'
 
@@ -50,92 +60,87 @@ export default {
           backgroundColor: '#29b6f6',
           icon: 'icon-article',
           topMessage: '共发表了',
-          middleMessage: '123',
-          bottomMessage: '篇文章'
+          middleMessage: '0',
+          bottomMessage: '篇文章',
+          to: 'articleManage'
         },
         {
           backgroundColor: '#7e57c2',
           icon: 'icon-drafts',
           topMessage: '草稿箱共有',
-          middleMessage: '15',
-          bottomMessage: '篇文章'
+          middleMessage: '0',
+          bottomMessage: '篇文章',
+          to: 'articleDrafts'
         },
         {
           backgroundColor: '#33b86c',
-          icon: 'icon-classify',
-          topMessage: '共有',
-          middleMessage: '10',
-          bottomMessage: '个分类'
+          icon: 'icon-deleted',
+          topMessage: '垃圾箱共有',
+          middleMessage: '0',
+          bottomMessage: '篇文章',
+          to: 'articleDeleted'
         },
         {
           backgroundColor: '#6e8cd7',
           icon: 'icon-tag',
           topMessage: '共有',
-          middleMessage: '666',
-          bottomMessage: '个标签'
+          middleMessage: '0',
+          bottomMessage: '个分类/标签',
+          to: 'adminCategories'
         }
       ],
       newestArticleList: [
-        {
-          title: '第一篇文章第一篇文章第一篇文章第一篇文章第一篇文章',
-          publishTime: '2018-07-15'
-        },
-        {
-          title: '第一篇文章',
-          publishTime: '2018-07-15'
-        },
-        {
-          title: '第一篇文章',
-          publishTime: '2018-07-15'
-        },
-        {
-          title: '第一篇文章',
-          publishTime: '2018-07-15'
-        },
-        {
-          title: '第一篇文章',
-          publishTime: '2018-07-15'
-        },
-        {
-          title: '第一篇文章',
-          publishTime: '2018-07-15'
-        },
-        {
-          title: '第一篇文章',
-          publishTime: '2018-07-15'
-        },
-        {
-          title: '第一篇文章',
-          publishTime: '2018-07-15'
-        },
-        {
-          title: '第一篇文章',
-          publishTime: '2018-07-15'
-        },
-        {
-          title: '第一篇文章',
-          publishTime: '2018-07-15'
-        }
       ],
       sysLogList: [
-        {
-          time: '2018-07-15 23:45:09',
-          content: '管理员 codebear 登录系统'
-        },
-        {
-          time: '2018-07-15 23:45:09',
-          content: '管理员 codebear 登录系统'
-        },
-        {
-          time: '2018-07-15 23:45:09',
-          content: '管理员 codebear 登录系统'
-        }
-      ]
+      ],
+      logParams: {
+        page: 0,
+        pageSize: 8
+      },
+      hadMoreLog: false,
+      loadLogMore: false
     }
   },
   created() {
+    this.getHomeStatistics()
+      .then((data) => {
+        this.messageCards[0].middleMessage = data.publishCount
+        this.messageCards[1].middleMessage = data.draftsCount
+        this.messageCards[2].middleMessage = data.deletedCount
+        this.messageCards[3].middleMessage = data.categoryCount + '/' + data.tagCount
+      })
+      .catch(()=> {})
+    this.getLog(0)
+    this.getArticleList({
+        by: 'status',
+        status: '0',
+        page: 0,
+        pageSize: 10
+      })
+      .then((data) => {
+        this.newestArticleList = data.list
+      })
+      .catch(()=> {})
   },
   methods: {
+    ...mapActions([
+      'getHomeStatistics',
+      'getSysLog',
+      'getArticleList'
+    ]),
+    getLog(page) {
+      this.logParams.page = page
+      this.loadLogMore = true
+      this.getSysLog(this.logParams)
+        .then((data) => {
+          this.loadLogMore = false
+          this.hadMoreLog = (parseInt(data.page) + 1) * parseInt(data.pageSize) < data.count
+          this.sysLogList = data.list
+        })
+        .catch(()=> {
+          this.loadLogMore = false
+        })
+    }
   }
 }
 </script>
@@ -212,6 +217,8 @@ export default {
         border-top: 1px solid #eeeeee
       &:last-child
         margin-bottom: 10px
+      > p
+        margin-bottom: 3px
     .more
       padding: 10px
       margin-top: 10px
@@ -219,7 +226,6 @@ export default {
       font-size: 14px
       @media (max-width: 759px)
         font-size: 12px
-        padding: 10px
       color: #555555
       background-color: #f9f9f9
       cursor: pointer
@@ -227,6 +233,25 @@ export default {
       &:hover
         background-color: $color-main
         color: $color-white
+    .more-log
+      margin-top: 10px
+      text-align: center
+      font-size: 14px
+      display: flex
+      flex-direction: row
+      @media (max-width: 759px)
+        font-size: 12px
+      > span
+        color: #555555
+        background-color: #f9f9f9
+        cursor: pointer
+        padding: 10px
+        flex: 1
+        transition: all .3s
+        &:hover
+          background-color: $color-main
+          color: $color-white
+        
 
 
 @keyframes show {

@@ -192,3 +192,10 @@ export default {
   }
 }
 </style>
+
+<style lang="stylus">
+.v-note-wrapper
+  z-index: 1 !important
+[type="button"]
+  -webkit-appearance: none
+</style>

@@ -3,6 +3,9 @@
     <p>分类/标签</p>
     <div class="category-tag-wrap">
       <div class="table-wrap">
+        <div class="action-btn-wrap">
+          <span @click="newCategory">新增分类</span>
+        </div>
         <el-table
           :data="catetoryList"
           border
@@ -14,7 +17,7 @@
               show-overflow-tooltip
               min-width="120">
             <template slot-scope="scope">
-              <div class="title" @click="toList('catetory', '111')">{{ scope.row.name }}</div>
+              <div class="title" @click="toList('catetory', scope.row.categoryId)">{{ scope.row.categoryName }}</div>
             </template>
           </el-table-column>
           <el-table-column
@@ -25,19 +28,13 @@
           <el-table-column
               prop="createTime"
               label="创建时间"
-              width="122"
+              width="128"
               :formatter="formatTime">
           </el-table-column>
           <el-table-column
               prop="updateTime"
               label="更新时间"
-              width="122"
-              :formatter="formatTime">
-          </el-table-column>
-          <el-table-column
-              prop="deleteTime"
-              label="删除时间"
-              width="122"
+              width="128"
               :formatter="formatTime">
           </el-table-column>
           <el-table-column
@@ -68,22 +65,17 @@
                   type="danger"
                   icon="el-icon-delete"
                   circle
-                  v-if="scope.row.canDel && scope.row.status == 0"
+                  v-if="scope.row.canDel"
                   @click="underCategory(scope.row)">
-                </el-button>
-                <el-button
-                  size="mini"
-                  type="success"
-                  icon="el-icon-check"
-                  circle
-                  v-if="scope.row.status == 1"
-                  @click="reUseCategory(scope.row)">
                 </el-button>
               </template>
           </el-table-column>
         </el-table>
       </div>
       <div class="table-wrap">
+        <div class="action-btn-wrap">
+          <span @click="newTag">新增标签</span>
+        </div>
         <el-table
           :data="tagList"
           border
@@ -95,7 +87,7 @@
               show-overflow-tooltip
               min-width="120">
             <template slot-scope="scope">
-              <div class="title" @click="toList('tag', '111')">{{ scope.row.name }}</div>
+              <div class="title" @click="toList('tag', scope.row.tagId)">{{ scope.row.tagName }}</div>
             </template>
           </el-table-column>
           <el-table-column
@@ -106,19 +98,13 @@
           <el-table-column
               prop="createTime"
               label="创建时间"
-              width="122"
+              width="128"
               :formatter="formatTime">
           </el-table-column>
           <el-table-column
               prop="updateTime"
               label="更新时间"
-              width="122"
-              :formatter="formatTime">
-          </el-table-column>
-          <el-table-column
-              prop="deleteTime"
-              label="删除时间"
-              width="122"
+              width="128"
               :formatter="formatTime">
           </el-table-column>
           <el-table-column
@@ -160,6 +146,10 @@
 
 
 <script>
+import {
+  mapActions,
+  mapGetters
+} from 'vuex'
 import moment from 'moment'
 
 export default {
@@ -168,63 +158,25 @@ export default {
   },
   data () {
     return {
-      catetoryList: [
-        {
-          name: '默认分类',
-          createTime: '1531733525',
-          publishTime: '1531733525',
-          updateTime: '1531733525',
-          deleteTime: '',
-          status: 0,
-          canDel: 0,
-          articleCount: 10
-        },
-        {
-          name: '第一篇文章',
-          createTime: '1531733525',
-          publishTime: '1531733525',
-          updateTime: '1531733525',
-          deleteTime: '',
-          status: 0,
-          canDel: 1,
-          articleCount: 1
-        },
-        {
-          name: '删除了',
-          createTime: '1531733525',
-          publishTime: '1531733525',
-          updateTime: '1531733525',
-          deleteTime: '',
-          status: 1,
-          canDel: 1,
-          articleCount: 1
-        }
-      ],
-      tagList: [
-        {
-          name: '第一个标签',
-          createTime: '1531733525',
-          publishTime: '1531733525',
-          updateTime: '1531733525',
-          deleteTime: '',
-          status: 0,
-          articleCount: 10
-        },
-        {
-          name: '第二个标签',
-          createTime: '1531733525',
-          publishTime: '1531733525',
-          updateTime: '1531733525',
-          deleteTime: '',
-          status: 0,
-          articleCount: 1
-        }
-      ]
+      catetoryList: [],
+      tagList: []
     }
   },
   created() {
+    this.getCList()
+    this.getTList()
   },
   methods: {
+    ...mapActions([
+      'getCategoryList',
+      'getTagList',
+      'addCategory',
+      'addTag',
+      'modifyCategory',
+      'modifyTag',
+      'deleteCategory',
+      'deleteTag'
+    ]),
     formatTime(row, column, cellValue, index) {
       return cellValue ? moment(parseInt(cellValue) * 1000).format('YYYY-MM-DD HH:ss') : '-'
     },
@@ -232,47 +184,115 @@ export default {
       return value == '0' ? '使用中' : '已删除'
     },
     editTag(tag) {
-      this.showDialogWithInput(tag.name, (value)=> {
-        this.$message({
-          type: 'success',
-          message: '标签名: ' + value
-        })
+      this.showDialogWithInput(tag.tagName, (value)=> {
+        if (!value) {
+          this.toast('标签名不能为空', 'error')
+          return
+        }
+        if (value === tag.tagName) {
+          this.toast('标签名重复', 'error')
+          return
+        }
+        this.modifyTag({
+            tagId: tag.tagId,
+            tagName: value
+          })
+          .then((data) => {
+            this.toast('修改成功')
+            this.getTList()
+          })
+          .catch((err)=> {
+            this.toast(err.msg, 'error')
+          })
       }, '请输入新的标签名')
     },
     underTag(tag) {
-      this.showDialog('此操作会将改标签删除，并将所有文章移除改标签, 是否继续?', ()=> {
-        this.$message({
-          type: 'success',
-          message: '已删除'
-        })
+      this.showDialog('此操作会将该标签删除，并将所有文章移除该标签, 是否继续?', ()=> {
+        this.deleteTag(tag.tagId)
+          .then((data) => {
+            this.toast('已删除')
+            this.getTList()
+          })
+          .catch((err)=> {
+            this.toast(err.msg, 'error')
+          })
       })
     },
     toList (type, id) {
       this.$router.push({
         name: 'adminArticleList',
-        params: {
+        query: {
           type: type,
-          itemId: id
+          id: id
         }
       })
     },
     editCategory(category) {
-      this.showDialogWithInput(category.name, (value)=> {
-        this.$message({
-          type: 'success',
-          message: '分类名: ' + value
-        })
+      this.showDialogWithInput(category.categoryName, (value)=> {
+        if (!value) {
+          this.toast('分类名不能为空', 'error')
+          return
+        }
+        if (value === category.categoryName) {
+          this.toast('分类名重复', 'error')
+          return
+        }
+        this.modifyCategory({
+            categoryId: category.categoryId,
+            categoryName: value
+          })
+          .then((data) => {
+            this.toast('修改成功')
+            this.getCList()
+          })
+          .catch((err)=> {
+            this.toast(err.msg, 'error')
+          })
       }, '请输入新的分类名')
     },
     underCategory(category) {
-      this.showDialog('此操作会将改分类下的文章移到默认分类, 是否继续?', ()=> {
-        this.$message({
-          type: 'success',
-          message: '已删除'
-        })
+      this.showDialog('此操作会删除该分类，并将该分类下的文章移到默认分类, 是否继续?', ()=> {
+        this.deleteCategory(category.categoryId)
+          .then((data) => {
+            this.toast('已删除')
+            this.getCList()
+          })
+          .catch((err)=> {
+            this.toast(err.msg, 'error')
+          })
       })
     },
-    reUseCategory(category) {
+    newCategory() {
+      this.showDialogWithInput('新增分类', (value)=> {
+        if (!value) {
+          this.toast('分类名不能为空', 'error')
+          return
+        }
+        this.addCategory(value)
+          .then((data) => {
+            this.toast('添加成功')
+            this.getCList()
+          })
+          .catch((err)=> {
+            this.toast(err.msg, 'error')
+          })
+      }, '请输入新的分类名')
+    },
+    newTag() {
+      this.showDialogWithInput('新增标签', (value)=> {
+        if (!value) {
+          this.toast('标签名不能为空', 'error')
+          return
+        }
+        this.addTag(value)
+          .then((data) => {
+            this.toast('添加成功')
+            this.getTList()
+          })
+          .catch((err)=> {
+            this.toast(err.msg, 'error')
+          })
+      }, '请输入新的标签名')
     },
     showDialog(tip, next) {
       this.$confirm(tip, '提示', {
@@ -292,6 +312,31 @@ export default {
         }).then(({ value }) => {
           next(value)
         }).catch(()=>{})
+    },
+    toast(msg, type = 'success') {
+      this.$message({
+        showClose: true,
+        message: msg,
+        type: type
+      })
+    },
+    getCList() {
+      this.getCategoryList({all: true})
+        .then((data) => {
+          this.catetoryList = data.list
+        })
+        .catch(()=> {
+          this.catetoryList = []
+        })
+    },
+    getTList() {
+      this.getTagList({all: true})
+        .then((data) => {
+          this.tagList = data.list
+        })
+        .catch(()=> {
+          this.tagList = []
+        })
     }
   }
 }
@@ -327,6 +372,20 @@ export default {
       transition: all .3s
       @media (max-width: 1009px)
         width: calc(100% - 10px)
+      .action-btn-wrap
+        position: relative
+        background-color: #eeeeee
+        padding: 5px
+        > span
+          display: inline-block
+          padding: 8px 10px
+          font-size: 14px
+          cursor: pointer
+          background-color: $color-main
+          color: $color-white
+          border-radius: 8px
+          &:hover
+            background-color: lighten($color-main, 10%)
 
 
 .title

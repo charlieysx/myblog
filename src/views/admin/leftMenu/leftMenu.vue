@@ -11,7 +11,7 @@
       :collapse="collapseMenu">
       <el-menu-item index="/admin">
         <i class="iconfont icon-home"></i>
-        <span slot="title">仪表盘</span>
+        <span slot="title">首页</span>
       </el-menu-item>
       <el-submenu index="2">
         <template slot="title">
@@ -21,6 +21,7 @@
         <el-menu-item index="/admin/article/publish"><i class="iconfont icon-article-edit"></i>写文章</el-menu-item>
         <el-menu-item index="/admin/article/manage"><i class="iconfont icon-article-manage"></i>文章管理</el-menu-item>
         <el-menu-item index="/admin/article/drafts"><i class="iconfont icon-drafts"></i>草稿箱</el-menu-item>
+        <el-menu-item index="/admin/article/deleted"><i class="iconfont icon-deleted"></i>垃圾箱</el-menu-item>
       </el-submenu>
       <el-menu-item index="/admin/categories">
         <i class="iconfont icon-tag"></i>

@@ -3,11 +3,11 @@ import Vuex from 'vuex'
 
 import common from './modules/common'
 import admin from './modules/admin'
-import user from './modules/user'
+import blog from './modules/blog'
 
 Vue.use(Vuex)
 
-const modules = { common, admin, user }
+const modules = { common, admin, blog }
 
 const store = new Vuex.Store({
   modules

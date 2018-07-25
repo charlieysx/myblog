@@ -24,8 +24,10 @@ axios.defaults.headers.Accept = 'application/json'
 
 // Add a request interceptor
 axios.interceptors.request.use(function (config) {
-  if (getAccessToken()) {
-    config.headers['accessToken'] = getAccessToken()
+  if (config.url.indexOf('a/') === 0) {
+    if (getAccessToken()) {
+      config.headers['accessToken'] = getAccessToken()
+    }
   }
   return config
 }, function (error) {
@@ -109,5 +111,170 @@ export default {
    */
   modifyAboutMe (content) {
     return axios.post('a/webConfig/modifyAbout', Qs.stringify({aboutMeContent: content}))
+  },
+  /**
+   * 获取首页面板显示的统计信息
+   */
+  getHomeStatistics () {
+    return axios.get('a/statistics/home')
+  },
+  /**
+   * 获取系统日志
+   */
+  getSysLog (params) {
+    return axios.get('a/sys/log', {params: params})
+  },
+  /**
+   * 添加分类
+   */
+  addCategory (categoryName) {
+    return axios.post('a/category/add', Qs.stringify({categoryName: categoryName}))
+  },
+  /**
+   * 添加标签
+   */
+  addTag (tagName) {
+    return axios.post('a/tag/add', Qs.stringify({tagName: tagName}))
+  },
+  /**
+   * 修改分类
+   */
+  modifyCategory (params) {
+    return axios.post('a/category/modify', Qs.stringify(params))
+  },
+  /**
+   * 修改标签
+   */
+  modifyTag (params) {
+    return axios.post('a/tag/modify', Qs.stringify(params))
+  },
+  /**
+   * 删除分类
+   */
+  deleteCategory (categoryId) {
+    return axios.post('a/category/delete', Qs.stringify({categoryId: categoryId}))
+  },
+  /**
+   * 删除标签
+   */
+  deleteTag (tagId) {
+    return axios.post('a/tag/delete', Qs.stringify({tagId: tagId}))
+  },
+  /**
+   * 获取分类列表
+   */
+  getCategoryList (params) {
+    return axios.get('a/category/list', {
+      params: params
+    })
+  },
+  /**
+   * 获取标签列表
+   */
+  getTagList (params) {
+    return axios.get('a/tag/list', {
+      params: params
+    })
+  },
+  /**
+   * 获取分类
+   */
+  getCategory (categoryId) {
+    return axios.get('a/category', {
+      params: {
+        categoryId: categoryId
+      }
+    })
+  },
+  /**
+   * 获取标签
+   */
+  getTag (tagId) {
+    return axios.get('a/tag', {
+      params: {
+        tagId: tagId
+      }
+    })
+  },
+  /**
+   * 保存文章
+   */
+  saveArticle (params) {
+    return axios.post('a/article/save', Qs.stringify(params))
+  },
+  /**
+   * 发布文章
+   */
+  publishArticle (params) {
+    return axios.post('a/article/publish', Qs.stringify(params))
+  },
+  /**
+   * 编辑文章
+   */
+  modifyArticle (params) {
+    return axios.post('a/article/modify', Qs.stringify(params))
+  },
+  /**
+   * 删除文章
+   */
+  deleteArticle (articleId) {
+    return axios.post('a/article/delete', Qs.stringify({id: articleId}))
+  },
+  /**
+   * 获取文章信息
+   */
+  getArticle (articleId) {
+    return axios.get('a/article/info', {
+      params: {
+        id: articleId
+      }
+    })
+  },
+  /**
+   * 获取文章列表
+   */
+  getArticleList (params) {
+    return axios.get('a/article/list', {
+      params: params
+    })
+  },
+  /**
+   * 获取友链列表
+   */
+  getFriendsList (params) {
+    return axios.get('a/friends/list', {
+      params: params
+    })
+  },
+  /**
+   * 添加友链
+   */
+  addFriend (params) {
+    return axios.post('a/friends/add', Qs.stringify(params))
+  },
+  /**
+   * 编辑友链
+   */
+  modifyFriend (params) {
+    return axios.post('a/friends/modify', Qs.stringify(params))
+  },
+  /**
+   * 删除友链
+   */
+  deleteFriend (friendId) {
+    return axios.post('a/friends/delete', Qs.stringify({friendId: friendId}))
+  },
+  /**
+   * 获取友链类型列表
+   */
+  getFriendTypeList () {
+    return axios.get('a/friends/typeList')
+  },
+  // ---------------------------------------------以下是博客页面使用的接口---------------------------------------------,
+  /**
+   * 获取 关于我 页面
+   */
+  getBlogAboutMe () {
+    return axios.get('w/getAbout')
   }
 }

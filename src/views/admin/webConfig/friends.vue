@@ -22,7 +22,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="type"
+          prop="typeName"
           label="分类"
           show-overflow-tooltip
           width="120">
@@ -30,25 +30,13 @@
         <el-table-column
           prop="createTime"
           label="创建时间"
-          width="122"
-          :formatter="formatTime">
-        </el-table-column>
-        <el-table-column
-          prop="publishTime"
-          label="发布时间"
-          width="122"
+          width="128"
           :formatter="formatTime">
         </el-table-column>
         <el-table-column
           prop="updateTime"
           label="更新时间"
-          width="122"
-          :formatter="formatTime">
-        </el-table-column>
-        <el-table-column
-          prop="deleteTime"
-          label="删除时间"
-          width="122"
+          width="128"
           :formatter="formatTime">
         </el-table-column>
         <el-table-column
@@ -91,7 +79,7 @@
         <el-pagination
           background
           layout="prev, pager, next"
-          :page-size="params.pageSize"
+          :page-size="pageSize"
           @current-change="pageChange"
           :current-page="currentPage"
           :total="total">
@@ -99,32 +87,34 @@
       </div>
       <!-- 分页 结束 -->
     </div>
-    <el-dialog title="编辑" class="edit-dialog" :visible.sync="dialogFormVisible">
+    <el-dialog :title="tip" class="edit-dialog" :visible.sync="dialogFormVisible">
       <el-input
         class="input-title"
         size="mini"
+        v-model="friend.name"
         placeholder="请输入友链名称">
       </el-input>
       <el-input
         class="input-title"
         size="mini"
+        v-model="friend.url"
         placeholder="请输入友链链接">
       </el-input>
       <div class="label-wrap">
         分类：
         <el-select
-          v-model="categoryValue"
+          v-model="typeValue"
           filterable
           allow-create
           default-first-option
           size="mini"
           placeholder="请选择文章分类">
           <el-option
-            v-for="item in options5"
+            v-for="item in typeList"
             size="mini"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
+            :key="item.id"
+            :label="item.name"
+            :value="item.name">
           </el-option>
         </el-select>
       </div>
@@ -137,6 +127,11 @@
 </template>
 
 <script>
+import {
+  mapActions,
+  mapGetters
+} from 'vuex'
+
 import moment from 'moment'
 import { scroll } from 'MIXINS/scroll'
 
@@ -147,73 +142,83 @@ export default {
   mixins: [scroll],
   data () {
     return {
-      friendsList: [
-        {
-          name: '友链1',
-          url: '',
-          createTime: '1531733525',
-          publishTime: '1531733525',
-          updateTime: '1531733525',
-          deleteTime: '',
-          status: 0,
-          type: 'test'
-        },
-        {
-          name: '友链2',
-          url: '',
-          createTime: '1531733525',
-          publishTime: '1531733525',
-          updateTime: '1531733525',
-          deleteTime: '',
-          status: 0,
-          type: 'testtest'
-        }
-      ],
-      params: {
-        page: 0,
-        pageSize: 20
-      },
+      friendsList: [],
+      page: 0,
+      pageSize: 15,
       currentPage: 0,
       total: 0,
       dialogFormVisible: false,
-      options5: [{
-        value: 'HTML',
-        label: 'HTML'
-      }, {
-        value: 'CSS',
-        label: 'CSS'
-      }, {
-        value: 'JavaScript',
-        label: 'JavaScript'
-      }],
-      categoryValue: ''
+      typeList: [],
+      typeValue: '',
+      tip: '新增',
+      friend: {}
     }
   },
   created() {
-    this.total = this.friendsList.length
+    this.page = 0
+    this.getList()
   },
   methods: {
+    ...mapActions([
+      'getFriendsList',
+      'deleteFriend',
+      'getFriendTypeList',
+      'addFriend',
+      'modifyFriend'
+    ]),
     formatTime(row, column, cellValue, index) {
-      return cellValue ? moment(parseInt(cellValue) * 1000).format('YYYY-MM-DD HH:ss') : '-'
+      return cellValue ? moment(parseInt(cellValue) * 1000).format('YYYY-MM-DD HH:mm') : '-'
     },
     formatStatus(value) {
       return value == '0' ? '已发布' : '已删除'
     },
-    edit(article) {
+    edit(friend) {
+      this.tip = '编辑'
+      this.getTypeList()
+      this.friend = JSON.parse(JSON.stringify(friend))
+      this.typeValue = friend.typeName
       this.dialogFormVisible = true
     },
-    under(article) {
-      this.showDialog('此操作会将该友链标记为删除，不再显示, 是否继续?', ()=> {
-        this.$message({
-          type: 'success',
-          message: '已删除'
-        })
+    under(friend) {
+      this.showDialog('此操作会将该友链标删除，不能恢复, 是否继续?', ()=> {
+        this.deleteFriend(friend.friendId)
+          .then((data) => {
+            this.toast('已删除')
+            this.page = 0
+            this.getList()
+          })
+          .catch((err)=> {
+            this.toast(err.msg, 'error')
+          })
       })
     },
     pageChange(currentPage) {
       this.scrollToTop()
-      this.params.page = currentPage - 1
+      this.page = currentPage - 1
       this.currentPage = currentPage
+      this.getList()
+    },
+    getList() {
+      this.getFriendsList({
+          page: this.page,
+          pageSize: this.pageSize
+        })
+        .then((data) => {
+          this.total = data.count
+          this.friendsList = data.list
+        })
+        .catch(()=> {
+          this.friendsList = []
+        })
+    },
+    getTypeList() {
+      this.getFriendTypeList()
+        .then((data) => {
+          this.typeList = data
+        })
+        .catch(()=> {
+          this.typeList = []
+        })
     },
     showDialog(tip, next) {
       this.$confirm(tip, '提示', {
@@ -223,14 +228,73 @@ export default {
           center: true
         }).then(() => {
           next()
-        }).catch(()=>{})
+        }).catch(()=>{
+          this.friend = {}
+          this.typeValue = ''
+        })
     },
     commit() {
-      this.dialogFormVisible = false
-      //
+      if (!this.friend.name) {
+        this.toast('请输入友链名称', 'error')
+        return
+      }
+      if (!this.friend.url) {
+        this.toast('请输入友链链接', 'error')
+        return
+      }
+      if (!this.typeValue) {
+        this.toast('请选择友链类型', 'error')
+        return
+      }
+      let params = {
+        name: this.friend.name,
+        url: this.friend.url
+      }
+      let type = this.typeList.find(item => item.name === this.typeValue)
+      if (type) {
+        params.typeId = type.id
+      } else {
+        params.typeName = this.typeValue
+      }
+
+      if (this.friend.friendId) {
+        params.friendId = this.friend.friendId
+        this.modifyFriend(params)
+          .then((data) => {
+            this.toast('已修改')
+            this.page = 0
+            this.getList()
+            this.dialogFormVisible = false
+          })
+          .catch((err)=> {
+            this.toast(err.msg, 'error')
+          })
+      } else {
+        this.addFriend(params)
+          .then((data) => {
+            this.toast('已添加')
+            this.page = 0
+            this.getList()
+            this.dialogFormVisible = false
+          })
+          .catch((err)=> {
+            this.toast(err.msg, 'error')
+          })
+      }
     },
     add() {
+      this.tip = '新增'
+      this.getTypeList()
+      this.friend = {}
+      this.typeValue = ''
       this.dialogFormVisible = true
+    },
+    toast(msg, type = 'success') {
+      this.$message({
+        showClose: true,
+        message: msg,
+        type: type
+      })
     }
   }
 }
@@ -273,7 +337,7 @@ export default {
     animation: show .8s
     .pagination
       width: 100%
-      margin-top: 20px
+      margin: 20px 0
       display: flex
       justify-content: center
 

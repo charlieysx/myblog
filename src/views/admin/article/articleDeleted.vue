@@ -1,5 +1,5 @@
 <template>
-  <div id="article-manage">
+  <div id="article-deleted">
     <p>文章管理（共计：{{ total }}篇）</p>
     <div class="article-table-wrap">
       <el-table
@@ -27,22 +27,16 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="categoryName"
-          label="分类"
-          show-overflow-tooltip
-          width="120">
-        </el-table-column>
-        <el-table-column
-          prop="pageview"
-          label="阅读量"
-          width="60">
-        </el-table-column>
-        <el-table-column
           label="加密"
           width="45">
           <template slot-scope="scope">
             {{ scope.row.isEncrypt === '0' ? '否' : '是' }}
           </template>
+        </el-table-column>
+        <el-table-column
+          prop="pageview"
+          label="阅读量"
+          width="60">
         </el-table-column>
         <el-table-column
           prop="createTime"
@@ -59,6 +53,12 @@
         <el-table-column
           prop="updateTime"
           label="更新时间"
+          width="128"
+          :formatter="formatTime">
+        </el-table-column>
+        <el-table-column
+          prop="deleteTime"
+          label="删除时间"
           width="128"
           :formatter="formatTime">
         </el-table-column>
@@ -122,14 +122,13 @@ import moment from 'moment'
 import { scroll } from 'MIXINS/scroll'
 
 export default {
-  name: 'article-manage',
+  name: 'article-deleted',
   components: {
   },
   mixins: [scroll],
   data () {
     return {
-      articleList: [
-      ],
+      articleList: [],
       page: 0,
       pageSize: 15,
       currentPage: 0,
@@ -149,7 +148,7 @@ export default {
       return cellValue ? moment(parseInt(cellValue) * 1000).format('YYYY-MM-DD HH:mm') : '-'
     },
     formatStatus(value) {
-      return value == '0' ? '已发布' : '-'
+      return value == '1' ? '已删除' : '-'
     },
     edit(article) {
       this.$router.push({
@@ -160,7 +159,7 @@ export default {
       })
     },
     under(article) {
-      this.showDialog('此操作会将该文章标记为删除，不再显示, 是否继续?', ()=> {
+      this.showDialog('此操作会将该文章彻底删除，不能恢复, 是否继续?', ()=> {
         this.deleteArticle(article.id)
           .then((data) => {
             this.$message({
@@ -189,7 +188,7 @@ export default {
     getList() {
       this.getArticleList({
           by: 'status',
-          status: 0,
+          status: 1,
           page: this.page,
           pageSize: this.pageSize
         })
@@ -228,7 +227,7 @@ export default {
 
 <style lang="stylus" scoped>
 @import '~STYLUS/color.styl'
-#article-manage
+#article-deleted
   position: relative
   padding-top: 52px
   > p
@@ -246,7 +245,7 @@ export default {
     animation: show .8s
     .pagination
       width: 100%
-      margin: 20px 0
+      margin-top: 20px
       display: flex
       justify-content: center
 

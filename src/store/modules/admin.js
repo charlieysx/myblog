@@ -131,6 +131,282 @@ const actions = {
       .catch((error) => {
         return Promise.reject(error)
       })
+  },
+  /**
+   * 获取首页面板显示的统计信息
+   */
+  getHomeStatistics (store) {
+    return api.getHomeStatistics()
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+  /**
+   * 获取系统日志
+   */
+  getSysLog (store, params) {
+    return api.getSysLog(params)
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+  /**
+   * 添加分类
+   */
+  addCategory (store, categoryName) {
+    return api.addCategory(categoryName)
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+  /**
+   * 添加标签
+   */
+  addTag (store, tagName) {
+    return api.addTag(tagName)
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+  /**
+   * 修改分类
+   */
+  modifyCategory (store, params) {
+    return api.modifyCategory(params)
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+  /**
+   * 修改标签
+   */
+  modifyTag (store, params) {
+    return api.modifyTag(params)
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+  /**
+   * 删除分类
+   */
+  deleteCategory (store, categoryId) {
+    return api.deleteCategory(categoryId)
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+  /**
+   * 删除标签
+   */
+  deleteTag (store, tagId) {
+    return api.deleteTag(tagId)
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+  /**
+   * 获取分类列表
+   */
+  getCategoryList (store, params) {
+    return api.getCategoryList(params)
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+  /**
+   * 获取标签列表
+   */
+  getTagList (store, params) {
+    return api.getTagList(params)
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+  /**
+   * 获取分类
+   */
+  getCategory (store, categoryId) {
+    return api.getCategory(categoryId)
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+  /**
+   * 获取标签
+   */
+  getTag (store, tagId) {
+    return api.getTag(tagId)
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+  /**
+   * 保存文章
+   */
+  saveArticle (store, params) {
+    return api.saveArticle(params)
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+  /**
+   * 发布文章
+   */
+  publishArticle (store, params) {
+    return api.publishArticle(params)
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+  /**
+   * 编辑文章
+   */
+  modifyArticle (store, params) {
+    return api.modifyArticle(params)
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+  /**
+   * 删除文章
+   */
+  deleteArticle (store, articleId) {
+    return api.deleteArticle(articleId)
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+  /**
+   * 获取文章信息
+   */
+  getArticle (store, articleId) {
+    return api.getArticle(articleId)
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+  /**
+   * 获取文章列表
+   */
+  getArticleList (store, params) {
+    return api.getArticleList(params)
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+  /**
+   * 获取友链列表
+   */
+  getFriendsList (store, params) {
+    return api.getFriendsList(params)
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+  /**
+   * 添加友链
+   */
+  addFriend (store, params) {
+    return api.addFriend(params)
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+  /**
+   * 编辑友链
+   */
+  modifyFriend (store, params) {
+    return api.modifyFriend(params)
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+  /**
+   * 删除友链
+   */
+  deleteFriend (store, friendId) {
+    return api.deleteFriend(friendId)
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+  /**
+   * 获取友链类型列表
+   */
+  getFriendTypeList (store) {
+    return api.getFriendTypeList()
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
   }
 }
 

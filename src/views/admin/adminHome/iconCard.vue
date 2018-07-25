@@ -2,7 +2,8 @@
   <div id="icon-card"
     :style="{
       backgroundColor: backgroundColor
-    }">
+    }"
+    @click="$router.push({name: to})">
       <span class="icon"><i class="iconfont" :class="icon"></i></span>
       <span class="content">
         {{ topMessage }}
@@ -18,7 +19,7 @@
 
 export default {
   name: 'icon-card',
-  props: ['backgroundColor', 'icon', 'topMessage', 'middleMessage', 'bottomMessage'],
+  props: ['backgroundColor', 'icon', 'topMessage', 'middleMessage', 'bottomMessage', 'to'],
   components: {
   },
   data () {

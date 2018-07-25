@@ -3,13 +3,14 @@
     <div class="header-wrap">
       编辑文章
       <div class="action-btn-wrap">
-        <span>发布</span>
-        <span>保存</span>
+        <span @click="publish" v-if="canPublish">发布</span>
+        <span @click="modify" v-if="canModify">提交</span>
+        <span @click="save" v-if="canSave">保存</span>
       </div>
     </div>
     <div class="edit-wrap">
       <mavon-editor class="editor"
-        v-model="value"
+        v-model="article.content"
         ref=md
         @imgAdd="$imgAdd"
         :boxShadow="false"
@@ -48,7 +49,7 @@
       <div class="input-wrap">
         <div class="fix-input-wrap">
           <UP class="upload-cover" 
-            :default-img="params.imageUrl"
+            :default-img="article.cover"
             ratio="2"
             WHRatio="2"
             maxWidth="300"
@@ -58,6 +59,7 @@
           <el-input
             class="input-title"
             size="mini"
+            v-model="article.title"
             placeholder="请输入文章标题">
           </el-input>
           <el-input
@@ -67,34 +69,35 @@
             :rows="6"
             :maxlength="150"
             resize="none"
+            v-model="article.subMessage"
             placeholder="请输入文章简介">
           </el-input>
           <div class="label-wrap">
             阅读加密：
-            <el-checkbox size="mini"></el-checkbox>
+            <el-checkbox size="mini" v-model="isEncrypt"></el-checkbox>
           </div>
           <div class="label-wrap">
             分类：
             <el-select
-              v-model="categoryValue"
+              v-model="category"
               filterable
               allow-create
               default-first-option
               size="mini"
               placeholder="请选择文章分类">
               <el-option
-                v-for="item in options5"
+                v-for="item in categoryList"
                 size="mini"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
+                :key="item.categoryId"
+                :label="item.categoryName"
+                :value="item.categoryName">
               </el-option>
             </el-select>
           </div>
           <div class="label-wrap">
             标签：
             <el-select
-              v-model="tagValue"
+              v-model="tags"
               filterable
               allow-create
               default-first-option
@@ -102,11 +105,11 @@
               multiple
               placeholder="请选择文章标签">
               <el-option
-                v-for="item in options5"
+                v-for="item in tagList"
                 size="mini"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
+                :key="item.tagId"
+                :label="item.tagName"
+                :value="item.tagName">
               </el-option>
             </el-select>
           </div>
@@ -134,35 +137,92 @@ export default {
   },
   data () {
     return {
-      value: '',
-      params: {
-        title: '',
-        info: '',
-        imageUrl: '',
+      canPublish: false,
+      canModify: false,
+      canSave: false,
+      isEncrypt: false,
+      article: {
         content: '',
-        from: ''
+        title: '',
+        cover: '',
+        subMessage: '',
+        isEncrypt: '0'
       },
-      options5: [{
-        value: 'HTML',
-        label: 'HTML'
-      }, {
-        value: 'CSS',
-        label: 'CSS'
-      }, {
-        value: 'JavaScript',
-        label: 'JavaScript'
-      }],
-      categoryValue: '',
-      tagValue: []
+      category: '',
+      tags: [],
+      categoryList: [],
+      tagList: []
     }
   },
   created() {
+    this.initData()
+  },
+  watch: {
+    $route(route) {
+      this.initData()
+    }
   },
   methods: {
     ...mapActions([
       'getQiniuToken',
-      'uploadToQiniu'
+      'uploadToQiniu',
+      'getArticle',
+      'getCategoryList',
+      'getTagList',
+      'saveArticle',
+      'publishArticle',
+      'modifyArticle'
     ]),
+    initData() {
+      let id = this.$route.query.id
+      this.canPublish = false,
+      this.canModify = false,
+      this.canSave = false,
+      this.isEncrypt = false,
+      this.article = {
+        content: '',
+        title: '',
+        cover: '',
+        subMessage: '',
+        isEncrypt: '0'
+      },
+      this.category = '',
+      this.tags = []
+      if (id) {
+        this.getArticle(id)
+          .then((data) => {
+            if (data.article.status === '0') {
+              this.canModify = true
+            } else {
+              this.canPublish = true
+              this.canSave = true
+            }
+            this.article = data.article
+            this.isEncrypt = this.article.isEncrypt === '1'
+            this.init(data.category, data.tags)
+          })
+          .catch(()=> {})
+      } else {
+        this.canPublish = true
+        this.canSave = true
+      }
+      this.getCategoryList({all: true})
+        .then((data) => {
+          this.categoryList = data.list
+        })
+        .catch(()=> {})
+      this.getTagList({all: true})
+        .then((data) => {
+          this.tagList = data.list
+        })
+        .catch(()=> {})
+    },
+    init(oldTategory, oldTags) {
+      this.category = oldTategory.name
+      oldTags.forEach(item => {
+        this.tags.push(item.name)
+      })
+    },
     $imgAdd(pos, $file) {
       this.getQiniuToken(true)
         .then((data) => {
@@ -172,27 +232,120 @@ export default {
           this.startUploadImg(formParams, pos)
         })
         .catch((err) => {
-          this.error(err.msg)
+          this.toast(err.msg, 'error')
         })
     },
-    startUploadImg (formParams, pos) {
+    startUploadImg(formParams, pos) {
       this.uploadToQiniu(formParams)
         .then((qiniuData) => {
           this.$refs.md.$img2Url(pos, qiniuData.imgUrl)
         })
         .catch((err) => {
-          this.error('上传失败')
+          this.toast('上传失败', 'error')
         })
     },
-    error (err) {
-      this.message = this.$message({
-        showClose: true,
-        message: err,
-        type: 'error'
-      })
+    uploadSuccess(url) {
+      this.article.cover = url
     },
-    uploadSuccess (url) {
-      this.params.imageUrl = url
+    getCategory() {
+      let category = this.categoryList.find(item => item.categoryName === this.category)
+      if (category) {
+        return {id: category.categoryId}
+      } else {
+        return {name: this.category}
+      }
+    },
+    getTags() {
+      let tags = []
+      this.tags.forEach(value => {
+        let tag = this.tagList.find(item => item.tagName === value)
+        if (tag) {
+          tags.push({id: tag.tagId})
+        } else {
+          tags.push({name: value})
+        }
+      })
+      return tags
+    },
+    getParams() {
+      let params = {
+        title: this.article.title,
+        cover: this.article.cover,
+        subMessage: this.article.subMessage,
+        isEncrypt: this.isEncrypt ? '1' : '0',
+        content: this.article.content
+      }
+      params.category = this.getCategory()
+      params.tags = this.getTags()
+      if (this.article.id) {
+        params.id = this.article.id
+      }
+      return params
+    },
+    publish() {
+      let params = this.getParams()
+      if (!params.title) {
+          this.toast('文章标题不能为空', 'error')
+          return
+      }
+      if (!params.subMessage) {
+          this.toast('文章简介不能为空', 'error')
+          return
+      }
+      if (!params.content) {
+          this.toast('文章内容不能为空', 'error')
+          return
+      }
+      this.publishArticle(params)
+        .then((data) => {
+          this.toast('已发布')
+        })
+        .catch((err) => {
+          this.toast(err.msg, 'error')
+        })
+    },
+    save() {
+      let params = this.getParams()
+      this.saveArticle(params)
+        .then((data) => {
+          this.toast('已保存')
+        })
+        .catch((err) => {
+          this.toast(err.msg, 'error')
+        })
+    },
+    modify() {
+      let params = this.getParams()
+      if (!params.id) {
+          this.toast('文章id不能为空', 'error')
+          return
+      }
+      if (!params.title) {
+          this.toast('文章标题不能为空', 'error')
+          return
+      }
+      if (!params.subMessage) {
+          this.toast('文章简介不能为空', 'error')
+          return
+      }
+      if (!params.content) {
+          this.toast('文章内容不能为空', 'error')
+          return
+      }
+      this.modifyArticle(params)
+        .then((data) => {
+          this.toast('已修改')
+        })
+        .catch((err) => {
+          this.toast(err.msg, 'error')
+        })
+    },
+    toast(msg, type = 'success') {
+      this.$message({
+        showClose: true,
+        message: msg,
+        type: type
+      })
     }
   }
 }

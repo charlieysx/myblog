@@ -2,99 +2,85 @@
   <div id="article-preview">
     <p><span @click="$router.go(-1)" style="margin-right: 20px;cursor: pointer;font-size: 14px"><i class="el-icon-arrow-left"></i>返回</span>文章预览</p>
     <div class="article-preview-wrap">
-      <div class="article-warp">
+      <div class="article-warp" v-if="article.id">
         <div class="article-message">
           <p class="article-title">
             {{ article.title }}
           </p>
-          <div class="article-info">
-            <i class="iconfont icon-calendar"></i>
-            <span class="info-item">发表于 {{ article.publishTime }}</span>
+          <div class="article-info" v-if="article.status === '0'">
+            <span class="info">
+              <i class="iconfont icon-calendar"></i>
+              <span class="info-item">发表于 {{ article.publishTime | time }}</span>
+            </span>
             <span class="line">|</span>
-            <i class="iconfont icon-folder"></i>
-            <span class="info-item">分类于 <span class="classify">{{ article.classify.name }}</span></span>
+            <span class="info">
+              <i class="iconfont icon-folder"></i>
+              <span class="info-item">分类于 
+                <span class="classify" @click="$router.push({name: 'adminArticleList', query:{type: 'category', id: category.id}})">
+                  {{ category.name }}
+                </span>
+              </span>
+            </span>
           </div>
           <div class="article-sub-message">{{ article.subMessage }}</div>
         </div>
-        <md-preview :contents="article.contents" />
+        <md-preview :contents="article.content" />
         <div class="tags">
           <div
-            v-for="(tag, index) in article.tags"
+            v-for="(tag, index) in tags"
             :key="index"
-            class="tag">
+            class="tag"
+             @click="$router.push({name: 'adminArticleList', query:{type: 'tag', id: tag.id}})">
             <i class="iconfont icon-tag"></i>
             {{ tag.name }}
           </div>
         </div>
       </div>
+      <no-data
+        v-if="!article.id"
+        text="没有找到该文章~"/>
     </div>
   </div>
 </template>
 
 <script>
+import {
+  mapActions,
+  mapGetters
+} from 'vuex'
 
 import mdPreview from 'COMMON/mdPreview/mdPreview'
+import noData from 'COMMON/noData/noData'
 
 export default {
   name: 'article-preview',
   components: {
-    mdPreview
+    mdPreview,
+    noData
   },
   data () {
     return {
-      article: {
-        title: '用Vue实现海报排版设计功能',
-        publishTime: '2018-07-08',
-        classify: {
-          id: 0,
-          name: 'vue'
-        },
-        subMessage: '这是文章简介',
-        tags: [
-          {
-            name: 'vue'
-          },
-          {
-            name: '设计'
-          }
-        ],
-        contents: `### 一、前言
-
->本来想做个微信小程序，实现一键生成海报图片（可替换文字、图片，不需要用户排版），所以后台管理系统上需要实现一个制作海报模板的功能（“简单版ps”），写了挺长时间的，逻辑太多了，现在写得差不多了，但是由于各种事情项目一直没有进展，估计是没能做完了，所以把这个“简单版ps”开源出来。
-
-### 二、界面
-
-![](https://user-gold-cdn.xitu.io/2018/6/13/163f7dea6cd6e2af?w=1919&h=958&f=jpeg&s=86423)
-![](https://user-gold-cdn.xitu.io/2018/6/13/163f7dee7b1c62f6?w=1919&h=959&f=jpeg&s=273501)
-
-### 三、动态效果图
-
-![](https://user-gold-cdn.xitu.io/2018/6/13/163f7e2439b9e35b?w=1220&h=832&f=gif&s=4549591)
-
-### 四、测试代码高亮
-
-\`\`\`javascript
-import Hljs from 'highlight.js'
-import 'highlight.js/styles/googlecode.css'
-
-let Highlight = {}
-Highlight.install = function (Vue, options) {
-  Vue.directive('highlight', function (el) {
-    let blocks = el.querySelectorAll('pre code')
-    blocks.forEach((block) => {
-      Hljs.highlightBlock(block)
-    })
-  })
-}
-export default Highlight
-\`\`\`
-`
-      }
+      article: {},
+      category: {},
+      tags: []
     }
   },
   created() {
+    let id = this.$route.query.id
+    if (id) {
+      this.getArticle(id)
+        .then((data) => {
+          this.article = data.article
+          this.category = data.category
+          this.tags = data.tags
+        })
+        .catch(()=> {})
+    }
   },
   methods: {
+    ...mapActions([
+      'getArticle'
+    ])
   }
 }
 </script>
@@ -148,21 +134,28 @@ export default Highlight
           color: #999999
           display: flex
           flex-direction: row
-          justify-content: flex-start
+          justify-content: center
           align-items: flex-end
+          flex-wrap: wrap
           .line
-            margin: 0 8px
-          .info-item
-            .classify
-              color: #666666
-              border-bottom: 1px solid $color-main
-              cursor: pointer
-              -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
-          .iconfont
-            font-size: 14px
-            @media (max-width: 768px)
-              font-size: 12px
-            margin-right: 5px
+            margin-bottom: 4px
+            @media (max-width: 460px)
+              display: none
+          .info
+            margin-bottom: 4px
+            margin-left: 4px
+            margin-right: 4px
+            .info-item
+              .classify
+                color: #666666
+                border-bottom: 1px solid $color-main
+                cursor: pointer
+                -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+            .iconfont
+              font-size: 14px
+              @media (max-width: 768px)
+                font-size: 12px
+              margin-right: 5px
         .article-sub-message
           font-size: 14px
           color: #999999

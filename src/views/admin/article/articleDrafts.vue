@@ -13,7 +13,7 @@
           show-overflow-tooltip
           min-width="200">
           <template slot-scope="scope">
-            <div class="article-title" @click="preview(scope.row)">{{ scope.row.title }}</div>
+            <div class="article-title" @click="preview(scope.row)">{{ scope.row.title || '未填写标题' }}</div>
           </template>
         </el-table-column>
         <el-table-column
@@ -28,28 +28,22 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="category"
-          label="分类"
-          show-overflow-tooltip
-          :formatter="formatText"
-          width="120">
+          label="加密"
+          width="45">
+          <template slot-scope="scope">
+            {{ scope.row.isEncrypt === '0' ? '否' : '是' }}
+          </template>
         </el-table-column>
         <el-table-column
           prop="createTime"
           label="创建时间"
-          width="122"
+          width="128"
           :formatter="formatTime">
         </el-table-column>
         <el-table-column
           prop="updateTime"
           label="更新时间"
-          width="122"
-          :formatter="formatTime">
-        </el-table-column>
-        <el-table-column
-          prop="deleteTime"
-          label="删除时间"
-          width="122"
+          width="128"
           :formatter="formatTime">
         </el-table-column>
         <el-table-column
@@ -91,7 +85,7 @@
         <el-pagination
           background
           layout="prev, pager, next"
-          :page-size="params.pageSize"
+          :page-size="pageSize"
           @current-change="pageChange"
           :current-page="currentPage"
           :total="total">
@@ -103,6 +97,11 @@
 </template>
 
 <script>
+import {
+  mapActions,
+  mapGetters
+} from 'vuex'
+
 import moment from 'moment'
 import { scroll } from 'MIXINS/scroll'
 
@@ -113,43 +112,27 @@ export default {
   mixins: [scroll],
   data () {
     return {
-      articleList: [
-        {
-          title: '第一篇文章第一篇文章第一篇文章',
-          createTime: '1531733525',
-          updateTime: '1531733525',
-          deleteTime: '',
-          status: 2,
-          category: 'test',
-          cover: 'http://img1.imgtn.bdimg.com/it/u=3249428919,1915053740&fm=200&gp=0.jpg'
-        },
-        {
-          title: '第一篇文章',
-          createTime: '1531733525',
-          updateTime: '1531733525',
-          deleteTime: '',
-          status: 2,
-          category: '',
-          cover: 'http://img1.imgtn.bdimg.com/it/u=3249428919,1915053740&fm=200&gp=0.jpg'
-        }
-      ],
-      params: {
-        page: 0,
-        pageSize: 20
-      },
+      articleList: [],
+      page: 0,
+      pageSize: 15,
       currentPage: 0,
       total: 0
     }
   },
   created() {
-    this.total = this.articleList.length
+    this.page = 0
+    this.getList()
   },
   methods: {
+    ...mapActions([
+      'getArticleList',
+      'deleteArticle'
+    ]),
     formatTime (row, column, cellValue, index) {
-      return cellValue ? moment(parseInt(cellValue) * 1000).format('YYYY-MM-DD HH:ss') : '-'
+      return cellValue ? moment(parseInt(cellValue) * 1000).format('YYYY-MM-DD HH:mm') : '-'
     },
     formatStatus (value) {
-      return value == '1' ? '已删除' : '待发布'
+      return value == '2' ? '待发布' : '-'
     },
     formatText (row, column, cellValue, inde) {
       return cellValue ? cellValue : '-'
@@ -157,23 +140,52 @@ export default {
     edit (article) {
       this.$router.push({
         name: 'editArticle',
-        params: {
-          articleId: '1'
+        query: {
+          id: article.id
         }
       })
     },
     under (article) {
       this.showDialog('此操作将彻底删除该文章，不可恢复, 是否继续?', ()=> {
-        this.$message({
-          type: 'success',
-          message: '已删除'
-        })
+        this.deleteArticle(article.id)
+          .then((data) => {
+            this.$message({
+              showClose: true,
+              message: '已删除',
+              type: 'success'
+            })
+            this.page = 0
+            this.getList()
+          })
+          .catch((err)=> {
+            this.$message({
+              showClose: true,
+              message: err.msg,
+              type: 'error'
+            })
+          })
       })
     },
     pageChange (currentPage) {
       this.scrollToTop()
-      this.params.page = currentPage - 1
+      this.page = currentPage - 1
       this.currentPage = currentPage
+      this.getList()
+    },
+    getList() {
+      this.getArticleList({
+          by: 'status',
+          status: 2,
+          page: this.page,
+          pageSize: this.pageSize
+        })
+        .then((data) => {
+          this.total = data.count
+          this.articleList = data.list
+        })
+        .catch(()=> {
+          this.articleList = []
+        })
     },
     previewImg(e) {
       this.$photoPreview.open(0, [{src: e.target.src, w: 41, h: 31, target: e.target}])
@@ -181,8 +193,8 @@ export default {
     preview (article) {
       this.$router.push({
         name: 'articlePreview',
-        params: {
-          articleId: '1'
+        query: {
+          id: article.id
         }
       })
     },
@@ -221,7 +233,7 @@ export default {
     animation: show .8s
     .pagination
       width: 100%
-      margin-top: 20px
+      margin: 20px 0
       display: flex
       display: -webkit-flex
       justify-content: center

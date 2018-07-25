@@ -40,25 +40,19 @@
         <el-table-column
           prop="createTime"
           label="创建时间"
-          width="122"
+          width="128"
           :formatter="formatTime">
         </el-table-column>
         <el-table-column
           prop="publishTime"
           label="发布时间"
-          width="122"
+          width="128"
           :formatter="formatTime">
         </el-table-column>
         <el-table-column
           prop="updateTime"
           label="更新时间"
-          width="122"
-          :formatter="formatTime">
-        </el-table-column>
-        <el-table-column
-          prop="deleteTime"
-          label="删除时间"
-          width="122"
+          width="128"
           :formatter="formatTime">
         </el-table-column>
         <el-table-column
@@ -101,7 +95,7 @@
         <el-pagination
           background
           layout="prev, pager, next"
-          :page-size="params.pageSize"
+          :page-size="pageSize"
           @current-change="pageChange"
           :current-page="currentPage"
           :total="total">
@@ -113,6 +107,11 @@
 </template>
 
 <script>
+import {
+  mapActions,
+  mapGetters
+} from 'vuex'
+
 import moment from 'moment'
 import { scroll } from 'MIXINS/scroll'
 
@@ -124,69 +123,101 @@ export default {
   data () {
     return {
       articleList: [
-        {
-          title: '第一篇文章第一篇文章第一篇文章',
-          createTime: '1531733525',
-          publishTime: '1531733525',
-          updateTime: '1531733525',
-          deleteTime: '',
-          status: 0,
-          pageview: 10,
-          category: 'test',
-          cover: 'http://img1.imgtn.bdimg.com/it/u=3249428919,1915053740&fm=200&gp=0.jpg'
-        },
-        {
-          title: '第一篇文章',
-          createTime: '1531733525',
-          publishTime: '1531733525',
-          updateTime: '1531733525',
-          deleteTime: '',
-          status: 0,
-          pageview: 100,
-          category: 'test',
-          cover: 'http://img1.imgtn.bdimg.com/it/u=3249428919,1915053740&fm=200&gp=0.jpg'
-        }
       ],
-      params: {
-        page: 0,
-        pageSize: 20
-      },
+      page: 0,
+      pageSize: 15,
       currentPage: 0,
       total: 0,
-      type: 'tag',
-      name: '数据结构与算法'
+      type: 'category',
+      name: '',
+      id: ''
     }
   },
   created() {
-    this.total = this.articleList.length
+    this.type = this.$route.query.type
+    if (this.type !== 'category' && this.type !== 'tag') {
+      this.type = 'category'
+    }
+    this.id = this.$route.query.id
+    if (this.type === 'category') {
+      this.getCategory(this.id)
+        .then((data) => {
+          this.name = data.name
+        })
+        .catch(()=> {})
+    } else if (this.type === 'tag') {
+      this.getTag(this.id)
+        .then((data) => {
+          this.name = data.name
+        })
+        .catch(()=> {})
+    }
+    this.page = 0
+    this.getList()
   },
   methods: {
+    ...mapActions([
+      'getArticleList',
+      'getCategory',
+      'getTag',
+      'deleteArticle'
+    ]),
     formatTime(row, column, cellValue, index) {
       return cellValue ? moment(parseInt(cellValue) * 1000).format('YYYY-MM-DD HH:ss') : '-'
     },
     formatStatus(value) {
-      return value == '0' ? '已发布' : (value == '1' ? '已删除' : '待发布')
+      return value == '0' ? '已发布' : '-'
     },
     edit(article) {
       this.$router.push({
         name: 'editArticle',
-        params: {
-          articleId: '1'
+        query: {
+          id: article.id
         }
       })
     },
     under(article) {
       this.showDialog('此操作会将该文章标记为删除，不再显示, 是否继续?', ()=> {
-        this.$message({
-          type: 'success',
-          message: '已删除'
-        })
+        this.deleteArticle(article.id)
+          .then((data) => {
+            this.$message({
+              showClose: true,
+              message: '已删除',
+              type: 'success'
+            })
+            this.page = 0
+            this.getList()
+          })
+          .catch((err)=> {
+            this.$message({
+              showClose: true,
+              message: err.msg,
+              type: 'error'
+            })
+          })
       })
     },
     pageChange(currentPage) {
       this.scrollToTop()
-      this.params.page = currentPage - 1
+      this.page = currentPage - 1
       this.currentPage = currentPage
+      this.getList()
+    },
+    getList() {
+      this.getArticleList({
+          by: this.type,
+          categoryId: this.id,
+          tagId: this.id,
+          page: this.page,
+          pageSize: this.pageSize
+        })
+        .then((data) => {
+          this.total = data.count
+          this.articleList = data.list
+        })
+        .catch(()=> {
+          this.articleList = []
+        })
     },
     previewImg(e) {
       this.$photoPreview.open(0, [{src: e.target.src, w: 41, h: 31, target: e.target}])
@@ -194,8 +225,8 @@ export default {
     preview (article) {
       this.$router.push({
         name: 'articlePreview',
-        params: {
-          articleId: '1'
+        query: {
+          id: article.id
         }
       })
     },
@@ -243,7 +274,7 @@ export default {
     animation: show .8s
     .pagination
       width: 100%
-      margin-top: 20px
+      margin: 20px 0
       display: flex
       justify-content: center
 
