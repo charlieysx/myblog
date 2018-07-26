@@ -1,7 +1,6 @@
 <template>
   <div class="no-data" :style="cls">
-    <img class="defalit-img" v-if="this.imgSize === 'default'" src="~IMAGES/nodatadefault.png">
-    <img class="small-img" v-else src="~IMAGES/nodatasmall.png">
+    <img class="default-img" src="~IMAGES/nodatadefault.png">
     <p v-if="text">{{text}}</p>
     <slot v-else></slot>
   </div>
@@ -13,24 +12,13 @@
       text: {
         type: String,
         default: ''
-      },
-      imgSize: {
-        type: String,
-        default: 'default'
       }
     },
     computed: {
       cls () {
-        if (this.imgSize === 'default') {
-          return {
-            fontSize: '14px',
-            padding: '60px'
-          }
-        } else {
-          return {
-            fontSize: '12px',
-            padding: '30px'
-          }
+        return {
+          fontSize: '14px',
+          padding: '60px'
         }
       }
     }
@@ -53,11 +41,8 @@
   > p
     margin-top: 20px
     color: $color-light-grey
-  .defalit-img
+  .default-img
     width: 240px
     height: 190px
-  .small-img
-    width: 120px
-    height: 100px
 </style>
 

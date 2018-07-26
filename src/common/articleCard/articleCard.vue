@@ -39,7 +39,7 @@ export default {
   props: ['article'],
   data () {
     return {
-      defaultCover: 'http://img1.imgtn.bdimg.com/it/u=3249428919,1915053740&fm=200&gp=0.jpg'
+      defaultCover: 'http://blogimg.codebear.cn/FrTy2sZVtGZGYMFj6PAuNe7T6g3__water'
     }
   },
   computed: {
@@ -101,7 +101,7 @@ export default {
         width: 100%
         padding-top: 50%
         content: ' '
-        background: rgba(0, 0, 0, .5)
+        background: rgba(0, 0, 0, .3)
         display: block
       .article-title
         position: absolute
