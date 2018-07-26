@@ -14,6 +14,7 @@
         maxWidth="100"
         maxHeight="100"
         tip="上传头像"
+        maxSize="2"
         @uploadSuccess="uploadAvatar"></UP>
       <el-input
         class="input-title"
@@ -77,6 +78,7 @@
         maxWidth="100"
         maxHeight="100"
         tip="上传微信二维码"
+        maxSize="2"
         @uploadSuccess="uploadWxpayQrcode"></UP>
       <UP class="upload-cover" 
         :default-img="params.alipayQrcode"
@@ -85,6 +87,7 @@
         maxWidth="100"
         maxHeight="100"
         tip="上传支付宝二维码"
+        maxSize="2"
         @uploadSuccess="uploadAlipayQrcode"></UP>
     </div>
   </div>
@@ -149,16 +152,10 @@ export default {
     commit() {
       if (this.params.settingPassword) {
         if (this.params.viewPassword.length < 6) {
-          this.$message({
-            type: 'error',
-            message: '密码不能小于6位'
-          })
+          this.$toast('密码不能小于6位', 'error')
           return
         } else if (this.params.viewPassword !== this.newPassword) {
-          this.$message({
-            type: 'error',
-            message: '两个新密码不匹配'
-          })
+          this.$toast('两个新密码不匹配', 'error')
           return
         }
       }
@@ -171,17 +168,11 @@ export default {
       this.modifyBlogConfig(this.params)
         .then((data) => {
           loading.close()
-          this.$message({
-            type: 'success',
-            message: '已更新'
-          })
+          this.$toast('已更新')
         })
         .catch((err) => {
           loading.close()
-          this.$message({
-            type: 'error',
-            message: err.msg
-          })
+          this.$toast(err.msg, 'error')
         })
     }
   }

@@ -55,6 +55,7 @@
             maxWidth="300"
             maxHeight="150"
             tip="上传文章封面图"
+            maxSize="2"
             @uploadSuccess="uploadSuccess"></UP>
           <el-input
             class="input-title"
@@ -232,7 +233,7 @@ export default {
           this.startUploadImg(formParams, pos)
         })
         .catch((err) => {
-          this.toast(err.msg, 'error')
+          this.$toast(err.msg, 'error')
         })
     },
     startUploadImg(formParams, pos) {
@@ -241,7 +242,7 @@ export default {
           this.$refs.md.$img2Url(pos, qiniuData.imgUrl)
         })
         .catch((err) => {
-          this.toast('上传失败', 'error')
+          this.$toast('上传失败', 'error')
         })
     },
     uploadSuccess(url) {
@@ -285,69 +286,62 @@ export default {
     publish() {
       let params = this.getParams()
       if (!params.title) {
-          this.toast('文章标题不能为空', 'error')
+          this.$toast('文章标题不能为空', 'error')
           return
       }
       if (!params.subMessage) {
-          this.toast('文章简介不能为空', 'error')
+          this.$toast('文章简介不能为空', 'error')
           return
       }
       if (!params.content) {
-          this.toast('文章内容不能为空', 'error')
+          this.$toast('文章内容不能为空', 'error')
           return
       }
       this.publishArticle(params)
         .then((data) => {
-          this.toast('已发布')
+          this.$toast('已发布')
           this.updateRoute('articlePreview', data)
         })
         .catch((err) => {
-          this.toast(err.msg, 'error')
+          this.$toast(err.msg, 'error')
         })
     },
     save() {
       let params = this.getParams()
       this.saveArticle(params)
         .then((data) => {
-          this.toast('已保存')
+          this.$toast('已保存')
           this.updateRoute('editArticle', data)
         })
         .catch((err) => {
-          this.toast(err.msg, 'error')
+          this.$toast(err.msg, 'error')
         })
     },
     modify() {
       let params = this.getParams()
       if (!params.id) {
-          this.toast('文章id不能为空', 'error')
+          this.$toast('文章id不能为空', 'error')
           return
       }
       if (!params.title) {
-          this.toast('文章标题不能为空', 'error')
+          this.$toast('文章标题不能为空', 'error')
           return
       }
       if (!params.subMessage) {
-          this.toast('文章简介不能为空', 'error')
+          this.$toast('文章简介不能为空', 'error')
           return
       }
       if (!params.content) {
-          this.toast('文章内容不能为空', 'error')
+          this.$toast('文章内容不能为空', 'error')
           return
       }
       this.modifyArticle(params)
         .then((data) => {
-          this.toast('已更新')
+          this.$toast('已更新')
         })
         .catch((err) => {
-          this.toast(err.msg, 'error')
+          this.$toast(err.msg, 'error')
         })
-    },
-    toast(msg, type = 'success') {
-      this.$message({
-        showClose: true,
-        message: msg,
-        type: type
-      })
     },
     updateRoute(name, articleId) {
       this.$router.push({

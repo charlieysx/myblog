@@ -22,6 +22,14 @@ Vue.use(validator)
 Vue.use(Highlight)
 Vue.use(photoPreview)
 
+Vue.toast = Vue.prototype.$toast = (msg, type = 'success') => {
+  Vue.prototype.$message({
+    showClose: true,
+    message: msg,
+    type: type
+  })
+}
+
 sync(store, router)
 
 /* eslint-disable no-new */

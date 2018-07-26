@@ -183,12 +183,12 @@ export default {
       this.showDialog('此操作会将该友链标删除，不能恢复, 是否继续?', ()=> {
         this.deleteFriend(friend.friendId)
           .then((data) => {
-            this.toast('已删除')
+            this.$toast('已删除')
             this.page = 0
             this.getList()
           })
           .catch((err)=> {
-            this.toast(err.msg, 'error')
+            this.$toast(err.msg, 'error')
           })
       })
     },
@@ -235,15 +235,15 @@ export default {
     },
     commit() {
       if (!this.friend.name) {
-        this.toast('请输入友链名称', 'error')
+        this.$toast('请输入友链名称', 'error')
         return
       }
       if (!this.friend.url) {
-        this.toast('请输入友链链接', 'error')
+        this.$toast('请输入友链链接', 'error')
         return
       }
       if (!this.typeValue) {
-        this.toast('请选择友链类型', 'error')
+        this.$toast('请选择友链类型', 'error')
         return
       }
       let params = {
@@ -261,24 +261,24 @@ export default {
         params.friendId = this.friend.friendId
         this.modifyFriend(params)
           .then((data) => {
-            this.toast('已修改')
+            this.$toast('已修改')
             this.page = 0
             this.getList()
             this.dialogFormVisible = false
           })
           .catch((err)=> {
-            this.toast(err.msg, 'error')
+            this.$toast(err.msg, 'error')
           })
       } else {
         this.addFriend(params)
           .then((data) => {
-            this.toast('已添加')
+            this.$toast('已添加')
             this.page = 0
             this.getList()
             this.dialogFormVisible = false
           })
           .catch((err)=> {
-            this.toast(err.msg, 'error')
+            this.$toast(err.msg, 'error')
           })
       }
     },
@@ -288,13 +288,6 @@ export default {
       this.friend = {}
       this.typeValue = ''
       this.dialogFormVisible = true
-    },
-    toast(msg, type = 'success') {
-      this.$message({
-        showClose: true,
-        message: msg,
-        type: type
-      })
     }
   }
 }

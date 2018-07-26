@@ -187,20 +187,12 @@ export default {
       this.showDialog('此操作会将该文章标记为删除，不再显示, 是否继续?', ()=> {
         this.deleteArticle(article.id)
           .then((data) => {
-            this.$message({
-              showClose: true,
-              message: '已删除',
-              type: 'success'
-            })
+            this.$toast('已删除')
             this.page = 0
             this.getList()
           })
           .catch((err)=> {
-            this.$message({
-              showClose: true,
-              message: err.msg,
-              type: 'error'
-            })
+            this.$toast(err.msg, 'error')
           })
       })
     },

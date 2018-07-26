@@ -90,7 +90,7 @@ export default {
           this.startUploadImg(formParams, pos)
         })
         .catch((err) => {
-          this.error(err.msg)
+          this.$toast(err.msg, 'error')
         })
     },
     startUploadImg (formParams, pos) {
@@ -99,15 +99,8 @@ export default {
           this.$refs.md.$img2Url(pos, qiniuData.imgUrl)
         })
         .catch((err) => {
-          this.error('上传失败')
+          this.$toast('上传失败', 'error')
         })
-    },
-    error(err) {
-      this.message = this.$message({
-        showClose: true,
-        message: err,
-        type: 'error'
-      })
     },
     uploadSuccess(url) {
       this.params.imageUrl = url
@@ -122,17 +115,11 @@ export default {
       this.modifyAboutMe(this.value)
         .then((data) => {
           loading.close()
-          this.$message({
-            type: 'success',
-            message: '已更新'
-          })
+          this.$toast('已更新')
         })
         .catch((err) => {
           loading.close()
-          this.$message({
-            type: 'error',
-            message: err.msg
-          })
+          this.$toast(err.msg, 'error')
         })
     }
   }

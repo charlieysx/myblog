@@ -84,26 +84,16 @@ export default {
             username: this.loginForm.username,
             password: this.loginForm.password
           }
-          if (this.message) {
-            this.message.close()
-          }
           this.adminLogin(loginFormParams)
             .then((info) => {
               window.location.reload()
             })
             .catch((err) => {
-              this.error(err.msg)
+              this.$toast(err.msg, 'error')
             })
         } else {
           return false
         }
-      })
-    },
-    error (err) {
-      this.message = this.$message({
-        showClose: true,
-        message: err,
-        type: 'error'
       })
     }
   }

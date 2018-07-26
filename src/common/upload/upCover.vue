@@ -49,18 +49,21 @@ export default {
   },
   props: {
     defaultImg: String,
-    ratio: {    // 裁剪结果宽高比
+    ratio: { // 裁剪结果宽高比
       default: 1
     },
     width: Number,
     height: Number,
-    WHRatio: {  // 组件宽高比
+    WHRatio: { // 组件宽高比
       default: 1
     },
     maxWidth: String,
     maxHeight: String,
     tip: {
       default: '上传图片'
+    },
+    maxSize: { // 最大选择图片的大小，单位M
+      default: 3
     }
   },
   data () {
@@ -110,17 +113,13 @@ export default {
           'image/webp'
         ]
         const type = fileType.indexOf(file.raw.type)
-        const size = file.raw.size / 1024 / 1024 <= 2
+        const size = file.raw.size / 1024 / 1024 <= this.maxSize
         if (type === -1) {
-          this.$toast({
-            message: '只限jpg、png、webp格式'
-          })
+          this.$toast('只限jpg、png、webp格式', 'error')
           return false
         }
         if (!size) {
-          this.$toast({
-            message: '图片太大了~最多支持2MB'
-          })
+          this.$toast(`图片太大了~最多支持${this.maxSize}MB`, 'error')
           return false
         }
 

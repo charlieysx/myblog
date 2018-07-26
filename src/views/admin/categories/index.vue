@@ -186,11 +186,11 @@ export default {
     editTag(tag) {
       this.showDialogWithInput(tag.tagName, (value)=> {
         if (!value) {
-          this.toast('标签名不能为空', 'error')
+          this.$toast('标签名不能为空', 'error')
           return
         }
         if (value === tag.tagName) {
-          this.toast('标签名重复', 'error')
+          this.$toast('标签名重复', 'error')
           return
         }
         this.modifyTag({
@@ -198,11 +198,11 @@ export default {
             tagName: value
           })
           .then((data) => {
-            this.toast('修改成功')
+            this.$toast('修改成功')
             this.getTList()
           })
           .catch((err)=> {
-            this.toast(err.msg, 'error')
+            this.$toast(err.msg, 'error')
           })
       }, '请输入新的标签名')
     },
@@ -210,11 +210,11 @@ export default {
       this.showDialog('此操作会将该标签删除，并将所有文章移除该标签, 是否继续?', ()=> {
         this.deleteTag(tag.tagId)
           .then((data) => {
-            this.toast('已删除')
+            this.$toast('已删除')
             this.getTList()
           })
           .catch((err)=> {
-            this.toast(err.msg, 'error')
+            this.$toast(err.msg, 'error')
           })
       })
     },
@@ -230,11 +230,11 @@ export default {
     editCategory(category) {
       this.showDialogWithInput(category.categoryName, (value)=> {
         if (!value) {
-          this.toast('分类名不能为空', 'error')
+          this.$toast('分类名不能为空', 'error')
           return
         }
         if (value === category.categoryName) {
-          this.toast('分类名重复', 'error')
+          this.$toast('分类名重复', 'error')
           return
         }
         this.modifyCategory({
@@ -242,11 +242,11 @@ export default {
             categoryName: value
           })
           .then((data) => {
-            this.toast('修改成功')
+            this.$toast('修改成功')
             this.getCList()
           })
           .catch((err)=> {
-            this.toast(err.msg, 'error')
+            this.$toast(err.msg, 'error')
           })
       }, '请输入新的分类名')
     },
@@ -254,43 +254,43 @@ export default {
       this.showDialog('此操作会删除该分类，并将该分类下的文章移到默认分类, 是否继续?', ()=> {
         this.deleteCategory(category.categoryId)
           .then((data) => {
-            this.toast('已删除')
+            this.$toast('已删除')
             this.getCList()
           })
           .catch((err)=> {
-            this.toast(err.msg, 'error')
+            this.$toast(err.msg, 'error')
           })
       })
     },
     newCategory() {
       this.showDialogWithInput('新增分类', (value)=> {
         if (!value) {
-          this.toast('分类名不能为空', 'error')
+          this.$toast('分类名不能为空', 'error')
           return
         }
         this.addCategory(value)
           .then((data) => {
-            this.toast('添加成功')
+            this.$toast('添加成功')
             this.getCList()
           })
           .catch((err)=> {
-            this.toast(err.msg, 'error')
+            this.$toast(err.msg, 'error')
           })
       }, '请输入新的分类名')
     },
     newTag() {
       this.showDialogWithInput('新增标签', (value)=> {
         if (!value) {
-          this.toast('标签名不能为空', 'error')
+          this.$toast('标签名不能为空', 'error')
           return
         }
         this.addTag(value)
           .then((data) => {
-            this.toast('添加成功')
+            this.$toast('添加成功')
             this.getTList()
           })
           .catch((err)=> {
-            this.toast(err.msg, 'error')
+            this.$toast(err.msg, 'error')
           })
       }, '请输入新的标签名')
     },
@@ -312,13 +312,6 @@ export default {
         }).then(({ value }) => {
           next(value)
         }).catch(()=>{})
-    },
-    toast(msg, type = 'success') {
-      this.$message({
-        showClose: true,
-        message: msg,
-        type: type
-      })
     },
     getCList() {
       this.getCategoryList({all: true})
