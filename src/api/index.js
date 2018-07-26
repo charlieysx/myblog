@@ -276,5 +276,55 @@ export default {
    */
   getBlogAboutMe () {
     return axios.get('w/getAbout')
+  },
+  /**
+   * 获取博客信息
+   */
+  getBlogInfo () {
+    return axios.get('w/blogInfo')
+  },
+  /**
+   * 获取文章列表
+   */
+  getBlogArticleList (params) {
+    return axios.get('w/article/list', {
+      params: params
+    })
+  },
+  /**
+   * 获取文章归档列表
+   */
+  getBlogArticleArchives (params) {
+    return axios.get('w/article/archives', {
+      params: params
+    })
+  },
+  /**
+   * 获取文章信息
+   */
+  getBlogArticle (articleId) {
+    return axios.get('w/article', {
+      params: {
+        id: articleId
+      }
+    })
+  },
+  /**
+   * 获取分类列表
+   */
+  getBlogCategoryList () {
+    return axios.get('w/category/list')
+  },
+  /**
+   * 获取标签列表
+   */
+  getBlogTagList () {
+    return axios.get('w/tag/list')
+  },
+  /**
+   * 获取友链列表
+   */
+  getBlogFriendsList () {
+    return axios.get('w/friends/list')
   }
 }

@@ -7,7 +7,7 @@
         'padding': isPc ? '25px' : '0px'
         }">
         <p class="line" v-if="isPc"></p>
-        <p class="blog-name">CodeBear</p>
+        <p class="blog-name">{{ blogInfo.blogName || '博客' }}</p>
         <p class="line" v-if="isPc"></p>
       </div>
       <header-tab-view v-if="isPc" :tabs="tabs" @tab-click="selectTab" />
@@ -143,7 +143,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'screen'
+      'screen',
+      'blogInfo'
     ])
   },
   methods: {

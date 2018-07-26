@@ -8,7 +8,8 @@ const ssCache = new Cache({storage: 'sessionStorage'})
 
 const KEYS = {
   token: 'ak',
-  adminInfo: 'adminInfo'
+  adminInfo: 'adminInfo',
+  blogInfo: 'blogInfo'
 }
 
 // 这里改为自己的nameSpace，比如项目名称
@@ -55,3 +56,4 @@ export function removeAccessToken () {
 }
 
 export const cachedAdminInfo = new CommonStorage(KEYS.adminInfo, 0)
+export const cachedBlogInfo = new CommonStorage(KEYS.blogInfo, 0)

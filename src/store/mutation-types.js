@@ -12,3 +12,5 @@ export const IS_LOGIN = 'IS_LOGIN'
 export const SHOW_TOKEN_ERROR = 'SHOW_TOKEN_ERROR'
 // 保存管理员信息
 export const SET_ADMIN_INFO = 'SET_ADMIN_INFO'
+// 保存博客信息
+export const SET_BLOG_INFO = 'SET_BLOG_INFO'

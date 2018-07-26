@@ -1,7 +1,7 @@
 <template>
   <div id="friends">
     <div class="type-wrap" v-for="(item, index) in friends" :key="index">
-      <p>{{ item.type }}</p>
+      <p>{{ item.name }}</p>
       <div class="friends-wrap">
         <a v-for="(friend, index) in item.list" :key="index" :href="friend.url" target="_blank">
           {{ friend.name }}
@@ -12,6 +12,9 @@
 </template>
 
 <script>
+import {
+  mapActions
+} from 'vuex'
 
 export default {
   name: 'friends',
@@ -19,91 +22,25 @@ export default {
   },
   data () {
     return {
-      friends: [
-        {
-          type: 'android',
-          list: [
-            {
-              name: 'test',
-              url: 'xxx'
-            },
-            {
-              name: 'test2',
-              url: 'xxx'
-            }
-          ]
-        },
-        {
-          type: 'vue',
-          list: [
-            {
-              name: 'test',
-              url: 'xxx'
-            },
-            {
-              name: 'test2',
-              url: 'xxx'
-            },
-            {
-              name: 'test2',
-              url: 'xxx'
-            },
-            {
-              name: 'test2test2test2',
-              url: 'xxx'
-            },
-            {
-              name: 'test2',
-              url: 'xxx'
-            },
-            {
-              name: 'test2',
-              url: 'xxx'
-            },
-            {
-              name: 'test2',
-              url: 'xxx'
-            },
-            {
-              name: 'test2test2test2',
-              url: 'xxx'
-            },
-            {
-              name: 'test2',
-              url: 'xxx'
-            },
-            {
-              name: 'test2',
-              url: 'xxx'
-            },
-            {
-              name: 'test2test2test2',
-              url: 'xxx'
-            },
-            {
-              name: 'test2',
-              url: 'xxx'
-            },
-            {
-              name: 'test2',
-              url: 'xxx'
-            },
-            {
-              name: 'test2test2test2',
-              url: 'xxx'
-            },
-            {
-              name: 'test2test2test2',
-              url: 'xxx'
-            }
-          ]
-        }
-      ]
+      friends: []
     }
   },
   created() {
+    this.getBlogFriendsList({
+        page: this.page,
+        pageSize: this.pageSize
+      })
+      .then((data) => {
+        this.friends = data
+      })
+      .catch(()=> {
+        this.friends = []
+      })
   },
   methods: {
+    ...mapActions([
+      'getBlogFriendsList'
+    ])
   }
 }
 </script>

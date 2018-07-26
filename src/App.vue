@@ -123,6 +123,11 @@ export default {
       'tokenError'
     ])
   },
+  created() {
+    if (!this.isAdminWrap) {
+      this.getBlogInfo()
+    }
+  },
   mounted() {
     this.updateScreen()
     window.addEventListener('resize', this.updateScreen)
@@ -134,7 +139,8 @@ export default {
   },
   methods: {
     ...mapActions([
-      'setShowRightNav'
+      'setShowRightNav',
+      'getBlogInfo'
     ]),
     updateScreen () {
       this.$store.commit(SCREEN_CHANGE, {

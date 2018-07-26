@@ -7,25 +7,25 @@
       'width': showRightNav ? '320px' : '0px',
       'transition': 'all .3s'
     }">
-      <img class="avatar" src="~IMAGES/avatar.jpg"/>
-      <p class="name">CodeBear</p>
-      <p class="motto">认识，了解，探索，超越</p>
+      <img class="avatar" :src="blogInfo.avatar || defaultAvatar"/>
+      <p class="name">{{ blogInfo.blogName || '博客' }}</p>
+      <p class="motto">{{ blogInfo.sign || '-' }}</p>
       <div class="menu-wrap">
         <span class="menu-item" @click="toView('archives')">
-          <p class="count">27</p>
+          <p class="count">{{ blogInfo.articleCount || 0 }}</p>
           <p>文章</p>
         </span>
         <span class="menu-item" @click="toView('categories')">
-          <p class="count">10</p>
+          <p class="count">{{ blogInfo.categoryCount || 0 }}</p>
           <p>分类</p>
         </span>
         <span class="menu-item" @click="toView('categories')">
-          <p class="count">124</p>
+          <p class="count">{{ blogInfo.tagCount || 0 }}</p>
           <p>标签</p>
         </span>
       </div>
       <div class="social-wrap">
-        <a class="social-item" href="https://github.com/CB-ysx" target="_blank">
+        <a class="social-item" :href="blogInfo.github" target="_blank" v-if="blogInfo.github">
           <i class="iconfont icon-github"></i>
           github
         </a>
@@ -62,6 +62,7 @@ export default {
   data () {
     return {
       show: true,
+      defaultAvatar: require('IMAGES/avatar.jpg'),
       lineStyle: {
         normalLineData: [
           {
@@ -144,7 +145,8 @@ export default {
   computed: {
     ...mapGetters([
       'screen',
-      'showRightNav'
+      'showRightNav',
+      'blogInfo'
     ])
   },
   methods: {

@@ -6,9 +6,9 @@
         v-for="(category, index) in categories"
         :key="index"
         class="category-item"
-        @click="toList('category', category)">
-        {{ category.name }}
-        <span>{{ category.count }}篇</span>
+        @click="toList('category', category.categoryId)">
+        {{ category.categoryName }}
+        <span>{{ category.articleCount }}篇</span>
       </div>
     </div>
     <p class="title">标签</p>
@@ -18,17 +18,20 @@
         :key="index"
         class="tag-item"
         :style="{
-          fontSize: getFontSize(tag.count),
-          color: getColor(tag.count)
+          fontSize: getFontSize(tag.articleCount),
+          color: getColor(tag.articleCount)
         }"
-        @click="toList('tag', tag)">
-        {{ tag.name }}
+        @click="toList('tag', tag.tagId)">
+        {{ tag.tagName }}
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import {
+  mapActions
+} from 'vuex'
 
 export default {
   name: 'categories',
@@ -36,91 +39,33 @@ export default {
   },
   data () {
     return {
-      categories: [
-        {
-          name: 'vue',
-          count: 1
-        },
-        {
-          name: 'android',
-          count: 1
-        },
-        {
-          name: '记录',
-          count: 10
-        },
-        {
-          name: '生活',
-          count: 125
-        },
-        {
-          name: '生活',
-          count: 1
-        },
-        {
-          name: '生活',
-          count: 1
-        },
-        {
-          name: '生活',
-          count: 1
-        },
-        {
-          name: '生活',
-          count: 1
-        },
-        {
-          name: '生活',
-          count: 1
-        }
-      ],
-      tags: [
-        {
-          name: 'ui',
-          count: 1
-        },
-        {
-          name: 'vue',
-          count: 10
-        },
-        {
-          name: 'vue',
-          count: 10
-        },
-        {
-          name: 'vue',
-          count: 100
-        },
-        {
-          name: 'Hexo',
-          count: 14
-        },
-        {
-          name: 'vue',
-          count: 7
-        },
-        {
-          name: 'vue',
-          count: 25
-        },
-        {
-          name: '编译原理',
-          count: 9
-        },
-        {
-          name: 'vue',
-          count: 9
-        },
-        {
-          name: 'vue',
-          count: 20
-        }
-      ]
+      categories: [],
+      tags: []
     }
   },
   computed: {
   },
+  created() {
+    this.getBlogCategoryList()
+      .then((data) => {
+        this.categories = data.list
+      })
+      .catch(()=> {
+        this.categories = []
+      })
+    this.getBlogTagList()
+      .then((data) => {
+        this.tags = data.list
+      })
+      .catch(()=> {
+        this.tags = []
+      })
+  },
   methods: {
+    ...mapActions([
+      'getBlogCategoryList',
+      'getBlogTagList'
+    ]),
     getFontSize (count) {
       let size = 14
       if (count < 5) {
@@ -151,12 +96,12 @@ export default {
       }
       return 'rgba(38, 42, 48, ' + alpha + ')'
     },
-    toList (type, item) {
+    toList (type, id) {
       this.$router.push({
         name: 'articleList',
-        params: {
+        query: {
           type: type,
-          itemId: '111'
+          id: id
         }
       })
     }

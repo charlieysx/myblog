@@ -2,19 +2,22 @@
   <div id="m-footer">
     <div class="footer-wrap">
       <p>
-        @CodeBear ———— 认识，了解，探索，超越。
+        @{{ blogInfo.blogName || '博客' }} ———— {{ blogInfo.sign }}
       </p>
       <p>
         本站点采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" target="_blank">知识共享 署名-非商业性使用-禁止演绎 4.0 国际 许可协议</a>
       </p>
       <p>
-        本站由 @CodeBear 创建。 (●'◡'●)ﾉ 本博客已默默运行了 1 天，总访问量 0 次 - © 2018
+        本站由 @{{ blogInfo.blogName || '博客' }} 创建 - © 2018
       </p>
     </div>
   </div>
 </template>
 
 <script>
+import {
+  mapGetters
+} from 'vuex'
 
 export default {
   name: 'm-footer',
@@ -23,6 +26,11 @@ export default {
   data () {
     return {
     }
+  },
+  computed: {
+    ...mapGetters([
+      'blogInfo'
+    ])
   },
   methods: {
   }

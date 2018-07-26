@@ -1,13 +1,13 @@
 <template>
   <div id="home">
     <article-card
-      v-for="(article, index) in articles"
+      v-for="(article, index) in articleList"
       :key="index"
       :article="article" />
     <!-- 分页 -->
     <div
       class="pagination"
-      v-show="articles.length > 0">
+      v-show="total > 0">
       <el-pagination
         background
         layout="prev, pager, next"
@@ -22,6 +22,11 @@
 </template>
 
 <script>
+import {
+  mapActions,
+  mapGetters
+} from 'vuex'
+
 import { scroll } from 'MIXINS/scroll'
 
 import articleCard from 'COMMON/articleCard/articleCard'
@@ -34,76 +39,39 @@ export default {
   mixins: [scroll],
   data () {
     return {
-      articles: [
-        {
-          title: '这是标题这是标题这是标题这是标题这是标题这是标题这是标题这是标题',
-          publishTime: '2018-07-08',
-          classify: {
-            id: 0,
-            name: 'vue'
-          },
-          subMessage: '这是文章简介'
-        },
-        {
-          title: '这是标题',
-          publishTime: '2018-07-08',
-          classify: {
-            id: 0,
-            name: 'vue'
-          },
-          subMessage: '这是文章简介'
-        },
-        {
-          title: '这是标题',
-          publishTime: '2018-07-08',
-          classify: {
-            id: 0,
-            name: 'vue'
-          },
-          subMessage: '这是文章简介'
-        },
-        {
-          title: '这是标题',
-          publishTime: '2018-07-08',
-          classify: {
-            id: 0,
-            name: 'vue'
-          },
-          subMessage: '这是文章简介'
-        },
-        {
-          title: '这是标题',
-          publishTime: '2018-07-08',
-          classify: {
-            id: 0,
-            name: 'vue'
-          },
-          subMessage: '这是文章简介'
-        },
-        {
-          title: '这是标题',
-          publishTime: '2018-07-08',
-          classify: {
-            id: 0,
-            name: 'vue'
-          },
-          subMessage: '这是文章简介'
-        }
-      ],
+      articleList: [],
       page: 0,
-      pageSize: 20,
-      currentPage: 1,
+      pageSize: 15,
+      currentPage: 0,
       total: 0
     }
   },
   created() {
-    this.total = this.articles.length
+    this.page = 0
+    this.getList()
   },
   methods: {
-    pageChange (currentPage) {
+    ...mapActions([
+      'getBlogArticleList'
+    ]),
+    pageChange(currentPage) {
       this.scrollToTop()
       this.page = currentPage - 1
       this.currentPage = currentPage
+      this.getList()
+    },
+    getList() {
+      this.getBlogArticleList({
+          page: this.page,
+          pageSize: this.pageSize
+        })
+        .then((data) => {
+          this.total = data.count
+          this.articleList = data.list
+        })
+        .catch(()=> {
+          this.articleList = []
+        })
     }
   }
 }

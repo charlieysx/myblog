@@ -37,12 +37,12 @@ export default [
     component: friends
   },
   {
-    path: '/list/:type/:itemId',
+    path: '/list',
     name: 'articleList',
     component: articleList
   },
   {
-    path: '/article/:articleId',
+    path: '/article',
     name: 'article',
     component: article
   }

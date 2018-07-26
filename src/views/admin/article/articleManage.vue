@@ -129,8 +129,7 @@ export default {
   mixins: [scroll],
   data () {
     return {
-      articleList: [
-      ],
+      articleList: [],
       page: 0,
       pageSize: 15,
       currentPage: 0,

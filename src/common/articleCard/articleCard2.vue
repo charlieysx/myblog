@@ -2,22 +2,22 @@
   <div id="article-card">
     <div class="article-card-wrap">
       <div class="article-title" @click="showArticle">
-        {{ article.title }}
+        {{ article.article.title }}
       </div>
       <div class="article-info">
         <i class="iconfont icon-calendar"></i>
-        <span class="info-item">发表于 {{ article.publishTime }}</span>
+        <span class="info-item">发表于 {{ article.article.publishTime | time }}</span>
         <span class="line">|</span>
         <i class="iconfont icon-folder"></i>
-        <span class="info-item">分类于 <span class="classify" @click="toList('category', article.classify)">{{ article.classify.name }}</span></span>
+        <span class="info-item">分类于 <span class="classify" @click="toList('category', article.category.id)">{{ article.category.name }}</span></span>
       </div>
-      <div class="article-sub-message">{{ article.subMessage }}</div>
+      <div class="article-sub-message">{{ article.article.subMessage }}</div>
       <div class="tags">
         <div
           v-for="(tag, index) in article.tags"
           :key="index"
           class="tag"
-           @click="toList('tag', tag)">
+           @click="toList('tag', tag.id)">
           <i class="iconfont icon-tag"></i>
           {{ tag.name }}
         </div>
@@ -41,17 +41,17 @@ export default {
     showArticle () {
       this.$router.push({
         name: 'article',
-        params: {
-          articleId: '1'
+        query: {
+          id: this.article.article.id
         }
       })
     },
-    toList (type, item) {
+    toList (type, id) {
       this.$router.push({
         name: 'articleList',
-        params: {
+        query: {
           type: type,
-          itemId: '111'
+          id: id
         }
       })
     }

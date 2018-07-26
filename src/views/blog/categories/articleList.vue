@@ -2,14 +2,14 @@
   <div id="archives">
     <div class="archives-wrap">
       <article-card2
-        v-for="(article, index) in archives"
+        v-for="(article, index) in articleList"
         :key="index"
         :article="article" />
     </div>
     <!-- 分页 -->
     <div
       class="pagination"
-      v-show="true">
+      v-show="total > 0">
       <el-pagination
         background
         layout="prev, pager, next"
@@ -24,6 +24,10 @@
 </template>
 
 <script>
+import {
+  mapActions
+} from 'vuex'
+
 import { scroll } from 'MIXINS/scroll'
 import articleCard2 from 'COMMON/articleCard/articleCard2'
 
@@ -36,64 +40,58 @@ export default {
   data () {
     return {
       page: 0,
-      pageSize: 20,
-      currentPage: 1,
+      pageSize: 15,
+      currentPage: 0,
       total: 0,
-      archives: [
-        {
-          title: '这是标题',
-          publishTime: '07-08',
-          classify: {
-            id: 0,
-            name: 'vue'
-          },
-          tags: [
-            {
-              name: 'vue'
-            },
-            {
-              name: 'test'
-            },
-            {
-              name: 'test'
-            },
-            {
-              name: 'testtest'
-            },
-            {
-              name: 'testtesttesttest'
-            }
-          ] ,
-          subMessage: '这是文章简介'
-        },
-        {
-          title: '这是标题这是标题这是标题这是标题这是标题这是标题这是标题这是标题',
-          publishTime: '07-08',
-          classify: {
-            id: 0,
-            name: 'vue'
-          },
-          tags: [
-            {
-              name: 'vue'
-            },
-            {
-              name: 'test'
-            }
-          ] ,
-          subMessage: '这是文章简介'
-        }
-      ]
+      type: 'category',
+      id: '',
+      articleList: []
     }
   },
   created() {
-    this.total = this.archives.length
+    this.initData()
+  },
+  watch: {
+    $route(route) {
+      this.initData()
+    }
   },
   methods: {
-    pageChange (currentPage) {
+    ...mapActions([
+      'getBlogArticleList'
+    ]),
+    initData() {
+      this.type = this.$route.query.type
+      if (this.type !== 'category' && this.type !== 'tag') {
+        this.type = 'category'
+      }
+      this.id = this.$route.query.id
+      this.total = 0
+      this.articleList = []
+      this.page = 0
+      this.getList()
+    },
+    pageChange(currentPage) {
       this.scrollToTop()
       this.page = currentPage - 1
       this.currentPage = currentPage
+      this.getList()
+    },
+    getList() {
+      this.getBlogArticleList({
+          by: this.type,
+          categoryId: this.id,
+          tagId: this.id,
+          page: this.page,
+          pageSize: this.pageSize
+        })
+        .then((data) => {
+          this.total = data.count
+          this.articleList = data.list
+        })
+        .catch(()=> {
+          this.articleList = []
+        })
     }
   }
 }

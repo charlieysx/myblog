@@ -1,31 +1,35 @@
 <template>
   <div id="article">
-    <div class="article-warp">
+    <div class="article-warp" v-if="article.id">
       <div class="article-message">
         <p class="article-title">
           {{ article.title }}
         </p>
         <div class="article-info">
           <i class="iconfont icon-calendar"></i>
-          <span class="info-item">发表于 {{ article.publishTime }}</span>
+          <span class="info-item">发表于 {{ article.publishTime | time }}</span>
           <span class="line">|</span>
           <i class="iconfont icon-folder"></i>
-          <span class="info-item">分类于 <span class="classify" @click="toList('category', article.classify)">{{ article.classify.name }}</span></span>
+            <span class="info-item">分类于 
+              <span class="classify" @click="$router.push({name: 'articleList', query:{type: 'category', id: category.id}})">
+                {{ category.name }}
+              </span>
+            </span>
         </div>
         <div class="article-sub-message">{{ article.subMessage }}</div>
       </div>
-      <md-preview :contents="article.contents" />
-      <div class="money-wrap">
+      <md-preview :contents="article.content" />
+      <div class="money-wrap" v-if="qrcode">
         <p>如果我的文章对您有帮助！有钱的捧个钱场，没钱的捧个人场，谢谢您！</p>
         <div class="money-btn" @click="showQrcode = !showQrcode">赞赏支持</div>
         <transition name="slide-fade">
           <div class="qrcode-wrap" v-show="showQrcode">
             <span class="qrcode">
-              <img src=''/>
+              <img :src='qrcode.wxpayQrcode'/>
               <p>微信支付</p>
             </span>
             <span class="qrcode">
-              <img src=''/>
+              <img :src='qrcode.alipayQrcode'/>
               <p>支付宝支付</p>
             </span>
           </div>
@@ -33,99 +37,92 @@
       </div>
       <div class="tags">
         <div
-          v-for="(tag, index) in article.tags"
+          v-for="(tag, index) in tags"
           :key="index"
           class="tag"
-           @click="toList('tag', tag)">
+          @click="$router.push({name: 'articleList', query:{type: 'tag', id: tag.id}})">
           <i class="iconfont icon-tag"></i>
           {{ tag.name }}
         </div>
       </div>
       <div class="pre-next-wrap">
-        <span class="pre-wrap">
+        <span class="pre-wrap" v-if="pn.pre" @click="$router.push({name: 'article', query:{id: pn.pre.id}})">
           <i class="el-icon-arrow-left"></i>
-          Vue 与 React 父子组件之间的家长里短
+          {{ pn.pre.title }}
         </span>
-        <span class="next-wrap">
-          前端工程师，揭开HTTP的神秘面纱
+        <span class="next-wrap" v-if="pn.next" @click="$router.push({name: 'article', query:{id: pn.next.id}})">
+          {{ pn.next.title }}
           <i class="el-icon-arrow-right"></i>
         </span>
       </div>
     </div>
+    <no-data
+      v-if="!article.id"
+      text="没有找到该文章~"/>
   </div>
 </template>
 
 <script>
+import {
+  mapActions
+} from 'vuex'
 
 import mdPreview from 'COMMON/mdPreview/mdPreview'
+import noData from 'COMMON/noData/noData'
 
 export default {
   name: 'article-content',
   components: {
-    mdPreview
+    mdPreview,
+    noData
   },
   data () {
     return {
       showQrcode: false,
-      article: {
-        title: '用Vue实现海报排版设计功能',
-        publishTime: '2018-07-08',
-        classify: {
-          id: 0,
-          name: 'vue'
-        },
-        subMessage: '这是文章简介',
-        tags: [
-          {
-            name: 'vue'
-          },
-          {
-            name: '设计'
-          }
-        ],
-        contents: `### 一、前言
-
->本来想做个微信小程序，实现一键生成海报图片（可替换文字、图片，不需要用户排版），所以后台管理系统上需要实现一个制作海报模板的功能（“简单版ps”），写了挺长时间的，逻辑太多了，现在写得差不多了，但是由于各种事情项目一直没有进展，估计是没能做完了，所以把这个“简单版ps”开源出来。
-
-### 二、界面
-
-![](https://user-gold-cdn.xitu.io/2018/6/13/163f7dea6cd6e2af?w=1919&h=958&f=jpeg&s=86423)
-![](https://user-gold-cdn.xitu.io/2018/6/13/163f7dee7b1c62f6?w=1919&h=959&f=jpeg&s=273501)
-
-### 三、动态效果图
-
-![](https://user-gold-cdn.xitu.io/2018/6/13/163f7e2439b9e35b?w=1220&h=832&f=gif&s=4549591)
-
-### 四、测试代码高亮
-
-\`\`\`javascript
-import Hljs from 'highlight.js'
-import 'highlight.js/styles/googlecode.css'
-
-let Highlight = {}
-Highlight.install = function (Vue, options) {
-  Vue.directive('highlight', function (el) {
-    let blocks = el.querySelectorAll('pre code')
-    blocks.forEach((block) => {
-      Hljs.highlightBlock(block)
-    })
-  })
-}
-export default Highlight
-\`\`\`
-`
-      }
+      article: {},
+      category: {},
+      tags: [],
+      qrcode: {},
+      pn: {}
     }
   },
   created() {
+    this.initData()
+  },
+  watch: {
+    $route(route) {
+      this.initData()
+    }
   },
   methods: {
-    toList (type, item) {
+    ...mapActions([
+      'getBlogArticle'
+    ]),
+    initData() {
+      this.article = {}
+      this.category = {}
+      this.tags = []
+      this.qrcode = {}
+      this.pn = {}
+      let id = this.$route.query.id
+      if (id) {
+        this.getBlogArticle(id)
+          .then((data) => {
+            this.article = data.article
+            this.category = data.category
+            this.tags = data.tags
+            this.qrcode = data.qrcode
+            this.pn = data.pn
+          })
+          .catch(()=> {})
+      }
+    },
+    toList (type, id) {
       this.$router.push({
         name: 'articleList',
         params: {
           type: type,
-          itemId: '111'
+          id: id
         }
       })
     }

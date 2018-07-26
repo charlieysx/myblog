@@ -6,11 +6,11 @@
         <p class="normal-node">目前共计 {{ total }} 篇文章~</p>
         <div
           class="bold-node"
-          v-for="(node, index) in archives"
+          v-for="(node, key, index) in archives"
           :key="index">
-          <p>{{ node.title }}</p>
+          <p>{{ key }}</p>
           <article-card2
-            v-for="(article, index) in node.list"
+            v-for="(article, index) in node"
             :key="index"
             :article="article" />
         </div>
@@ -19,7 +19,7 @@
     <!-- 分页 -->
     <div
       class="pagination"
-      v-show="true">
+      v-show="total > 0">
       <el-pagination
         background
         layout="prev, pager, next"
@@ -34,6 +34,10 @@
 </template>
 
 <script>
+import {
+  mapActions
+} from 'vuex'
+
 import { scroll } from 'MIXINS/scroll'
 import articleCard2 from 'COMMON/articleCard/articleCard2'
 
@@ -46,111 +50,38 @@ export default {
   data () {
     return {
       page: 0,
-      pageSize: 20,
-      currentPage: 1,
+      pageSize: 15,
+      currentPage: 0,
       total: 0,
-      archives: [
-        {
-          title: '2018',
-          list: [
-            {
-              title: '这是标题',
-              publishTime: '07-08',
-              classify: {
-                id: 0,
-                name: 'vue'
-              },
-              tags: [
-                {
-                  name: 'vue'
-                },
-                {
-                  name: 'test'
-                },
-                {
-                  name: 'test'
-                },
-                {
-                  name: 'testtest'
-                },
-                {
-                  name: 'testtesttesttest'
-                }
-              ] ,
-              subMessage: '这是文章简介'
-            },
-            {
-              title: '这是标题这是标题这是标题这是标题这是标题这是标题这是标题这是标题',
-              publishTime: '07-08',
-              classify: {
-                id: 0,
-                name: 'vue'
-              },
-              tags: [
-                {
-                  name: 'vue'
-                },
-                {
-                  name: 'test'
-                }
-              ] ,
-              subMessage: '这是文章简介'
-            }
-          ]
-        },
-        {
-          title: '2017',
-          list: [
-            {
-              title: '这是标题这是标题这是标题这是标题这是标题这是标题这是标题这是标题',
-              publishTime: '07-08',
-              classify: {
-                id: 0,
-                name: 'vue'
-              },
-              tags: [
-                {
-                  name: 'vue'
-                },
-                {
-                  name: 'test'
-                }
-              ] ,
-              subMessage: '这是文章简介'
-            },
-            {
-              title: '这是标题这是标题这是标题这是标题这是标题这是标题这是标题这是标题',
-              publishTime: '07-08',
-              classify: {
-                id: 0,
-                name: 'vue'
-              },
-              tags: [
-                {
-                  name: 'vue'
-                },
-                {
-                  name: 'test'
-                }
-              ] ,
-              subMessage: '这是文章简介'
-            }
-          ]
-        }
-      ]
+      archives: []
     }
   },
   created() {
-    this.total = 0
-    this.archives.forEach(item => {
-      this.total += item.list.length
-    })
+    this.page = 0
+    this.getList()
   },
   methods: {
-    pageChange (currentPage) {
+    ...mapActions([
+      'getBlogArticleArchives'
+    ]),
+    pageChange(currentPage) {
       this.scrollToTop()
       this.page = currentPage - 1
       this.currentPage = currentPage
+      this.getList()
+    },
+    getList() {
+      this.getBlogArticleArchives({
+          page: this.page,
+          pageSize: this.pageSize
+        })
+        .then((data) => {
+          this.total = data.count
+          this.archives = data.list
+        })
+        .catch(()=> {
+          this.archives = []
+        })
     }
   }
 }

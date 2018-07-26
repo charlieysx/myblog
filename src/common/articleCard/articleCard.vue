@@ -6,17 +6,27 @@
           backgroundImage: 'url(' + getCover + ')'
         }">
         <div class="article-title">
-          <span @click="showArticle">{{ article.title }}</span>
+          <span @click="showArticle">{{ article.article.title }}</span>
         </div>
       </div>
       <div class="article-info">
         <i class="iconfont icon-calendar"></i>
-        <span class="info-item">发表于 {{ article.publishTime }}</span>
+        <span class="info-item">发表于 {{ article.article.publishTime | time }}</span>
         <span class="line">|</span>
         <i class="iconfont icon-folder"></i>
-        <span class="info-item">分类于 <span class="classify" @click="toList('category', article.classify)">{{ article.classify.name }}</span></span>
+        <span class="info-item">分类于 <span class="classify" @click="toList('category', article.category.id)">{{ article.category.name }}</span></span>
       </div>
-      <div class="article-sub-message">{{ article.subMessage }}</div>
+      <div class="article-sub-message">{{ article.article.subMessage }}</div>
+      <div class="tags" v-if="article.tags.length > 0">
+        <div
+          v-for="(tag, index) in article.tags"
+          :key="index"
+          class="tag"
+           @click="toList('tag', tag.id)">
+          <i class="iconfont icon-tag"></i>
+          {{ tag.name }}
+        </div>
+      </div>
       <div class="read-more" @click="showArticle">阅读全文 >></div>
     </div>
   </div>
@@ -34,8 +44,8 @@ export default {
   },
   computed: {
     getCover () {
-      if (this.article && this.article.cover) {
-        return this.article.cover
+      if (this.article && this.article.article && this.article.article.cover) {
+        return this.article.article.cover
       }
       return this.defaultCover
     }
@@ -44,17 +54,17 @@ export default {
     showArticle () {
       this.$router.push({
         name: 'article',
-        params: {
-          articleId: '1'
+        query: {
+          id: this.article.article.id
         }
       })
     },
-    toList (type, item) {
+    toList (type, id) {
       this.$router.push({
         name: 'articleList',
-        params: {
+        query: {
           type: type,
-          itemId: '111'
+          id: id
         }
       })
     }
@@ -158,14 +168,13 @@ export default {
       font-size: 16px
       @media (max-width: 768px)
         font-size: 14px
-      margin-bottom: 20px
     .read-more
       position: relative
       display: inline-block
       font-size: 14px
+      margin-top: 20px
       @media (max-width: 768px)
         font-size: 12px
-      margin-bottom: 10px
       cursor: pointer
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
       &:after
@@ -186,6 +195,46 @@ export default {
           transform: scaleX(0)
           transition-duration: .2s
           transition-timing-function: ease
+    .tags
+      width: 100%
+      padding: 10px 0px
+      display: flex
+      flex-direction: row
+      align-items: center
+      flex-wrap: wrap
+      border-bottom: 1px solid #eeeeee
+      margin-bottom: 10px
+      .tag
+        color: $color-white
+        padding: 5px
+        background-color: $color-main
+        font-size: 12px
+        margin-right: 5px
+        border-radius: 5px
+        transition: all .3s
+        position: relative
+        margin-left: 10px
+        margin-top: 10px
+        line-height: 1
+        cursor: pointer
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+        &:hover
+          &:before
+            border-right: 12px solid lighten($color-main, 20%)
+          background-color: lighten($color-main, 20%)
+        &:before
+          position: absolute
+          left: -9px
+          top: 0
+          width: 0
+          height: 0
+          content: ""
+          border-top: 11px solid transparent
+          border-bottom: 11px solid transparent
+          border-right: 12px solid $color-main
+          transition: all .3s
+        .iconfont
+          font-size: 12px
 
 @keyframes show {
   from {
