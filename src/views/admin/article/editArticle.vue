@@ -129,6 +129,7 @@ import {
 import { mavonEditor } from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import UP from 'COMMON/upload/upCover.vue'
+import { markdown } from 'UTIL/markdown'
 
 export default {
   name: 'edit-article',
@@ -268,13 +269,18 @@ export default {
       })
       return tags
     },
+    markdownHtml(str) {
+      return markdown(str)
+    },
     getParams() {
+      let html = this.markdownHtml(this.article.content)
       let params = {
         title: this.article.title,
         cover: this.article.cover,
         subMessage: this.article.subMessage,
         isEncrypt: this.isEncrypt ? '1' : '0',
-        content: this.article.content
+        content: this.article.content,
+        htmlContent: html
       }
       params.category = this.getCategory()
       params.tags = this.getTags()

@@ -56,6 +56,7 @@ import {
 
 import { mavonEditor } from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
+import { markdown } from 'UTIL/markdown'
 
 export default {
   name: 'web-config-about',
@@ -105,6 +106,9 @@ export default {
     uploadSuccess(url) {
       this.params.imageUrl = url
     },
+    markdownHtml(str) {
+      return markdown(str)
+    },
     commit() {
       const loading = this.$loading({
         lock: true,
@@ -112,7 +116,11 @@ export default {
         spinner: 'el-icon-loading',
         background: 'rgba(0, 0, 0, 0.7)'
       })
-      this.modifyAboutMe(this.value)
+      let html = this.markdownHtml(this.value)
+      this.modifyAboutMe({
+          aboutMeContent: this.value,
+          htmlContent: html
+        })
         .then((data) => {
           loading.close()
           this.$toast('已更新')

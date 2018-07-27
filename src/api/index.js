@@ -109,8 +109,8 @@ export default {
   /**
    * 修改 关于我 页面
    */
-  modifyAboutMe (content) {
-    return axios.post('a/webConfig/modifyAbout', Qs.stringify({aboutMeContent: content}))
+  modifyAboutMe (params) {
+    return axios.post('a/webConfig/modifyAbout', Qs.stringify(params))
   },
   /**
    * 获取首页面板显示的统计信息

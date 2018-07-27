@@ -122,8 +122,8 @@ const actions = {
   /**
    * 修改 关于我 页面
    */
-  modifyAboutMe (store, content) {
-    return api.modifyAboutMe(content)
+  modifyAboutMe (store, params) {
+    return api.modifyAboutMe(params)
       .then((data) => {
         return Promise.resolve(data.data)
       })

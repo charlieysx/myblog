@@ -24,7 +24,7 @@
           </div>
           <div class="article-sub-message">{{ article.subMessage }}</div>
         </div>
-        <md-preview :contents="article.content" />
+        <md-preview :contents="article.htmlContent" />
         <div class="tags">
           <div
             v-for="(tag, index) in tags"

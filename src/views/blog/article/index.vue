@@ -18,7 +18,7 @@
         </div>
         <div class="article-sub-message">{{ article.subMessage }}</div>
       </div>
-      <md-preview :contents="article.content" />
+      <md-preview :contents="article.htmlContent" />
       <div class="money-wrap" v-if="qrcode">
         <p>如果我的文章对您有帮助！有钱的捧个钱场，没钱的捧个人场，谢谢您！</p>
         <div class="money-btn" @click="showQrcode = !showQrcode">赞赏支持</div>

@@ -6,7 +6,7 @@
           关于我
         </p>
       </div>
-      <md-preview :contents="content" />
+      <md-preview :contents="htmlContent" />
       <div class="money-wrap" v-if="qrcode">
         <p>如果我的文章对您有帮助！有钱的捧个钱场，没钱的捧个人场，谢谢您！</p>
         <div class="money-btn" @click="showQrcode = !showQrcode">赞赏支持</div>
@@ -42,14 +42,14 @@ export default {
   data () {
     return {
       showQrcode: false,
-      content: '',
+      htmlContent: '',
       qrcode: ''
     }
   },
   created() {
     this.getBlogAboutMe()
       .then((data) => {
-        this.content = data.aboutMeContent
+        this.htmlContent = data.htmlContent
         this.qrcode = data.qrcode
       })
       .catch(()=> {})
