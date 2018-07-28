@@ -2,7 +2,10 @@ import api from 'API/index'
 import {
   SCREEN_CHANGE,
   SHOW_RIGHT_NAV,
-  IS_ADMIN_WRAP
+  IS_ADMIN_WRAP,
+  SET_ARTICLE_MENU,
+  SET_ARTICLE_MENU_SOURCE,
+  SET_ARTICLE_MENU_TAG
 } from '../mutation-types'
 
 const state = {
@@ -11,7 +14,10 @@ const state = {
     height: 0
   },
   showRightNav: false,
-  isAdminWrap: false
+  isAdminWrap: false,
+  articleMenu: false,
+  articleMenuSource: [],
+  articleMenuTag: '1.'
 }
 
 const getters = {
@@ -23,6 +29,15 @@ const getters = {
   },
   isAdminWrap (state) {
     return state.isAdminWrap
+  },
+  articleMenu (state) {
+    return state.articleMenu
+  },
+  articleMenuSource (state) {
+    return state.articleMenuSource
+  },
+  articleMenuTag (state) {
+    return state.articleMenuTag
   }
 }
 
@@ -35,6 +50,15 @@ const mutations = {
   },
   [IS_ADMIN_WRAP] (state, data) {
     state.isAdminWrap = data
+  },
+  [SET_ARTICLE_MENU] (state, data) {
+    state.articleMenu = data
+  },
+  [SET_ARTICLE_MENU_SOURCE] (state, data) {
+    state.articleMenuSource = data
+  },
+  [SET_ARTICLE_MENU_TAG] (state, data) {
+    state.articleMenuTag = data
   }
 }
 
@@ -44,6 +68,15 @@ const actions = {
   },
   setIsAdminWrap (store, isAdminWrap) {
     store.state.isAdminWrap = isAdminWrap
+  },
+  setArticleMenu (store, articleMenu) {
+    store.state.articleMenu = articleMenu
+  },
+  setArticleMenuSource (store, articleMenuSource) {
+    store.state.articleMenuSource = articleMenuSource
+  },
+  setArticleMenuTag (store, articleMenuTag) {
+    store.state.articleMenuTag = articleMenuTag
   },
   uploadToQiniu (store, params) {
     return api.uploadToQiniu(params)

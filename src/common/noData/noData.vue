@@ -6,23 +6,23 @@
   </div>
 </template>
 <script>
-  export default {
-    name: 'noData',
-    props: {
-      text: {
-        type: String,
-        default: ''
-      }
-    },
-    computed: {
-      cls () {
-        return {
-          fontSize: '14px',
-          padding: '60px'
-        }
+export default {
+  name: 'noData',
+  props: {
+    text: {
+      type: String,
+      default: ''
+    }
+  },
+  computed: {
+    cls () {
+      return {
+        fontSize: '14px',
+        padding: '60px'
       }
     }
   }
+}
 </script>
 <style lang="stylus" scoped>
 @import '~STYLUS/color.styl'

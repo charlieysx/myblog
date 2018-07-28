@@ -1,19 +1,23 @@
+var timer = null
 var scroll = {
   methods: {
-    scrollToTop () {
-      let timer = null
+    scrollToTarget (target = 0) {
       let currentNum = document.body.scrollTop || document.documentElement.scrollTop
       let t = 0
       clearInterval(timer)
+      let dir = 1
+      if (target > currentNum) {
+        dir = -1
+      }
       timer = setInterval(() => {
         // 匀加速运动
         t++
-        currentNum = currentNum - (2 * t)
-        if (currentNum <= 0) {
-          document.body.scrollTop = document.documentElement.scrollTop = 0
+        currentNum -= (2 * t * dir)
+        document.body.scrollTop = document.documentElement.scrollTop = currentNum
+        if ((dir === 1 && currentNum <= target) || (dir === -1 && currentNum >= target)) {
+          document.body.scrollTop = document.documentElement.scrollTop = target
           clearInterval(timer)
         }
-        document.body.scrollTop = document.documentElement.scrollTop = currentNum
       }, 16.7)
     }
   }

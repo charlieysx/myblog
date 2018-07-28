@@ -14,3 +14,9 @@ export const SHOW_TOKEN_ERROR = 'SHOW_TOKEN_ERROR'
 export const SET_ADMIN_INFO = 'SET_ADMIN_INFO'
 // 保存博客信息
 export const SET_BLOG_INFO = 'SET_BLOG_INFO'
+// 保存文章目录信息
+export const SET_ARTICLE_MENU = 'SET_ARTICLE_MENU'
+// 保存文章目录信息(未生成树的)
+export const SET_ARTICLE_MENU_SOURCE = 'SET_ARTICLE_MENU_SOURCE'
+// 保存当前为文章第几个目录
+export const SET_ARTICLE_MENU_TAG = 'SET_ARTICLE_MENU_TAG'

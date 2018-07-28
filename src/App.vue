@@ -30,7 +30,7 @@
 
     <!-- 返回顶部 -->
     <transition name="slide-fade">
-      <div class="to-top" @click="scrollToTop" v-show="showScrollToTop">
+      <div class="to-top" @click="scrollToTarget" v-show="showScrollToTop">
         <span
           class="to-top-line"
           v-for="(line, index) in lineData"
@@ -120,7 +120,9 @@ export default {
     ...mapGetters([
       'isAdminWrap',
       'isLogin',
-      'tokenError'
+      'tokenError',
+      'articleMenu',
+      'articleMenuSource'
     ])
   },
   created() {
@@ -140,7 +142,8 @@ export default {
   methods: {
     ...mapActions([
       'setShowRightNav',
-      'getBlogInfo'
+      'getBlogInfo',
+      'setArticleMenuTag'
     ]),
     updateScreen () {
       this.$store.commit(SCREEN_CHANGE, {
@@ -154,6 +157,15 @@ export default {
         this.showScrollToTop = true
       } else {
         this.showScrollToTop = false
+      }
+      if (this.articleMenu) {
+        for (let i = 0, len = this.articleMenuSource.length; i < len; ++i) {
+          let item = this.articleMenuSource[i]
+          if (scrollTop <= item.top + 20) {
+            this.setArticleMenuTag(item.tag)
+            break
+          }
+        }
       }
     }
   }
