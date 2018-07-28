@@ -161,7 +161,9 @@ export default {
       if (this.articleMenu) {
         for (let i = 0, len = this.articleMenuSource.length; i < len; ++i) {
           let item = this.articleMenuSource[i]
-          if (scrollTop <= item.top + 20) {
+          let top = document.getElementById(item.id).getBoundingClientRect().top
+          top += document.body.scrollTop || document.documentElement.scrollTop
+          if (scrollTop <= top + 20) {
             this.setArticleMenuTag(item.tag)
             break
           }

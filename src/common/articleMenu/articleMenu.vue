@@ -28,7 +28,9 @@ export default {
   },
   methods: {
     toMenu(item) {
-      this.scrollToTarget(item.top)
+      let top = document.getElementById(item.id).getBoundingClientRect().top
+      top += document.body.scrollTop || document.documentElement.scrollTop
+      this.scrollToTarget(top)
     },
     is (item) {
       return item.tag === this.articleMenuTag

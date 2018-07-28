@@ -72,7 +72,7 @@ export default {
       let pos = 0
       Array.prototype.forEach.call(headNodes, item => {
         headList.push({
-          top: item.getBoundingClientRect().top - 10,
+          id: item.id,
           index: parseInt(item.tagName.replace('H', '')),
           title: item.innerText
         })
