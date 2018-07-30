@@ -17,8 +17,7 @@ export default {
   computed: {
     cls () {
       return {
-        fontSize: '14px',
-        padding: '60px'
+        fontSize: '14px'
       }
     }
   }
