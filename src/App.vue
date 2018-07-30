@@ -30,7 +30,7 @@
 
     <!-- 返回顶部 -->
     <transition name="slide-fade">
-      <div class="to-top" @click="scrollToTarget" v-show="showScrollToTop">
+      <div class="to-top" @click="scrollToTarget(0)" v-show="showScrollToTop">
         <span
           class="to-top-line"
           v-for="(line, index) in lineData"
@@ -127,7 +127,7 @@ export default {
   },
   created() {
     if (!this.isAdminWrap) {
-      this.getBlogInfo()
+      this.getBlogInfo().catch(()=> {})
     }
   },
   mounted() {

@@ -74,7 +74,7 @@ export default {
           this.category = data.category
           this.tags = data.tags
         })
-        .catch(()=> {})
+        .catch((err)=> {console.log(err)})
     }
   },
   methods: {

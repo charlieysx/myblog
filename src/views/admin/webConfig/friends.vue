@@ -193,7 +193,7 @@ export default {
       })
     },
     pageChange(currentPage) {
-      this.scrollToTarget()
+      this.scrollToTarget(0)
       this.page = currentPage - 1
       this.currentPage = currentPage
       this.getList()
