@@ -108,11 +108,11 @@ export default {
           }
         }
       })
-      index = 0
       // 因为上面一层循环，只能处理两层，所以需要遍历孩子节点，出现index不一样的说明不是同级，需要对孩子节点再递归调用生成
       tree.forEach(item => {
         let children = item.children
         let ids = []
+        index = 0
         // 判断是否存在index不一样的
         children.forEach(child => {
           child.tag = item.tag + (++index) + '.'
