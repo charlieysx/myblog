@@ -1,18 +1,18 @@
 <template>
   <div id="comments">
-    <div class="input-wrap">
+    <div id="comments-input-top" class="input-wrap">
       <div class="input-top">
         <el-input
           class="top-item"
           size="mini"
           v-model="name"
-          placeholder="称呼">
+          placeholder="称呼（必填）">
         </el-input>
         <el-input
           class="top-item"
           size="mini"
           v-model="email"
-          placeholder="邮箱（方便联系您，不会公开）">
+          placeholder="邮箱（选填，方便联系您，不会公开）">
         </el-input>
       </div>
       <el-input
@@ -20,7 +20,6 @@
         type="textarea"
         size="mini"
         :rows="5"
-        :maxlength="150"
         resize="none"
         v-model="content"
         :placeholder="placeholder">
@@ -57,7 +56,10 @@
         <div class="comments-info">
           <img class="avatar" src="~IMAGES/avatar.jpg" />
           <div class="name-time">
-            <p class="name">{{ comments.name }}</p>
+            <p class="name">
+              {{ comments.name }}
+              <span @click="reply(comments)">回复</span>
+            </p>
             <p class="time">{{ comments.createTime | time }}</p>
           </div>
         </div>
@@ -70,7 +72,10 @@
             <div class="comments-info">
               <img class="avatar" src="~IMAGES/avatar.jpg" />
               <div class="name-time">
-                <p class="name">{{ child.name }}</p>
+                <p class="name">
+                  {{ child.name }}
+                  <span @click="reply(child)">回复</span>
+                </p>
                 <p class="time">{{ child.createTime | time }}</p>
               </div>
             </div>
@@ -84,6 +89,7 @@
 
 <script>
 import noData from 'COMMON/noData/noData'
+import { scroll } from 'MIXINS/scroll'
 
 export default {
   name: 'comments',
@@ -91,6 +97,7 @@ export default {
   components: {
     noData
   },
+  mixins: [scroll],
   data () {
     return {
       placeholder: '写下您的评论~',
@@ -183,7 +190,7 @@ export default {
         },
         {
           id: 1,
-          name: '匿名',
+          name: '匿名匿名匿名匿名匿名匿名匿名',
           createTime: 1532945798,
           children: [
             {
@@ -191,7 +198,14 @@ export default {
               name: '作者',
               createTime: 1532945798,
               children: [],
-              content: 'test'
+              content: '@匿名匿名匿名匿名匿名匿名匿名 test'
+            },
+            {
+              id: 2,
+              name: '哈哈',
+              createTime: 1532945798,
+              children: [],
+              content: '@作者 <img class="content-emoji" src="static/emoji/weixiao.gif" alt="" />'
             }
           ],
           content: 'testtest'
@@ -203,10 +217,25 @@ export default {
           children: [],
           content: 'test'
         }
-      ]
+      ],
+      parentsId: '',
+      parentsName: ''
     }
   },
   computed: {
+  },
+  watch: {
+    content(value) {
+      if (this.parentsName !== '') {
+        if (value.indexOf(`@${this.parentsName} `) !== 0) {
+          this.parentsId = ''
+          this.parentsName = ''
+        }
+      }
+    },
+    parentsName(value) {
+      this.content = `@${this.parentsName} `
+    }
   },
   methods: {
     choseEmoji(title) {
@@ -218,15 +247,24 @@ export default {
         this.$toast('评论内容不能为空', 'error')
         return
       }
-      let params = {
-        content: this.analyzeEmoji()
-      }
       if (this.name === '') {
-        params.name = '匿名'
+        this.$toast('请填写您的称呼', 'error')
+        return
+      }
+      let params = {
+        name: this.name,
+        content: this.analyzeEmoji()
       }
       if (!this.email === '') {
         params.email = this.email
       }
+      this.commentsList.push({
+        id: 1,
+        name: 'haha',
+        createTime: 1532945798,
+        children: [],
+        content: params.content
+      })
     },
     analyzeEmoji() {
       let pattern = /\[[\u4e00-\u9fa5]+\]/g
@@ -245,7 +283,15 @@ export default {
           }
         }
       }
+      result = result.replace(/\r\n/g, '<br/>').replace(/\n/g, '<br/>').replace(/\s/g, '&nbsp;')
       return result
+    },
+    reply(comments) {
+      this.parentsId = comments.id
+      this.parentsName = comments.name
+      let top = document.getElementById('comments-input-top').getBoundingClientRect().top
+      top += document.body.scrollTop || document.documentElement.scrollTop
+      this.scrollToTarget(top)
     }
   }
 }
@@ -355,6 +401,7 @@ export default {
   .comments-wrap
     .comments-item
       padding: 10px 5px
+      transition: background-color .3s
       &:hover
         background-color: #eeeeee
       .comments-info
@@ -367,10 +414,18 @@ export default {
           margin-right: 5px
           border-radius: 50%
         .name-time
+          flex: 1
           .name
             font-size: 14px
             color: #555555
             margin-bottom: 2px
+            > span
+              font-size: 12px
+              float: right
+              cursor: pointer
+              color: lighten($color-main, 30%)
+              &:hover
+                color: $color-main
           .time
             font-size: 12px
             color: #999999
@@ -378,13 +433,17 @@ export default {
         padding-left: 40px
         font-size: 14px
         color: #555555
+        line-height: 16px
   .comments-children
-    padding-left: 12px
     margin-left: 12px
     border-left: 2px solid #999999
     margin-top: 5px
     .comments-child
       padding: 10px 5px
+      padding-left: 17px
+      transition: background-color .3s
+      &:hover
+        background-color: #dddddd
       .comments-info
         display: flex
         flex-direction: row
@@ -395,10 +454,18 @@ export default {
           margin-right: 5px
           border-radius: 50%
         .name-time
+          flex: 1
           .name
             font-size: 14px
             color: #555555
             margin-bottom: 2px
+            > span
+              font-size: 12px
+              float: right
+              cursor: pointer
+              color: lighten($color-main, 30%)
+              &:hover
+                color: $color-main
           .time
             font-size: 12px
             color: #999999
@@ -406,6 +473,7 @@ export default {
         padding-left: 40px
         font-size: 14px
         color: #555555
+        line-height: 16px
 
 .fade-enter-active, .fade-leave-active
   transition: opacity .3s
