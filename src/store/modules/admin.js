@@ -406,6 +406,54 @@ const actions = {
       .catch((error) => {
         return Promise.reject(error)
       })
+  },
+  /**
+   * 获取所有评论列表
+   */
+  getAllCommentsList (store) {
+    return api.getAllCommentsList()
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+  /**
+   * 获取文章评论列表
+   */
+  getComments (store, articleId) {
+    return api.getComments(articleId)
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+  /**
+   * 添加评论
+   */
+  adminReplyComments (store, params) {
+    return api.adminReplyComments(params)
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+  /**
+   * 删除评论
+   */
+  deleteComments (store, commentsId) {
+    return api.deleteComments(commentsId)
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
   }
 }
 

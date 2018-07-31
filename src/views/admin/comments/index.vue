@@ -9,6 +9,11 @@
         size="mini"
         style="width: 100%">
         <el-table-column
+          prop="name"
+          label="评论者"
+          width="120">
+        </el-table-column>
+        <el-table-column
           label="评论内容"
           min-width="200">
           <template slot-scope="scope">
@@ -21,6 +26,13 @@
           min-width="150">
           <template slot-scope="scope">
             <div class="comments-title" @click="preview(scope.row)">{{ scope.row.articleTitle }}</div>
+          </template>
+        </el-table-column>
+        <el-table-column
+          label="作者"
+          width="45">
+          <template slot-scope="scope">
+            {{ scope.row.isAuthor === '1' ? '是' : '否' }}
           </template>
         </el-table-column>
         <el-table-column
@@ -55,7 +67,7 @@
       <!-- 分页 -->
       <div
         class="pagination"
-        v-show="commentsList.length > 0">
+        v-show="total > 0">
         <el-pagination
           background
           layout="prev, pager, next"
@@ -75,7 +87,7 @@
         :rows="5"
         resize="none"
         v-model="replyContent"
-        placeholder="请输入回复内容~">
+        :placeholder="placeholder">
       </el-input>
       <div class="btn-wrap">
         <span class="emoji-btn" :class="{active: showEmoji}" @click="showEmoji = !showEmoji">表情</span>
@@ -115,49 +127,44 @@ export default {
   mixins: [scroll, emoji],
   data () {
     return {
-      commentsList: [
-        {
-          content: '<img class="content-emoji" src="/static/emoji/weixiao.gif" alt="" />',
-          createTime: 1532945798,
-          articleTitle: 'test',
-          isAuthor: '0'
-        },
-        {
-          content: '<img class="content-emoji" src="/static/emoji/weixiao.gif" alt="" />',
-          createTime: 1532945798,
-          articleTitle: 'test',
-          isAuthor: '1'
-        }
-      ],
+      placeholder: '',
+      commentsList: [],
       dialogFormVisible: false,
       showEmoji: false,
       replyContent: '',
       page: 0,
       pageSize: 15,
       currentPage: 0,
-      total: 0
+      total: 0,
+      comments: {}
     }
   },
   created() {
     this.page = 0
-    // this.getList()
+    this.getList()
   },
   methods: {
     ...mapActions([
-      'getArticleList',
-      'deleteArticle'
+      'getAllCommentsList',
+      'adminReplyComments',
+      'deleteComments'
     ]),
     formatTime(row, column, cellValue, index) {
       return cellValue ? moment(parseInt(cellValue) * 1000).format('YYYY-MM-DD HH:mm') : '-'
     },
     reply(comments) {
+      this.comments = comments
+      this.replyContent = ``
+      this.placeholder = `@${this.comments.name} `
       this.dialogFormVisible = true
     },
-    under (comments) {
+    del (comments) {
       this.showDialog('此操作将彻底删除该评论，不可恢复, 是否继续?', ()=> {
-        this.deleteArticle(comments.id)
+        this.deleteComments(comments.id)
           .then((data) => {
             this.$toast('已删除')
+            this.page = 0
+            this.getList()
           })
           .catch((err)=> {
             this.$toast(err.msg, 'error')
@@ -171,18 +178,14 @@ export default {
       this.getList()
     },
     getList() {
-      this.getArticleList({
-          by: 'status',
-          status: 2,
-          page: this.page,
-          pageSize: this.pageSize
-        })
+      this.getAllCommentsList()
         .then((data) => {
           this.total = data.count
-          this.articleList = data.list
+          this.commentsList = data.list
         })
         .catch(()=> {
-          this.articleList = []
+          this.total = 0
+          this.commentsList = []
         })
     },
     preview (article) {
@@ -198,11 +201,28 @@ export default {
       this.replyContent += title
     },
     commit() {
-      //
+      if (this.replyContent === '') {
+        this.$toast('回复内容不能为空', 'error')
+        return
+      }
+      let params = {
+        articleId: this.comments.articleId,
+        replyId: this.comments.id,
+        content: this.analyzeEmoji(`@${this.comments.name} ${this.replyContent}`)
+      }
+      this.adminReplyComments(params)
+        .then((data) => {
+          this.$toast('回复成功~')
+          this.page = 0
+          this.getList()
+          this.dialogFormVisible = false
+        })
+        .catch((err)=> {
+          this.$toast(err.msg, 'error')
+        })
     },
     cancel() {
       this.dialogFormVisible = false
-      this.replyContent = ''
     },
     showDialog(tip, next) {
       this.$confirm(tip, '提示', {
@@ -270,7 +290,7 @@ export default {
   margin: 1px
 
 .edit-dialog
-  position: relative
+  top: 15vh !important
   .input-title
     margin-bottom: 10px
   .el-dialog

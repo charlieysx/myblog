@@ -55,7 +55,7 @@
           <i class="el-icon-arrow-right"></i>
         </span>
       </div>
-      <comments id="1" />
+      <comments :id="article.id" />
     </div>
     <no-data
       v-if="!article.id"

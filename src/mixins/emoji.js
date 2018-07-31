@@ -95,7 +95,7 @@ var emoji = {
           }
         }
       }
-      result = result.replace(/\r\n/g, '<br/>').replace(/\n/g, '<br/>').replace(/\s/g, '&nbsp;')
+      result = result.replace(/\r\n/g, '<br/>').replace(/\n/g, '<br/>')
       return result
     },
     getEmojiList () {

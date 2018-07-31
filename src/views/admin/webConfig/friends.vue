@@ -355,6 +355,7 @@ a
 
 <style lang="stylus">
 .edit-dialog
+  top: 15vh !important
   .el-dialog
     margin: 0 auto !important
     width: calc(100% - 30px)

@@ -3,12 +3,14 @@
     <div id="comments-input-top" class="input-wrap">
       <div class="input-top">
         <el-input
+          v-if="!isAdminWrap"
           class="top-item"
           size="mini"
           v-model="name"
           placeholder="称呼（必填）">
         </el-input>
         <el-input
+          v-if="!isAdminWrap"
           class="top-item"
           size="mini"
           v-model="email"
@@ -32,7 +34,7 @@
         </div>
       </div>
       <transition name="slide-fade">
-        <ul class="emoji-wrap" v-show="showEmoji">
+        <ul class="emoji-wrap" v-show="showEmoji" :style="{top: isAdminWrap ? '143px' : '214px'}">
           <li
             v-for="(emoji, index) in emojiList"
             :key="index"
@@ -54,11 +56,11 @@
         v-for="(comments, index) in commentsList"
         :key="index">
         <div class="comments-info">
-          <img class="avatar" src="~IMAGES/avatar.jpg" />
+          <img class="avatar" :src="getAvatar(comments)" />
           <div class="name-time">
             <p class="name">
-              {{ comments.name }}
-              <span @click="reply(comments)">回复</span>
+              {{ getName(comments) }}
+              <span @click="reply(comments)" v-if="!isAdminWrap">回复</span>
             </p>
             <p class="time">{{ comments.createTime | time }}</p>
           </div>
@@ -70,11 +72,11 @@
             v-for="(child, index) in comments.children"
             :key="index">
             <div class="comments-info">
-              <img class="avatar" src="~IMAGES/avatar.jpg" />
+              <img class="avatar" :src="getAvatar(child)" />
               <div class="name-time">
                 <p class="name">
-                  {{ child.name }}
-                  <span @click="reply(child)">回复</span>
+                  {{ getName(child) }}
+                  <span @click="reply(child)" v-if="!isAdminWrap">回复</span>
                 </p>
                 <p class="time">{{ child.createTime | time }}</p>
               </div>
@@ -88,6 +90,11 @@
 </template>
 
 <script>
+import {
+  mapGetters,
+  mapActions
+} from 'vuex'
+
 import noData from 'COMMON/noData/noData'
 import { scroll } from 'MIXINS/scroll'
 import { emoji } from 'MIXINS/emoji'
@@ -107,95 +114,141 @@ export default {
       count: 0,
       name: '',
       email: '',
-      commentsList: [
-        {
-          id: 1,
-          name: '匿名',
-          createTime: 1532945798,
-          children: [],
-          content: 'test'
-        },
-        {
-          id: 1,
-          name: '匿名匿名匿名匿名匿名匿名匿名',
-          createTime: 1532945798,
-          children: [
-            {
-              id: 1,
-              name: '作者',
-              createTime: 1532945798,
-              children: [],
-              content: '@匿名匿名匿名匿名匿名匿名匿名 test'
-            },
-            {
-              id: 2,
-              name: '哈哈',
-              createTime: 1532945798,
-              children: [],
-              content: '@作者 <img class="content-emoji" src="/static/emoji/weixiao.gif" alt="" />'
-            }
-          ],
-          content: 'testtest'
-        },
-        {
-          id: 1,
-          name: '匿名',
-          createTime: 1532945798,
-          children: [],
-          content: 'test'
-        }
-      ],
-      parentsId: '',
-      parentsName: ''
+      commentsList: [],
+      replyId: 0,
+      replyName: '',
+      avatar: require('IMAGES/cat.jpg')
     }
   },
   computed: {
+    ...mapGetters([
+      'isAdminWrap',
+      'commentsInfo',
+      'blogInfo'
+    ])
   },
   watch: {
-    content(value) {
-      if (this.parentsName !== '') {
-        if (value.indexOf(`@${this.parentsName} `) !== 0) {
-          this.parentsId = ''
-          this.parentsName = ''
+    content (value) {
+      if (this.replyName !== '') {
+        if (value.indexOf(`@${this.replyName} `) !== 0) {
+          this.replyId = 0
+          this.replyName = ''
         }
       }
     },
-    parentsName(value) {
-      this.content = `@${this.parentsName} `
+    replyName (value) {
+      this.content = `@${this.replyName} `
+    },
+    id (value) {
+      if (value !== '') {
+        this.init()
+      }
+    }
+  },
+  created() {
+    if (this.id !== '') {
+      this.init()
+    }
+    if (this.commentsInfo.name) {
+      this.name = this.commentsInfo.name
+      this.email = this.commentsInfo.email
     }
   },
   methods: {
+    ...mapActions([
+      'getBlogComments',
+      'replyComments',
+      'adminReplyComments',
+      'getComments',
+      'setCommentsInfo'
+    ]),
+    getName(comments) {
+      return comments.name + (comments.isAuthor !== '1' ? '' : '（作者）')
+    },
+    getAvatar(comments) {
+      return comments.isAuthor !== '1' ? this.avatar : this.blogInfo.avatar
+    },
+    init() {
+      this.count = 0
+      this.commentsList = []
+      this.replyId = 0
+      this.replyName = ''
+      this.content = ''
+      this.getList()
+    },
+    getList() {
+      if (this.isAdminWrap) {
+        this.getComments(this.id)
+          .then((data) => {
+            this.count = data.count
+            this.commentsList = data.list
+          })
+          .catch(()=> {})
+      } else {
+        this.getBlogComments(this.id)
+          .then((data) => {
+            this.count = data.count
+            this.commentsList = data.list
+          })
+          .catch(()=> {})
+      }
+    },
+    addComments(params) {
+      if (this.isAdminWrap) {
+        this.adminReplyComments(params)
+          .then((data) => {
+            this.$toast('评论成功~')
+            this.init()
+          })
+          .catch((err)=> {
+            this.$toast(err.msg, 'error')
+          })
+      } else {
+        this.replyComments(params)
+          .then((data) => {
+            this.$toast('评论成功~')
+            this.init()
+          })
+          .catch((err)=> {
+            this.$toast(err.msg, 'error')
+          })
+      }
+    },
     choseEmoji(title) {
       // this.content += '[' + title + ']'
       this.content += title
     },
     send() {
-      if (this.content === '') {
+      if (this.content === '' || this.content === `@${this.replyName} `) {
         this.$toast('评论内容不能为空', 'error')
         return
       }
-      if (this.name === '') {
+      if (this.name === '' && !this.isAdminWrap) {
         this.$toast('请填写您的称呼', 'error')
         return
       }
       let params = {
+        articleId: this.id,
         name: this.name,
+        replyId: this.replyId,
         content: this.analyzeEmoji(this.content)
       }
-      if (!this.email === '') {
+      if (this.email !== '' && !this.isAdminWrap) {
+        if (!(/^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(this.email))) {
+          this.$toast('邮箱格式不正确哦~', 'error')
+          return
+        }
         params.email = this.email
       }
-      this.commentsList.push({
-        id: 1,
-        name: 'haha',
-        createTime: 1532945798,
-        children: [],
-        content: params.content
+      this.setCommentsInfo({
+        name: this.name,
+        email: this.email
       })
+      this.addComments(params)
     },
     reply(comments) {
-      this.parentsId = comments.id
-      this.parentsName = comments.name
+      this.replyId = comments.id
+      this.replyName = comments.name
       let top = document.getElementById('comments-input-top').getBoundingClientRect().top
       top += document.body.scrollTop || document.documentElement.scrollTop
       this.scrollToTarget(top)

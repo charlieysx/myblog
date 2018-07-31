@@ -35,7 +35,7 @@
             {{ tag.name }}
           </div>
         </div>
-        <comments id="1" />
+        <comments :id="article.id" />
       </div>
       <no-data
         v-if="!article.id"
