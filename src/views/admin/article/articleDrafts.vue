@@ -1,6 +1,6 @@
 <template>
   <div id="article-drafts">
-    <p>草稿箱（共计：{{ total }}篇）</p>
+    <p>回收站（共计：{{ total }}篇）</p>
     <div class="article-table-wrap">
       <el-table
         :data="articleList"

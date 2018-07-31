@@ -359,7 +359,6 @@ a
     margin: 0 auto !important
     width: calc(100% - 30px)
     max-width: 400px
-    margin-top: 15vh !important
   .input-title
     margin-bottom: 10px
   .label-wrap

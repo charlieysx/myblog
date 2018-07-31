@@ -21,11 +21,15 @@
         <el-menu-item index="/admin/article/publish"><i class="iconfont icon-article-edit"></i>写文章</el-menu-item>
         <el-menu-item index="/admin/article/manage"><i class="iconfont icon-article-manage"></i>文章管理</el-menu-item>
         <el-menu-item index="/admin/article/drafts"><i class="iconfont icon-drafts"></i>草稿箱</el-menu-item>
-        <el-menu-item index="/admin/article/deleted"><i class="iconfont icon-deleted"></i>垃圾箱</el-menu-item>
+        <el-menu-item index="/admin/article/deleted"><i class="iconfont icon-deleted"></i>回收站</el-menu-item>
       </el-submenu>
       <el-menu-item index="/admin/categories">
         <i class="iconfont icon-tag"></i>
         <span slot="title">分类/标签</span>
+      </el-menu-item>
+      <el-menu-item index="/admin/comments">
+        <i class="iconfont icon-comments"></i>
+        <span slot="title">评论</span>
       </el-menu-item>
       <el-submenu index="4">
         <template slot="title">

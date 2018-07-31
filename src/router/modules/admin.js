@@ -9,6 +9,7 @@ const webConfig = r => require.ensure([], () => r(require('VIEWS/admin/webConfig
 const webConfigAbout = r => require.ensure([], () => r(require('VIEWS/admin/webConfig/about.vue')), 'webConfigAbout')
 const webConfigFriends = r => require.ensure([], () => r(require('VIEWS/admin/webConfig/friends.vue')), 'webConfigFriends')
 const adminArticleList = r => require.ensure([], () => r(require('VIEWS/admin/categories/articleList.vue')), 'adminArticleList')
+const adminComments = r => require.ensure([], () => r(require('VIEWS/admin/comments/index.vue')), 'adminComments')
 
 export default [
   {
@@ -71,6 +72,14 @@ export default [
     path: '/admin/categories',
     name: 'adminCategories',
     component: adminCategories,
+    meta: {
+      requireAuth: true
+    }
+  },
+  {
+    path: '/admin/comments',
+    name: 'adminComments',
+    component: adminComments,
     meta: {
       requireAuth: true
     }
