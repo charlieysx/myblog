@@ -121,6 +121,30 @@ const actions = {
       .catch((error) => {
         return Promise.reject(error)
       })
+  },
+  /**
+   * 获取文章评论列表
+   */
+  getBlogComments (store, articleId) {
+    return api.getBlogComments(articleId)
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+  /**
+   * 添加评论
+   */
+  replyComments (store, params) {
+    return api.replyComments(params)
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
   }
 }
 

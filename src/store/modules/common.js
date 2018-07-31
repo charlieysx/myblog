@@ -5,8 +5,13 @@ import {
   IS_ADMIN_WRAP,
   SET_ARTICLE_MENU,
   SET_ARTICLE_MENU_SOURCE,
-  SET_ARTICLE_MENU_TAG
+  SET_ARTICLE_MENU_TAG,
+  SET_COMMENTS_INFO
 } from '../mutation-types'
+
+import {
+  cachedCommentsInfo
+} from 'API/cacheService'
 
 const state = {
   screen: {
@@ -17,7 +22,8 @@ const state = {
   isAdminWrap: false,
   articleMenu: false,
   articleMenuSource: [],
-  articleMenuTag: '1.'
+  articleMenuTag: '1.',
+  commentsInfo: cachedCommentsInfo.load() || {}
 }
 
 const getters = {
@@ -38,6 +44,9 @@ const getters = {
   },
   articleMenuTag (state) {
     return state.articleMenuTag
+  },
+  commentsInfo (state) {
+    return state.commentsInfo
   }
 }
 
@@ -59,6 +68,9 @@ const mutations = {
   },
   [SET_ARTICLE_MENU_TAG] (state, data) {
     state.articleMenuTag = data
+  },
+  [SET_COMMENTS_INFO] (state, data) {
+    state.commentsInfo = data
   }
 }
 
@@ -77,6 +89,10 @@ const actions = {
   },
   setArticleMenuTag (store, articleMenuTag) {
     store.state.articleMenuTag = articleMenuTag
+  },
+  setCommentsInfo (store, commentsInfo) {
+    cachedCommentsInfo.save(commentsInfo)
+    store.state.commentsInfo = commentsInfo
   },
   uploadToQiniu (store, params) {
     return api.uploadToQiniu(params)

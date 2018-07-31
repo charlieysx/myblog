@@ -87,6 +87,14 @@ export default {
           middleMessage: '0',
           bottomMessage: '个分类/标签',
           to: 'adminCategories'
+        },
+        {
+          backgroundColor: '#E6A23C',
+          icon: 'icon-comments',
+          topMessage: '共有',
+          middleMessage: '0',
+          bottomMessage: '条评论',
+          to: 'adminComments'
         }
       ],
       newestArticleList: [

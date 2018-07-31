@@ -37,10 +37,12 @@ export default {
 @import '~STYLUS/color.styl'
 #icon-card
   position: relative
-  width: calc(25% - 10px)
-  @media (max-width: 1259px)
+  width: calc(20% - 10px)
+  @media (max-width: 1450px)
+    width: calc(25% - 10px)
+  @media (max-width: 1228px)
     width: calc(33.33% - 10px)
-  @media (max-width: 1009px)
+  @media (max-width: 990px)
     width: calc(50% - 10px)
   @media (max-width: 759px)
     width: calc(100% - 10px)

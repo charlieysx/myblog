@@ -20,3 +20,5 @@ export const SET_ARTICLE_MENU = 'SET_ARTICLE_MENU'
 export const SET_ARTICLE_MENU_SOURCE = 'SET_ARTICLE_MENU_SOURCE'
 // 保存当前为文章第几个目录
 export const SET_ARTICLE_MENU_TAG = 'SET_ARTICLE_MENU_TAG'
+// 保存评论填写的昵称邮箱信息
+export const SET_COMMENTS_INFO = 'SET_COMMENTS_INFO'

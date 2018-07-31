@@ -35,6 +35,7 @@
             {{ tag.name }}
           </div>
         </div>
+        <comments :id="article.id" />
       </div>
       <no-data
         v-if="!article.id"
@@ -51,12 +52,14 @@ import {
 
 import mdPreview from 'COMMON/mdPreview/mdPreview'
 import noData from 'COMMON/noData/noData'
+import comments from 'COMMON/comments/comments'
 
 export default {
   name: 'article-preview',
   components: {
     mdPreview,
-    noData
+    noData,
+    comments
   },
   data () {
     return {

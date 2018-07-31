@@ -270,6 +270,34 @@ export default {
   getFriendTypeList () {
     return axios.get('a/friends/typeList')
   },
+  /**
+   * 获取所有评论列表
+   */
+  getAllCommentsList () {
+    return axios.get('a/comments/alllist')
+  },
+  /**
+   * 获取文章评论列表
+   */
+  getComments (articleId) {
+    return axios.get('a/comments/list', {
+      params: {
+        articleId: articleId
+      }
+    })
+  },
+  /**
+   * 添加评论
+   */
+  adminReplyComments (params) {
+    return axios.post('a/comments/add', Qs.stringify(params))
+  },
+  /**
+   * 删除评论
+   */
+  deleteComments (id) {
+    return axios.post('a/comments/delete', Qs.stringify({commentsId: id}))
+  },
   // ---------------------------------------------以下是博客页面使用的接口---------------------------------------------,
   /**
    * 获取 关于我 页面
@@ -326,5 +354,21 @@ export default {
    */
   getBlogFriendsList () {
     return axios.get('w/friends/list')
+  },
+  /**
+   * 获取文章评论列表
+   */
+  getBlogComments (articleId) {
+    return axios.get('w/comments/list', {
+      params: {
+        articleId: articleId
+      }
+    })
+  },
+  /**
+   * 添加评论
+   */
+  replyComments (params) {
+    return axios.post('w/comments/add', Qs.stringify(params))
   }
 }
