@@ -188,11 +188,11 @@ export default {
           this.commentsList = []
         })
     },
-    preview (article) {
+    preview (comments) {
       this.$router.push({
         name: 'articlePreview',
         query: {
-          id: article.id
+          id: comments.articleId
         }
       })
     },

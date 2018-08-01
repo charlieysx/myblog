@@ -116,6 +116,7 @@ export default {
         this.messageCards[1].middleMessage = data.draftsCount
         this.messageCards[2].middleMessage = data.deletedCount
         this.messageCards[3].middleMessage = data.categoryCount + '/' + data.tagCount
+        this.messageCards[4].middleMessage = data.commentsCount
       })
       .catch(()=> {})
     this.getLog(0)
