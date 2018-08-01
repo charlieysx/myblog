@@ -17,7 +17,12 @@
           label="评论内容"
           min-width="200">
           <template slot-scope="scope">
-            <div v-html="scope.row.content"></div>
+            <span 
+              v-for="(item, index) in JSON.parse(scope.row.content)"
+              :key="index">
+              {{ item.type === 'text' ? item.content : '' }}
+              <img class="content-emoji" :src="item.content" alt="" v-if="item.type === 'emoji'" />
+            </span>
           </template>
         </el-table-column>
         <el-table-column
@@ -208,7 +213,8 @@ export default {
       let params = {
         articleId: this.comments.articleId,
         replyId: this.comments.id,
-        content: this.analyzeEmoji(`@${this.comments.name} ${this.replyContent}`)
+        content: this.analyzeEmoji(`@${this.comments.name} ${this.replyContent}`),
+        sourceContent: `@${this.comments.name} ${this.replyContent}`
       }
       this.adminReplyComments(params)
         .then((data) => {

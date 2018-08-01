@@ -246,7 +246,8 @@ export default {
         articleId: this.id,
         name: this.name,
         replyId: this.replyId,
-        content: this.analyzeEmoji(this.content)
+        content: this.analyzeEmoji(this.content),
+        sourceContent: this.content
       }
       if (this.email !== '' && !this.isAdminWrap) {
         if (!(/^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(this.email))) {
