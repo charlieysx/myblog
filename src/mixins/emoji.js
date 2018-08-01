@@ -79,9 +79,10 @@ var emoji = {
   },
   methods: {
     analyzeEmoji (source) {
+      source = source.replace(/\r\n/g, '<br/>').replace(/\n/g, '<br/>')
       let pattern = /\[[\u4e00-\u9fa5]+\]/g
       let patternResult = source.match(pattern)
-      let result = source
+      let result = []
       if (patternResult) {
         // let list = patternResult.filter((element, index, self)=> {
         //   return self.indexOf(element) === index
@@ -91,12 +92,32 @@ var emoji = {
             return item.title === patternResult[i]
           })
           if (emoji) {
-            result = result.replace(emoji.title, '<img class="content-emoji" src="/static/emoji/' + emoji.name + '" alt="" />')
+            // result = result.replace(emoji.title, '<img class="content-emoji" src="/static/emoji/' + emoji.name + '" alt="" />')
+            let index = source.indexOf(emoji.title)
+            if (index > 0) {
+              let content = source.substr(0, index)
+              result.push({
+                type: 'text',
+                content: content
+              })
+              source = source.replace(content, '')
+            }
+            result.push({
+              type: 'emoji',
+              content: '/static/emoji/' + emoji.name
+            })
+            source = source.replace(emoji.title, '')
           }
         }
       }
-      result = result.replace(/\r\n/g, '<br/>').replace(/\n/g, '<br/>')
-      return result
+      if (source.length > 0) {
+        result.push({
+          type: 'text',
+          content: source
+        })
+      }
+      // result = result.replace(/\r\n/g, '<br/>').replace(/\n/g, '<br/>')
+      return JSON.stringify(result)
     },
     getEmojiList () {
       return this.emojiList

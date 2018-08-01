@@ -19,6 +19,7 @@
       </div>
       <el-input
         class="input-area"
+        id="comments-content-area"
         type="textarea"
         size="mini"
         :rows="5"
@@ -65,7 +66,14 @@
             <p class="time">{{ comments.createTime | time }}</p>
           </div>
         </div>
-        <p class="content" v-html="comments.content"></p>
+        <p class="content">
+          <span 
+            v-for="(item, index) in JSON.parse(comments.content)"
+            :key="index">
+            {{ item.type === 'text' ? item.content : '' }}
+            <img class="content-emoji" :src="item.content" alt="" v-if="item.type === 'emoji'" />
+          </span>
+        </p>
         <ul class="comments-children" v-if="comments.children.length > 0">
           <li
             class="comments-child"
@@ -81,7 +89,14 @@
                 <p class="time">{{ child.createTime | time }}</p>
               </div>
             </div>
-            <p class="content" v-html="child.content"></p>
+            <p class="content">
+              <span 
+                v-for="(item, index) in JSON.parse(child.content)"
+                :key="index">
+                {{ item.type === 'text' ? item.content : '' }}
+                <img class="content-emoji" :src="item.content" alt="" v-if="item.type === 'emoji'" />
+              </span>
+            </p>
           </li>
         </ul>
       </li>
@@ -130,14 +145,14 @@ export default {
   watch: {
     content (value) {
       if (this.replyName !== '') {
-        if (value.indexOf(`@${this.replyName} `) !== 0) {
+        if (value.indexOf(this.replyName) !== 0) {
           this.replyId = 0
           this.replyName = ''
         }
       }
     },
     replyName (value) {
-      this.content = `@${this.replyName} `
+      this.content = this.replyName
     },
     id (value) {
       if (value !== '') {
@@ -248,10 +263,11 @@ export default {
     },
     reply(comments) {
       this.replyId = comments.id
-      this.replyName = comments.name
+      this.replyName = `@${comments.name} `
       let top = document.getElementById('comments-input-top').getBoundingClientRect().top
       top += document.body.scrollTop || document.documentElement.scrollTop
       this.scrollToTarget(top)
+      document.getElementById('comments-content-area').focus()
     }
   }
 }
