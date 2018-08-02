@@ -79,7 +79,7 @@ var emoji = {
   },
   methods: {
     analyzeEmoji (source) {
-      source = source.replace(/\r\n/g, '<br/>').replace(/\n/g, '<br/>')
+      // source = source.replace(/\r\n/g, '<br/>').replace(/\n/g, '<br/>')
       let pattern = /\[[\u4e00-\u9fa5]+\]/g
       let patternResult = source.match(pattern)
       let result = []
