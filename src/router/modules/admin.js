@@ -10,6 +10,7 @@ const webConfigAbout = r => require.ensure([], () => r(require('VIEWS/admin/webC
 const webConfigFriends = r => require.ensure([], () => r(require('VIEWS/admin/webConfig/friends.vue')), 'webConfigFriends')
 const adminArticleList = r => require.ensure([], () => r(require('VIEWS/admin/categories/articleList.vue')), 'adminArticleList')
 const adminComments = r => require.ensure([], () => r(require('VIEWS/admin/comments/index.vue')), 'adminComments')
+const webConfigResume = r => require.ensure([], () => r(require('VIEWS/admin/webConfig/resume.vue')), 'webConfigResume')
 
 export default [
   {
@@ -112,6 +113,14 @@ export default [
     path: '/admin/articlelist',
     name: 'adminArticleList',
     component: adminArticleList,
+    meta: {
+      requireAuth: true
+    }
+  },
+  {
+    path: '/admin/webConfig/resume',
+    name: 'webConfigResume',
+    component: webConfigResume,
     meta: {
       requireAuth: true
     }

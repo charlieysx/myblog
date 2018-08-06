@@ -38,6 +38,7 @@
         </template>
         <el-menu-item index="/admin/webConfig"><i class="iconfont icon-base-config"></i>基本配置</el-menu-item>
         <el-menu-item index="/admin/webConfig/about"><i class="iconfont icon-about"></i>关于我</el-menu-item>
+        <el-menu-item index="/admin/webConfig/resume"><i class="iconfont icon-resume"></i>我的简历</el-menu-item>
         <el-menu-item index="/admin/webConfig/friends"><i class="iconfont icon-friends-link"></i>友链管理</el-menu-item>
       </el-submenu>
       <el-submenu index="5">

@@ -1,7 +1,7 @@
 <template>
   <div id="web-config-about">
     <div class="header-wrap">
-      编辑“关于我”页面
+      编辑“我的简历”页面
       <div class="action-btn-wrap">
         <span @click="commit">更新</span>
       </div>
@@ -69,7 +69,7 @@ export default {
     }
   },
   created () {
-    this.getAboutMe()
+    this.getResume()
       .then((data) => {
         this.value = data.md
       })
@@ -79,8 +79,8 @@ export default {
     ...mapActions([
       'getQiniuToken',
       'uploadToQiniu',
-      'getAboutMe',
-      'modifyAboutMe'
+      'getResume',
+      'modifyResume'
     ]),
     $imgAdd(pos, $file) {
       this.getQiniuToken(true)
@@ -117,8 +117,8 @@ export default {
         background: 'rgba(0, 0, 0, 0.7)'
       })
       let html = this.markdownHtml(this.value)
-      this.modifyAboutMe({
-          aboutMeContent: this.value,
+      this.modifyResume({
+          resumeContent: this.value,
           htmlContent: html
         })
         .then((data) => {

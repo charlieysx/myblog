@@ -454,6 +454,30 @@ const actions = {
       .catch((error) => {
         return Promise.reject(error)
       })
+  },
+  /**
+   * 获取 我的简历 页面
+   */
+  getResume (store) {
+    return api.getResume()
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+  /**
+   * 修改 我的简历 页面
+   */
+  modifyResume (store, params) {
+    return api.modifyResume(params)
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
   }
 }
 
