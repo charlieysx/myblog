@@ -298,6 +298,18 @@ export default {
   deleteComments (id) {
     return axios.post('a/comments/delete', Qs.stringify({commentsId: id}))
   },
+  /**
+   * 获取 我的简历 页面
+   */
+  getResume () {
+    return axios.get('a/webConfig/getResume')
+  },
+  /**
+   * 修改 我的简历 页面
+   */
+  modifyResume (params) {
+    return axios.post('a/webConfig/modifyResume', Qs.stringify(params))
+  },
   // ---------------------------------------------以下是博客页面使用的接口---------------------------------------------,
   /**
    * 获取 关于我 页面
@@ -370,5 +382,11 @@ export default {
    */
   replyComments (params) {
     return axios.post('w/comments/add', Qs.stringify(params))
+  },
+  /**
+   * 获取 我的简历 页面
+   */
+  getBlogResume () {
+    return axios.get('w/getResume')
   }
 }

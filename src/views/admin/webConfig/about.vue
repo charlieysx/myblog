@@ -71,7 +71,7 @@ export default {
   created () {
     this.getAboutMe()
       .then((data) => {
-        this.value = data.aboutMeContent
+        this.value = data.md
       })
       .catch(()=> {})
   },

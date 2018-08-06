@@ -29,15 +29,16 @@ export default {
     }
   },
   created() {
-    // this.getBlogAboutMe()
-    //   .then((data) => {
-    //     this.htmlContent = data.htmlContent
-    //     this.qrcode = data.qrcode
-    //   })
-    //   .catch(()=> {})
+    this.getBlogResume()
+      .then((data) => {
+        this.htmlContent = data.html
+      })
+      .catch(()=> {})
   },
   methods: {
-    ...mapActions([])
+    ...mapActions([
+      'getBlogResume'
+    ])
   }
 }
 </script>

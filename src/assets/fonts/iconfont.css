@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'iconfont';  /* project id 738189 */
-  src: url('//at.alicdn.com/t/font_738189_49ekqtr59gt.eot');
-  src: url('//at.alicdn.com/t/font_738189_49ekqtr59gt.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_738189_49ekqtr59gt.woff') format('woff'),
-  url('//at.alicdn.com/t/font_738189_49ekqtr59gt.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_738189_49ekqtr59gt.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_738189_4occd8ja10i.eot');
+  src: url('//at.alicdn.com/t/font_738189_4occd8ja10i.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_738189_4occd8ja10i.woff') format('woff'),
+  url('//at.alicdn.com/t/font_738189_4occd8ja10i.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_738189_4occd8ja10i.svg#iconfont') format('svg');
 }
 
 .iconfont {
@@ -54,3 +54,5 @@
 .icon-drafts:before { content: "\e64f"; }
 
 .icon-comments:before { content: "\e63a"; }
+
+.icon-resume:before { content: "\e612"; }

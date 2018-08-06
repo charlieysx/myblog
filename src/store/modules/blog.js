@@ -145,6 +145,18 @@ const actions = {
       .catch((error) => {
         return Promise.reject(error)
       })
+  },
+  /**
+   * 获取 我的简历 页面
+   */
+  getBlogResume (store) {
+    return api.getBlogResume()
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
   }
 }
 

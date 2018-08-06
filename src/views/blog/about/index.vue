@@ -49,7 +49,7 @@ export default {
   created() {
     this.getBlogAboutMe()
       .then((data) => {
-        this.htmlContent = data.htmlContent
+        this.htmlContent = data.html
         this.qrcode = data.qrcode
       })
       .catch(()=> {})

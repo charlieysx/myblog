@@ -69,9 +69,9 @@ export default {
     }
   },
   created () {
-    this.getAboutMe()
+    this.getResume()
       .then((data) => {
-        this.value = data.aboutMeContent
+        this.value = data.md
       })
       .catch(()=> {})
   },
@@ -79,8 +79,8 @@ export default {
     ...mapActions([
       'getQiniuToken',
       'uploadToQiniu',
-      'getAboutMe',
-      'modifyAboutMe'
+      'getResume',
+      'modifyResume'
     ]),
     $imgAdd(pos, $file) {
       this.getQiniuToken(true)
@@ -117,8 +117,8 @@ export default {
         background: 'rgba(0, 0, 0, 0.7)'
       })
       let html = this.markdownHtml(this.value)
-      this.modifyAboutMe({
-          aboutMeContent: this.value,
+      this.modifyResume({
+          resumeContent: this.value,
           htmlContent: html
         })
         .then((data) => {
