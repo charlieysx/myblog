@@ -87,9 +87,9 @@ export default {
     min-height: 285.5px
     padding: 10px
   line-height: 1.2
+  animation: show .8s
   .article-card-wrap
     position: relative
-    animation: show .8s
     .article-cover
       position: relative
       width: 100%

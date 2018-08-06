@@ -65,7 +65,7 @@ export default {
       'getBlogArticleArchives'
     ]),
     pageChange(currentPage) {
-      this.scrollToTop()
+      this.scrollToTarget(0, false)
       this.page = currentPage - 1
       this.currentPage = currentPage
       this.getList()

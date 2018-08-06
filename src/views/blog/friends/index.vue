@@ -26,10 +26,7 @@ export default {
     }
   },
   created() {
-    this.getBlogFriendsList({
-        page: this.page,
-        pageSize: this.pageSize
-      })
+    this.getBlogFriendsList()
       .then((data) => {
         this.friends = data
       })
@@ -52,6 +49,7 @@ export default {
   padding: 30px 10px
   max-width: 940px
   margin: 0 auto
+  animation: show .8s
   .type-wrap
     > p
       border-left: 4px solid #999999

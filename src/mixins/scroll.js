@@ -1,7 +1,11 @@
 var timer = null
 var scroll = {
   methods: {
-    scrollToTarget (target = 0) {
+    scrollToTarget (target, animation = true) {
+      if (!animation) {
+        document.body.scrollTop = document.documentElement.scrollTop = 0
+        return
+      }
       let currentNum = document.body.scrollTop || document.documentElement.scrollTop
       let t = 0
       clearInterval(timer)

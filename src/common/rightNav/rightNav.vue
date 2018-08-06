@@ -12,31 +12,37 @@
         |
         <span :class="{'active': !showMenu}" @click="showMenu = false">站点信息</span>
       </div>
-      <article-menu class="article-menu" :menu="articleMenu" :start="0" v-show="showMenu"/>
-      <div class="info-wrap" v-show="!showMenu">
-        <img class="avatar" :src="blogInfo.avatar || defaultAvatar"/>
-        <p class="name">{{ blogInfo.blogName || '博客' }}</p>
-        <p class="motto">{{ blogInfo.sign || '-' }}</p>
-        <div class="menu-wrap">
-          <span class="menu-item" @click="toView('archives')">
-            <p class="count">{{ blogInfo.articleCount || 0 }}</p>
-            <p>文章</p>
-          </span>
-          <span class="menu-item" @click="toView('categories')">
-            <p class="count">{{ blogInfo.categoryCount || 0 }}</p>
-            <p>分类</p>
-          </span>
-          <span class="menu-item" @click="toView('categories')">
-            <p class="count">{{ blogInfo.tagCount || 0 }}</p>
-            <p>标签</p>
-          </span>
-        </div>
-        <div class="social-wrap">
-          <a class="social-item" :href="blogInfo.github" target="_blank" v-if="blogInfo.github">
-            <i class="iconfont icon-github"></i>
-            github
-          </a>
-        </div>
+      <div class="content-wrap">
+        <transition name="slide-fade">
+          <article-menu class="article-menu" :menu="articleMenu" :start="0" v-show="showMenu"/>
+        </transition>
+        <transition name="slide-fade">
+          <div class="info-wrap" v-show="!showMenu">
+            <img class="avatar" :src="blogInfo.avatar || defaultAvatar"/>
+            <p class="name">{{ blogInfo.blogName || '博客' }}</p>
+            <p class="motto">{{ blogInfo.sign || '-' }}</p>
+            <div class="menu-wrap">
+              <span class="menu-item" @click="toView('archives')">
+                <p class="count">{{ blogInfo.articleCount || 0 }}</p>
+                <p>文章</p>
+              </span>
+              <span class="menu-item" @click="toView('categories')">
+                <p class="count">{{ blogInfo.categoryCount || 0 }}</p>
+                <p>分类</p>
+              </span>
+              <span class="menu-item" @click="toView('categories')">
+                <p class="count">{{ blogInfo.tagCount || 0 }}</p>
+                <p>标签</p>
+              </span>
+            </div>
+            <div class="social-wrap">
+              <a class="social-item" :href="blogInfo.github" target="_blank" v-if="blogInfo.github">
+                <i class="iconfont icon-github"></i>
+                github
+              </a>
+            </div>
+          </div>
+        </transition>
       </div>
     </div>
     <div class="toggle" @click="toggle" @mouseover="setLineData" @mouseout="setLineData">
@@ -155,9 +161,11 @@ export default {
       if (value) {
         this.showMenu = true
         this.setShowRightNav(true)
+        this.toggleLineData = this.lineStyle.closeLineData
       } else {
         this.showMenu = false
         this.setShowRightNav(false)
+        this.toggleLineData = this.lineStyle.normalLineData
       }
     }
   },
@@ -227,70 +235,83 @@ export default {
         &:hover
         &.active
           color: $color-white
-    .article-menu
-      padding: 5px
-    .info-wrap
-      display: flex
-      flex-direction: column
-      align-items: center
-      .avatar
-        border: 4px solid $color-white
-        border-radius: 50%
-        width: 100px
-        height: 100px
-      .name
-        color: $color-white
-        padding: 15px
-        font-size: 18px
-        font-weight: bold
-      .motto
-        color: #999999
-        padding: 5px 15px
-        font-size: 14px
-        font-weight: bold
-      .menu-wrap
+    .content-wrap
+      position: relative
+      width: 100%
+      max-height: calc(100vh - 150px)
+      overflow-y: auto
+      .article-menu
+        position: absolute
+        left: 0
+        top: 0
+        width: 100%
+        padding: 5px
+      .info-wrap
+        position: absolute
+        left: 0
+        top: 0
+        width: 100%
         display: flex
-        flex-direction: row
+        flex-direction: column
         align-items: center
-        margin-top: 15px
-        .menu-item
-          display: flex
-          flex-direction: column
-          align-items: center
-          border-right: 1px solid #555555
-          font-size: 14px
-          padding: 0 15px
-          color: #999999
-          transition: all .3s
-          cursor: pointer
+        .avatar
+          border: 4px solid $color-white
+          border-radius: 50%
+          width: 100px
+          height: 100px
+        .name
+          color: $color-white
+          padding: 15px
+          font-size: 18px
           font-weight: bold
-          &:last-child
-            border-right: 0px
-          &:hover
-            color: $color-white
-          .count
-            margin-bottom: 5px
-            font-size: 20px
-      .social-wrap
-        padding: 20px
-        display: flex
-        flex-direction: row
-        align-items: center
-        flex-wrap: wrap
-        .social-item
-          padding: 8px
-          border: 1px solid #fc6423
-          border-radius: 5px
+        .motto
+          color: #999999
+          padding: 5px 15px
           font-size: 14px
-          line-height: 1
-          color: #fc6423
-          transition: all .3s
-          cursor: pointer
-          &:hover
-            background-color: #fc6423
-            color: $color-white
-          .iconfont
+          font-weight: bold
+        .menu-wrap
+          display: flex
+          flex-direction: row
+          align-items: center
+          margin-top: 15px
+          .menu-item
+            display: flex
+            flex-direction: column
+            align-items: center
+            border-right: 1px solid #555555
             font-size: 14px
+            padding: 0 15px
+            color: #999999
+            transition: all .3s
+            cursor: pointer
+            font-weight: bold
+            &:last-child
+              border-right: 0px
+            &:hover
+              color: $color-white
+            .count
+              margin-bottom: 5px
+              font-size: 20px
+        .social-wrap
+          padding: 20px
+          display: flex
+          flex-direction: row
+          align-items: center
+          flex-wrap: wrap
+          .social-item
+            padding: 8px
+            border: 1px solid #fc6423
+            border-radius: 5px
+            font-size: 14px
+            line-height: 1
+            color: #fc6423
+            transition: all .3s
+            cursor: pointer
+            &:hover
+              background-color: #fc6423
+              color: $color-white
+            .iconfont
+              font-size: 14px
 
   .toggle
     position: fixed
@@ -313,4 +334,9 @@ export default {
       background-color: $color-white
       &:first-child
         margin-top: 0px
+
+
+.slide-fade-enter
+.slide-fade-leave-to
+  opacity: 0
 </style>

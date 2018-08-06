@@ -138,4 +138,5 @@ export default {
 #md-preview
   position: relative
   width: 100%
+  margin-top: 10px
 </style>

@@ -55,7 +55,7 @@ export default {
       'getBlogArticleList'
     ]),
     pageChange(currentPage) {
-      this.scrollToTop()
+      this.scrollToTarget(0, false)
       this.page = currentPage - 1
       this.currentPage = currentPage
       this.getList()
@@ -90,4 +90,9 @@ export default {
     flex-direction: row
     justify-content: center
     background-color: $color-white
+
+
+.slide-fade-enter
+.slide-fade-leave-to
+  opacity: 0
 </style>

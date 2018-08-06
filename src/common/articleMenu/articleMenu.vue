@@ -3,6 +3,7 @@
     <li v-for="item in menu" :key="item.tag">
       <span @click="toMenu(item)" :class="{'active': is(item) || isParent(item)}">{{ item.tag }} {{ item.title }}</span>
       <article-menu :menu="item.children"  v-show="isParent(item)" />
+      <!-- <article-menu :menu="item.children" /> -->
     </li>
   </ul>
 </template>
