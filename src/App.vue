@@ -6,7 +6,7 @@
       <m-header />
       <!-- header 结束 -->
       <!-- content -->
-      <div class="view-wrap">
+      <div class="view-wrap" :style="{width: viewWrapWidth}">
         <router-view></router-view>
       </div>
       <!-- content 结束 -->
@@ -102,7 +102,8 @@ export default {
         }
       ],
       showScrollToTop: false,
-      evtname: ''
+      evtname: '',
+      viewWrapWidth: '1000px'
     }
   },
   watch: {
@@ -115,6 +116,20 @@ export default {
           type: 'error'
         })
       }
+    },
+    showRightNav (value) {
+      if (value && this.screen.width > 960) {
+        this.viewWrapWidth = this.screen.width - 340 + 'px'
+      } else {
+        this.viewWrapWidth = this.screen.width - 20 + 'px'
+      }
+    },
+    screen (value) {
+      if (this.screen.width <= 960) {
+        this.viewWrapWidth = this.screen.width - 20 + 'px'
+      } else if (this.showRightNav) {
+        this.viewWrapWidth = this.screen.width - 340 + 'px'
+      }
     }
   },
   computed: {
@@ -124,7 +139,9 @@ export default {
       'tokenError',
       'articleMenu',
       'articleMenuSource',
-      'blogInfo'
+      'blogInfo',
+      'showRightNav',
+      'screen'
     ])
   },
   created() {

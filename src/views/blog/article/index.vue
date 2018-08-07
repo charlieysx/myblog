@@ -1,20 +1,24 @@
 <template>
-  <div id="article">
+  <div id="article" v-loading="loading">
     <div class="article-warp" v-if="article.id">
       <div class="article-message">
         <p class="article-title">
           {{ article.title }}
         </p>
         <div class="article-info">
+          <span>
           <i class="iconfont icon-calendar"></i>
           <span class="info-item">发表于 {{ article.publishTime | time }}</span>
+          </span>
           <span class="line">|</span>
-          <i class="iconfont icon-folder"></i>
+          <span>
+            <i class="iconfont icon-folder"></i>
             <span class="info-item">分类于 
               <span class="classify" @click="$router.push({name: 'articleList', query:{type: 'category', id: category.id}})">
                 {{ category.name }}
               </span>
             </span>
+          </span>
         </div>
         <div class="article-sub-message">{{ article.subMessage }}</div>
       </div>
@@ -86,7 +90,8 @@ export default {
       category: {},
       tags: [],
       qrcode: {},
-      pn: {}
+      pn: {},
+      loading: false
     }
   },
   created() {
@@ -109,6 +114,7 @@ export default {
       this.pn = {}
       let id = this.$route.query.id
       if (id) {
+        this.loading = true
         this.getBlogArticle(id)
           .then((data) => {
             this.article = data.article
@@ -116,8 +122,11 @@ export default {
             this.tags = data.tags
             this.qrcode = data.qrcode
             this.pn = data.pn
+            this.loading = false
           })
-          .catch(()=> {})
+          .catch(()=> {
+            this.loading = false
+          })
       }
     },
     toList (type, id) {
@@ -166,21 +175,24 @@ export default {
         color: #999999
         display: flex
         flex-direction: row
-        justify-content: flex-start
+        justify-content: center
         align-items: flex-end
+        flex-wrap: wrap
         .line
           margin: 0 8px
-        .info-item
-          .classify
-            color: #666666
-            border-bottom: 1px solid $color-main
-            cursor: pointer
-            -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
-        .iconfont
-          font-size: 14px
-          @media (max-width: 768px)
-            font-size: 12px
-          margin-right: 5px
+        > span
+          margin-top: 4px
+          .info-item
+            .classify
+              color: #666666
+              border-bottom: 1px solid $color-main
+              cursor: pointer
+              -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+          .iconfont
+            font-size: 14px
+            @media (max-width: 768px)
+              font-size: 12px
+            margin-right: 5px
       .article-sub-message
         font-size: 14px
         color: #999999

@@ -1,5 +1,5 @@
 <template>
-  <div id="archives">
+  <div id="archives" v-loading="loading">
     <div class="archives-wrap">
       <div class="time-line"></div>
       <div class="list-content">
@@ -53,7 +53,8 @@ export default {
       pageSize: 15,
       currentPage: 0,
       total: 0,
-      archives: []
+      archives: [],
+      loading: false
     }
   },
   created() {
@@ -71,6 +72,7 @@ export default {
       this.getList()
     },
     getList() {
+      this.loading = true
       this.getBlogArticleArchives({
           page: this.page,
           pageSize: this.pageSize
@@ -78,9 +80,11 @@ export default {
         .then((data) => {
           this.total = data.count
           this.archives = data.list
+          this.loading = false
         })
         .catch(()=> {
           this.archives = []
+          this.loading = false
         })
     }
   }

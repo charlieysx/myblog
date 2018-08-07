@@ -1,5 +1,5 @@
 <template>
-  <div id="home">
+  <div id="home" v-loading="loading">
     <article-card
       v-for="(article, index) in articleList"
       :key="index"
@@ -43,7 +43,8 @@ export default {
       page: 0,
       pageSize: 10,
       currentPage: 0,
-      total: 0
+      total: 0,
+      loading: false
     }
   },
   created() {
@@ -61,6 +62,7 @@ export default {
       this.getList()
     },
     getList() {
+      this.loading = true
       this.getBlogArticleList({
           page: this.page,
           pageSize: this.pageSize
@@ -68,9 +70,11 @@ export default {
         .then((data) => {
           this.total = data.count
           this.articleList = data.list
+          this.loading = false
         })
         .catch(()=> {
           this.articleList = []
+          this.loading = false
         })
     }
   }
@@ -82,6 +86,7 @@ export default {
 #home
   position: relative
   padding: 30px 10px
+  min-height: 100px
   .pagination
     width: 100%
     padding: 10px 0

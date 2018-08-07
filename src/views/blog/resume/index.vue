@@ -1,5 +1,5 @@
 <template>
-  <div id="resume">
+  <div id="resume" v-loading="loading">
     <div class="resume-warp">
       <div class="resume-message">
         <p class="resume-title">
@@ -25,15 +25,20 @@ export default {
   },
   data () {
     return {
-      htmlContent: ''
+      htmlContent: '',
+      loading: false
     }
   },
   created() {
+    this.loading = true
     this.getBlogResume()
       .then((data) => {
         this.htmlContent = data.html
+        this.loading = false
       })
-      .catch(()=> {})
+      .catch(()=> {
+        this.loading = false
+      })
   },
   methods: {
     ...mapActions([

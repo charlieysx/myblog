@@ -1,5 +1,5 @@
 <template>
-  <div id="about">
+  <div id="about" v-loading="loading">
     <div class="about-warp">
       <div class="about-message">
         <p class="about-title">
@@ -46,16 +46,21 @@ export default {
     return {
       showQrcode: false,
       htmlContent: '',
-      qrcode: ''
+      qrcode: '',
+      loading: false
     }
   },
   created() {
+    this.loading = true
     this.getBlogAboutMe()
       .then((data) => {
         this.htmlContent = data.html
         this.qrcode = data.qrcode
+        this.loading = false
       })
-      .catch(()=> {})
+      .catch(()=> {
+        this.loading = false
+      })
   },
   methods: {
     ...mapActions([

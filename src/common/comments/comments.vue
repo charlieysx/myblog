@@ -35,7 +35,7 @@
         </div>
       </div>
       <transition name="slide-fade">
-        <ul class="emoji-wrap" v-show="showEmoji" :style="{top: isAdminWrap ? '143px' : '214px'}">
+        <ul class="emoji-wrap" v-if="showEmoji" :style="{top: isAdminWrap ? '143px' : '214px'}">
           <li
             v-for="(emoji, index) in emojiList"
             :key="index"

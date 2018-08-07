@@ -1,5 +1,5 @@
 <template>
-  <div id="friends">
+  <div id="friends" v-loading="loading">
     <div class="type-wrap" v-for="(item, index) in friends" :key="index">
       <p>{{ item.name }}</p>
       <div class="friends-wrap">
@@ -22,16 +22,20 @@ export default {
   },
   data () {
     return {
-      friends: []
+      friends: [],
+      loading: false
     }
   },
   created() {
+    this.loading = true
     this.getBlogFriendsList()
       .then((data) => {
         this.friends = data
+        this.loading = false
       })
       .catch(()=> {
         this.friends = []
+        this.loading = false
       })
   },
   methods: {

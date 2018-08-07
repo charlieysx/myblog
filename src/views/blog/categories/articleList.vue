@@ -1,5 +1,5 @@
 <template>
-  <div id="archives">
+  <div id="archives" v-loading="loading">
     <div class="archives-wrap">
       <article-card2
         v-for="(article, index) in articleList"
@@ -45,7 +45,8 @@ export default {
       total: 0,
       type: 'category',
       id: '',
-      articleList: []
+      articleList: [],
+      loading: false
     }
   },
   created() {
@@ -78,6 +79,7 @@ export default {
       this.getList()
     },
     getList() {
+      this.loading = true
       this.getBlogArticleList({
           by: this.type,
           categoryId: this.id,
@@ -88,9 +90,11 @@ export default {
         .then((data) => {
           this.total = data.count
           this.articleList = data.list
+          this.loading = false
         })
         .catch(()=> {
           this.articleList = []
+          this.loading = false
         })
     }
   }
