@@ -41,7 +41,7 @@ export default {
     return {
       articleList: [],
       page: 0,
-      pageSize: 15,
+      pageSize: 10,
       currentPage: 0,
       total: 0
     }

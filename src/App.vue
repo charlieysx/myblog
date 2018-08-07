@@ -101,7 +101,8 @@ export default {
           transform: 'rotateZ(-45deg)'
         }
       ],
-      showScrollToTop: false
+      showScrollToTop: false,
+      evtname: ''
     }
   },
   watch: {
@@ -122,7 +123,8 @@ export default {
       'isLogin',
       'tokenError',
       'articleMenu',
-      'articleMenuSource'
+      'articleMenuSource',
+      'blogInfo'
     ])
   },
   created() {
@@ -131,13 +133,18 @@ export default {
     }
   },
   mounted() {
+    document.title = `被发现啦(*´∇｀*)---${this.blogInfo.blogName}的博客`;
     this.updateScreen()
     window.addEventListener('resize', this.updateScreen)
     window.addEventListener('scroll', this.scrollListener)
+    let visProp = this.getHiddenProp()
+    this.evtname = visProp.replace(/[H|h]idden/, '') + 'visibilitychange'
+    document.addEventListener(this.evtname, this.visibilityChange, false)
   },
   beforeDestroy () {
     window.removeEventListener('resize', this.updateScreen, false)
     window.removeEventListener('scroll', this.scrollListener, false)
+    document.removeEventListener(this.evtname, this.visibilityChange, false)
   },
   methods: {
     ...mapActions([
@@ -168,6 +175,43 @@ export default {
             break
           }
         }
+      }
+    },
+    getHiddenProp () {
+      var prefixes = ['webkit', 'moz', 'ms', 'o']
+      // if 'hidden' is natively supported just return it
+      if ('hidden' in document) {
+        return 'hidden'
+      }
+      // otherwise loop over all the known prefixes until we find one
+      for (var i = 0; i < prefixes.length; i++) {
+        if ((prefixes[i] + 'Hidden') in document) {
+          return prefixes[i] + 'Hidden'
+        }
+      }
+      // otherwise it's not supported
+      return null
+    },
+    getVisibilityState () {
+      var prefixes = ['webkit', 'moz', 'ms', 'o']
+      if ('visibilityState' in document) return 'visibilityState'
+      for (var i = 0; i < prefixes.length; i++) {
+        if ((prefixes[i] + 'VisibilityState') in document) {
+          return prefixes[i] + 'VisibilityState'
+        }
+      }
+      // otherwise it's not supported
+      return null
+    },
+    visibilityChange () {
+      switch (document[this.getVisibilityState()]) {
+        case 'visible':
+          document.title = `被发现啦(*´∇｀*)---${this.blogInfo.blogName}的博客`;
+          break
+        case 'hidden':
+        default:
+          document.title = `藏好啦(つд⊂)---${this.blogInfo.blogName}的博客`;
+          break
       }
     }
   }
