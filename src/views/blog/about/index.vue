@@ -23,6 +23,7 @@
           </div>
         </transition>
       </div>
+      <comments id="-1" />
     </div>
   </div>
 </template>
@@ -33,11 +34,13 @@ import {
 } from 'vuex'
 
 import mdPreview from 'COMMON/mdPreview/mdPreview'
+import comments from 'COMMON/comments/comments'
 
 export default {
   name: 'about-content',
   components: {
-    mdPreview
+    mdPreview,
+    comments
   },
   data () {
     return {

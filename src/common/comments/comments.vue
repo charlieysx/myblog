@@ -47,10 +47,10 @@
         </ul>
       </transition>
     </div>
-    <p class="count">{{ count }}条评论</p>
+    <p class="count">{{ count }}条{{ id === '-1' ? '留言' : '评论' }}</p>
     <no-data
       v-if="commentsList.length === 0"
-      text="还没有评论~"/>
+      :text="getNoDataText()"/>
     <ul class="comments-wrap">
       <li
         class="comments-item"
@@ -168,6 +168,9 @@ export default {
       this.name = this.commentsInfo.name
       this.email = this.commentsInfo.email
     }
+    if (this.id == '-1') {
+      this.placeholder = '写下您的留言~'
+    }
   },
   methods: {
     ...mapActions([
@@ -177,6 +180,9 @@ export default {
       'getComments',
       'setCommentsInfo'
     ]),
+    getNoDataText() {
+      return this.id === '-1' ? '还没有留言~' : '还没有评论~'
+    },
     getName(comments) {
       return comments.name + (comments.isAuthor !== '1' ? '' : '（作者）')
     },
@@ -212,7 +218,8 @@ export default {
       if (this.isAdminWrap) {
         this.adminReplyComments(params)
           .then((data) => {
-            this.$toast('评论成功~')
+            let msg = this.id == '-1' ? '留言' : '评论'
+            this.$toast(`${msg}成功~`)
             this.init()
           })
           .catch((err)=> {
@@ -221,7 +228,8 @@ export default {
       } else {
         this.replyComments(params)
           .then((data) => {
-            this.$toast('评论成功~')
+            let msg = this.id == '-1' ? '留言' : '评论'
+            this.$toast(`${msg}成功~`)
             this.init()
           })
           .catch((err)=> {
@@ -235,7 +243,8 @@ export default {
     },
     send() {
       if (this.content === '' || this.content === `@${this.replyName} `) {
-        this.$toast('评论内容不能为空', 'error')
+        let msg = this.id == '-1' ? '留言' : '评论'
+        this.$toast(`${msg}内容不能为空`, 'error')
         return
       }
       if (this.name === '' && !this.isAdminWrap) {
