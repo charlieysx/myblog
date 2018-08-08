@@ -165,7 +165,12 @@ export default {
         @media (max-width: 768px)
           font-size: 12px
         margin: 0 5px
+        &:first-child
+          margin-left: 0
     .article-sub-message
+      color: #666666
+      border-left: 2px solid #666666
+      padding-left: 5px
       font-size: 16px
       @media (max-width: 768px)
         font-size: 14px
