@@ -79,6 +79,16 @@ export default {
           name: '友链',
           icon: 'icon-friends-link',
           to: 'friends'
+        },
+        {
+          name: '更多',
+          icon: 'icon-more',
+          to: 'morefunc'
+        },
+        {
+          name: '搜索',
+          icon: 'icon-search',
+          to: 'search'
         }
       ],
       lineStyle: {
@@ -158,6 +168,10 @@ export default {
       this.toggleLineData = this.showMobileTabs ? this.lineStyle.closeLineData : this.lineStyle.normalLineData
     },
     selectTab (tab) {
+      if (tab.to === 'morefunc') {
+        this.$toast('更多功能待开发...')
+        return
+      }
       this.$router.push({name: tab.to})
     }
   }

@@ -388,5 +388,13 @@ export default {
    */
   getBlogResume () {
     return axios.get('w/getResume')
+  },
+  /**
+   * 按文章标题和简介搜索
+   */
+  searchArticle (params) {
+    return axios.get('w/article/search', {
+      params: params
+    })
   }
 }

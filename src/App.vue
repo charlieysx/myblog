@@ -118,18 +118,10 @@ export default {
       }
     },
     showRightNav (value) {
-      if (value && this.screen.width > 960) {
-        this.viewWrapWidth = this.screen.width - 340 + 'px'
-      } else {
-        this.viewWrapWidth = this.screen.width - 20 + 'px'
-      }
+      this.setViewWrapWidth()
     },
     screen (value) {
-      if (this.screen.width <= 960) {
-        this.viewWrapWidth = this.screen.width - 20 + 'px'
-      } else if (this.showRightNav) {
-        this.viewWrapWidth = this.screen.width - 340 + 'px'
-      }
+      this.setViewWrapWidth()
     }
   },
   computed: {
@@ -169,6 +161,13 @@ export default {
       'getBlogInfo',
       'setArticleMenuTag'
     ]),
+    setViewWrapWidth () {
+      let temp = 20
+      if (this.screen.width > 990 && this.showRightNav) {
+        temp = 340
+      }
+      this.viewWrapWidth = this.screen.width - temp + 'px'
+    },
     updateScreen () {
       this.$store.commit(SCREEN_CHANGE, {
         width: window.innerWidth,
@@ -264,12 +263,13 @@ export default {
       margin: 0 auto
       padding: 0 10px
       min-height: calc(100vh - 120px)
+      transition: width .3s
   .to-top
     position: fixed
     width: 24px
     height: 24px
     background-color: $color-main
-    right: 30px
+    right: 10px
     bottom: 15px
     padding: 5px
     z-index: 1050

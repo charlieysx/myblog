@@ -6,6 +6,7 @@ const article = r => require.ensure([], () => r(require('VIEWS/blog/article/inde
 const about = r => require.ensure([], () => r(require('VIEWS/blog/about/index.vue')), 'about')
 const friends = r => require.ensure([], () => r(require('VIEWS/blog/friends/index.vue')), 'friends')
 const resume = r => require.ensure([], () => r(require('VIEWS/blog/resume/index.vue')), 'resume')
+const search = r => require.ensure([], () => r(require('VIEWS/blog/search/index.vue')), 'search')
 
 export default [
   {
@@ -51,5 +52,10 @@ export default [
     path: '/resume',
     name: 'resume',
     component: resume
+  },
+  {
+    path: '/search',
+    name: 'search',
+    component: search
   }
 ]

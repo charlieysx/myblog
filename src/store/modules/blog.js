@@ -157,6 +157,18 @@ const actions = {
       .catch((error) => {
         return Promise.reject(error)
       })
+  },
+  /**
+   * 按文章标题和简介搜索
+   */
+  searchArticle (store, params) {
+    return api.searchArticle(params)
+      .then((data) => {
+        return Promise.resolve(data.data)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
   }
 }
 

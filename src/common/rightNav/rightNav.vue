@@ -153,7 +153,7 @@ export default {
     screen (value) {
       this.show = true
 
-      if (value.width <= 960) {
+      if (value.width <= 990) {
         this.show = false
       }
     },
@@ -318,7 +318,7 @@ export default {
     width: 24px
     height: 24px
     background-color: $color-main
-    right: 30px
+    right: 10px
     bottom: 45px
     padding: 5px
     z-index: 1050

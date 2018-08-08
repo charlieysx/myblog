@@ -65,7 +65,7 @@ export default {
   position: relative
   background-color: $color-white
   padding: 20px
-  margin-bottom: 40px
+  margin-bottom: 20px
   &:last-child
     margin-bottom: 0px
   box-shadow: 0px 0px 5px 0px rgba(38, 42, 48, .1)
