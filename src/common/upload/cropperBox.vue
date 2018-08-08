@@ -99,7 +99,7 @@ export default {
       this.uploading = true
 
       const croppedCanvas = this.cropper.getCroppedCanvas()
-      const croppedDataUrl = croppedCanvas.toDataURL()
+      const croppedDataUrl = croppedCanvas.toDataURL(this.rawFile.type)
       const blob = this.dataURLtoBlob(croppedDataUrl)
       blob.uid = this.rawFile.uid
       this.$emit('finishCropImage', blob)
