@@ -10,11 +10,15 @@
         </div>
       </div>
       <div class="article-info">
-        <i class="iconfont icon-calendar"></i>
-        <span class="info-item">发表于 {{ article.article.publishTime | time }}</span>
+        <span>
+          <i class="iconfont icon-calendar"></i>
+          <span class="info-item">发表于 {{ article.article.publishTime | time }}</span>
+        </span>
         <span class="line">|</span>
-        <i class="iconfont icon-folder"></i>
-        <span class="info-item">分类于 <span class="classify" @click="toList('category', article.category.id)">{{ article.category.name }}</span></span>
+        <span>
+          <i class="iconfont icon-folder"></i>
+          <span class="info-item">分类于 <span class="classify" @click="toList('category', article.category.id)">{{ article.category.name }}</span></span>
+        </span>
       </div>
       <div class="article-sub-message">{{ article.article.subMessage }}</div>
       <div class="tags" v-if="article.tags.length > 0">
@@ -151,19 +155,22 @@ export default {
       flex-direction: row
       justify-content: flex-start
       align-items: flex-end
+      flex-wrap: wrap
       .line
         margin: 0 8px
-      .info-item
-        .classify
-          color: #666666
-          border-bottom: 1px solid $color-main
-          cursor: pointer
-          -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
-      .iconfont
-        font-size: 14px
-        @media (max-width: 768px)
-          font-size: 12px
-        margin-right: 5px
+      > span
+        margin-top: 4px
+        .info-item
+          .classify
+            color: #666666
+            border-bottom: 1px solid $color-main
+            cursor: pointer
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+        .iconfont
+          font-size: 14px
+          @media (max-width: 768px)
+            font-size: 12px
+          margin-right: 5px
     .article-sub-message
       font-size: 16px
       @media (max-width: 768px)

@@ -7,8 +7,8 @@
         </p>
         <div class="article-info">
           <span>
-          <i class="iconfont icon-calendar"></i>
-          <span class="info-item">发表于 {{ article.publishTime | time }}</span>
+            <i class="iconfont icon-calendar"></i>
+            <span class="info-item">发表于 {{ article.publishTime | time }}</span>
           </span>
           <span class="line">|</span>
           <span>
