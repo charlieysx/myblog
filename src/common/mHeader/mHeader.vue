@@ -172,6 +172,7 @@ export default {
         this.$toast('更多功能待开发...')
         return
       }
+      this.toggle()
       this.$router.push({name: tab.to})
     }
   }
