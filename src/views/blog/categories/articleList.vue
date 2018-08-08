@@ -20,6 +20,9 @@
       </el-pagination>
     </div>
     <!-- 分页 结束 -->
+    <no-data
+      v-if="total === 0"
+      text="没有找到文章~"/>
   </div>
 </template>
 
@@ -30,11 +33,13 @@ import {
 
 import { scroll } from 'MIXINS/scroll'
 import articleCard2 from 'COMMON/articleCard/articleCard2'
+import noData from 'COMMON/noData/noData'
 
 export default {
   name: 'archives',
   components: {
-    articleCard2
+    articleCard2,
+    noData
   },
   mixins: [scroll],
   data () {
