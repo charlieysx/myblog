@@ -269,6 +269,7 @@ export default {
           padding: 5px 15px
           font-size: 14px
           font-weight: bold
+          text-align: center
         .menu-wrap
           display: flex
           flex-direction: row

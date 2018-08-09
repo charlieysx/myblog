@@ -6,13 +6,19 @@
         <p class="normal-node">目前共计 {{ total }} 篇文章~</p>
         <div
           class="bold-node"
-          v-for="(node, key, index) in archives"
+          v-for="(year, key, index) in archives"
           :key="index">
           <p>{{ key }}</p>
-          <article-card2
-            v-for="(article, index) in node"
-            :key="index"
-            :article="article" />
+          <div
+            class="bold-node month"
+            v-for="(month, key, index) in year"
+            :key="index">
+            <p>{{ key }}</p>
+            <article-card2
+              v-for="(article, index) in month"
+              :key="index"
+              :article="article" />
+          </div>
         </div>
       </div>
     </div>
@@ -174,6 +180,16 @@ export default {
             border-radius: 8px
         > p
           margin-bottom: 20px
+        .month
+          color: #666666
+          font-size: 26px
+          @media (max-width: 768px)
+            font-size: 20px
+          &:before
+            left: -19px
+            @media (max-width: 768px)
+              left: -18px
+
 
 @keyframes show {
   from {

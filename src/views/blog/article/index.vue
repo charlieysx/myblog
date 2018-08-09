@@ -6,19 +6,12 @@
           {{ article.title }}
         </p>
         <div class="article-info">
-          <span>
-            <i class="iconfont icon-calendar"></i>
-            <span class="info-item">发表于 {{ article.publishTime | time }}</span>
-          </span>
-          <span class="line">|</span>
-          <span>
-            <i class="iconfont icon-folder"></i>
-            <span class="info-item">分类于 
-              <span class="classify" @click="$router.push({name: 'articleList', query:{type: 'category', id: category.id}})">
-                {{ category.name }}
-              </span>
-            </span>
-          </span>
+          <i class="iconfont icon-calendar"></i>
+          发表于 {{ article.publishTime | time('YYYY年MM月DD日') }} •
+          <i class="iconfont icon-folder"></i>
+          <span class="classify" @click="toList('category', category.id)">{{ category.name }}</span> •
+          <i class="iconfont icon-eye"></i>
+          {{ article.pageview }}次围观
         </div>
         <div class="article-sub-message">{{ article.subMessage }}</div>
       </div>
@@ -171,28 +164,27 @@ export default {
         font-size: 14px
         @media (max-width: 768px)
           font-size: 12px
-        margin: 10px 0px
-        color: #999999
+        margin: 20px 0px
+        color: #666666
         display: flex
         flex-direction: row
         justify-content: center
-        align-items: flex-end
         flex-wrap: wrap
-        .line
-          margin: 0 8px
-        > span
-          margin-top: 4px
-          .info-item
-            .classify
-              color: #666666
-              border-bottom: 1px solid $color-main
-              cursor: pointer
-              -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
-          .iconfont
-            font-size: 14px
-            @media (max-width: 768px)
-              font-size: 12px
-            margin-right: 5px
+        .classify
+          color: #444444
+          border-bottom: 1px solid $color-main
+          cursor: pointer
+          -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+          margin-right: 5px
+          &:hover
+            color: $color-main
+        .iconfont
+          font-size: 14px
+          @media (max-width: 768px)
+            font-size: 12px
+          margin: 0 5px
+          &:first-child
+            margin-left: 0
       .article-sub-message
         font-size: 14px
         color: #999999
