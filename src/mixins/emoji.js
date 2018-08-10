@@ -97,14 +97,14 @@ var emoji = {
             if (index > 0) {
               let content = source.substr(0, index)
               result.push({
-                type: 'text',
-                content: content
+                'type': 'text',
+                'content': content
               })
               source = source.replace(content, '')
             }
             result.push({
-              type: 'emoji',
-              content: '/static/emoji/' + emoji.name
+              'type': 'emoji',
+              'content': '/static/emoji/' + emoji.name
             })
             source = source.replace(emoji.title, '')
           }
