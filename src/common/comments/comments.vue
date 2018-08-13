@@ -262,7 +262,6 @@ export default {
           this.$toast('邮箱格式不正确哦~', 'error')
           return
         }
-        params.email = this.email
       }
       if (this.content === '' || this.content === `@${this.replyName} `) {
         let msg = this.id == '-1' ? '留言' : '评论'

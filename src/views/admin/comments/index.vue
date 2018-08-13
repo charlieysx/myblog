@@ -41,6 +41,11 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="ip"
+          label="ip"
+          width="120">
+        </el-table-column>
+        <el-table-column
           prop="createTime"
           label="创建时间"
           width="128"
