@@ -1,6 +1,6 @@
 <template>
   <div id="comments">
-    <div id="comments-input-top" class="input-wrap">
+    <div id="comments-input-top" class="input-wrap" v-loading="loading">
       <div class="input-top">
         <el-input
           v-if="!isAdminWrap"
@@ -31,7 +31,11 @@
         <span class="emoji-btn" :class="{active: showEmoji}" @click="showEmoji = !showEmoji">表情</span>
         <div class="action-btn">
           <span class="cancel-btn" @click="content = ''" v-show="content !== ''">取消</span>
-          <span class="send-btn" @click="send">发送~</span>
+          <span 
+            class="send-btn" 
+            @click="check">
+            发送~
+          </span>
         </div>
       </div>
       <transition name="slide-fade">
@@ -67,7 +71,7 @@
           </div>
         </div>
         <p class="content">
-          <span 
+          <span
             v-for="(item, index) in JSON.parse(comments.content)"
             :key="index">
             {{ item.type === 'text' ? item.content : '' }}
@@ -132,7 +136,9 @@ export default {
       commentsList: [],
       replyId: 0,
       replyName: '',
-      avatar: require('IMAGES/cat.jpg')
+      avatar: require('IMAGES/cat.jpg'),
+      captcha: false,
+      loading: false
     }
   },
   computed: {
@@ -215,15 +221,18 @@ export default {
       }
     },
     addComments(params) {
+      this.loading = true
       if (this.isAdminWrap) {
         this.adminReplyComments(params)
           .then((data) => {
             let msg = this.id == '-1' ? '留言' : '评论'
             this.$toast(`${msg}成功~`)
             this.init()
+            this.loading = false
           })
           .catch((err)=> {
             this.$toast(err.msg, 'error')
+            this.loading = false
           })
       } else {
         this.replyComments(params)
@@ -231,9 +240,11 @@ export default {
             let msg = this.id == '-1' ? '留言' : '评论'
             this.$toast(`${msg}成功~`)
             this.init()
+            this.loading = false
           })
           .catch((err)=> {
             this.$toast(err.msg, 'error')
+            this.loading = false
           })
       }
     },
@@ -241,28 +252,47 @@ export default {
       // this.content += '[' + title + ']'
       this.content += title
     },
-    send() {
+    check() {
+      if (this.name === '' && !this.isAdminWrap) {
+        this.$toast('请填写您的称呼', 'error')
+        return
+      }
+      if (this.email !== '' && !this.isAdminWrap) {
+        if (!(/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/.test(this.email))) {
+          this.$toast('邮箱格式不正确哦~', 'error')
+          return
+        }
+        params.email = this.email
+      }
       if (this.content === '' || this.content === `@${this.replyName} `) {
         let msg = this.id == '-1' ? '留言' : '评论'
         this.$toast(`${msg}内容不能为空`, 'error')
         return
       }
-      if (this.name === '' && !this.isAdminWrap) {
-        this.$toast('请填写您的称呼', 'error')
+      if (this.captcha) {
+        this.captcha.show()
         return
       }
+      this.captcha = new TencentCaptcha('2075567253', (res)=> {
+        if(res.ret === 0){
+          this.send(res.ticket, res.randstr)
+          return
+        }
+        this.$toast('未通过验证', 'error')
+      })
+      this.captcha.show()
+    },
+    send(ticket, randstr) {
       let params = {
         articleId: this.id,
         name: this.name,
         replyId: this.replyId,
         content: this.analyzeEmoji(this.content),
-        sourceContent: this.content
+        sourceContent: this.content,
+        ticket: ticket,
+        randstr: randstr
       }
       if (this.email !== '' && !this.isAdminWrap) {
-        if (!(/^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(this.email))) {
-          this.$toast('邮箱格式不正确哦~', 'error')
-          return
-        }
         params.email = this.email
       }
       this.setCommentsInfo({
