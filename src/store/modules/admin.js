@@ -410,8 +410,8 @@ const actions = {
   /**
    * 获取所有评论列表
    */
-  getAllCommentsList (store) {
-    return api.getAllCommentsList()
+  getAllCommentsList (store, params) {
+    return api.getAllCommentsList(params)
       .then((data) => {
         return Promise.resolve(data.data)
       })

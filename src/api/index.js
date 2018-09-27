@@ -273,8 +273,10 @@ export default {
   /**
    * 获取所有评论列表
    */
-  getAllCommentsList () {
-    return axios.get('a/comments/alllist')
+  getAllCommentsList (params) {
+    return axios.get('a/comments/alllist', {
+      params: params
+    })
   },
   /**
    * 获取文章评论列表

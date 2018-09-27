@@ -188,7 +188,10 @@ export default {
       this.getList()
     },
     getList() {
-      this.getAllCommentsList()
+      this.getAllCommentsList({
+          page: this.page,
+          pageSize: this.pageSize
+        })
         .then((data) => {
           this.total = data.count
           this.commentsList = data.list
