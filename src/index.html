@@ -12,6 +12,37 @@
     <noscript>本站大量使用 JavaScript 技术，请确保您的浏览器打开了 JavaScript 支持，谢谢。</noscript>
 
     <div id="app"></div>
+    <script>
+      //获取某URL所有参数，集成一个对象
+      function getAllUrlQuery(url) {
+        let _url = url || window.location.href
+        // 获取连接后面的参数，微信分享的链接可能会有编码问题，先decodeURI
+        let params = decodeURI(_url).split('#')[0].split('?')
+        // 如果只有一个数据，说明没有带参数
+        if (params.length > 1) {
+          let result = {}
+          params = params[1].split('&')
+          params.forEach(item=> {
+            // 取出键值对
+            let arr = item.split('=')
+            let key = arr[0]
+            let value = arr[1]
+            // 如果出现大于2的数组，说明value中有 = 这个符号，需要拼接起来
+            if (arr.length > 2) {
+              arr.splice(0, 1)
+              value = arr.join('=')
+            }
+            // 因为直接解析为对象可能会出错，如果value是对象，需要自己用JSON.parse(str)解析
+            result[key] = value
+          })
+          return result
+        }
+        // 返回一个空对象
+        return {}
+      }
+      window.urlParams = getAllUrlQuery()
+      console.log(window.urlParams)
+    </script>
     <!-- built files will be auto injected -->
     <% if (htmlWebpackPlugin.options.prod) { %>
       <!-- 如果是开发环境就不需要引入cdn了，直接用本地的，不然没网都开发不了 -->
@@ -32,14 +63,28 @@
     
       <script>
         // 百度统计
-        // var _hmt = _hmt || [];
-        // (function() {
-        //   var hm = document.createElement("script");
-        //   hm.src = "https://hm.baidu.com/hm.js?9933e6d78b342f270a46bfe831b671b8";
-        //   var s = document.getElementsByTagName("script")[0]; 
-        //   s.parentNode.insertBefore(hm, s);
-        // })();
+        // TODO：上传到github时注释掉，避免别人用这个博客时，也统计到这里来
+        // 自行更改src链接
+
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?9933e6d78b342f270a46bfe831b671b8";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+          // 百度统计
+          window.baidu = ({from = (window.urlParams.ADTAG || '-'), type = 'page', event = '-'}) => {
+            _hmt.push(['_trackEvent', from, type, event])
+          }
+        })();
     </script>
+    <% } else { %>
+      <script>
+        // 百度统计
+        window.baidu = ({from = (window.urlParams.ADTAG || '-'), type = 'page', event = '-'}) => {
+          console.log('dev模式不上报百度统计：', from, type, event)
+        }
+      </script>
     <% } %>
   </body>
 </html>

@@ -272,8 +272,13 @@ export default {
         this.captcha.show()
         return
       }
+      // 自己申请腾讯验证码，下面的那串数字要改为自己的
       this.captcha = new TencentCaptcha('2075567253', (res)=> {
         if(res.ret === 0){
+          window.baidu({
+            type: 'btn',
+            event: 'comments-captcha'
+          })
           this.send(res.ticket, res.randstr)
           return
         }
