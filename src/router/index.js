@@ -40,10 +40,10 @@ router.beforeEach((to, from, next) => {
   } else {
     let event = to.name
     if (to.name === 'article') {
-      event += ` - ${window.urlParams.id}`
+      event += ` - ${to.query.id}`
     }
     if (to.name === 'articleList') {
-      event += `-${window.urlParams.type} - ${window.urlParams.id}`
+      event += `-${to.query.type} - ${to.query.id}`
     }
     window.baidu({
       event: event

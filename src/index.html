@@ -14,7 +14,7 @@
     <div id="app"></div>
     <script>
       //获取某URL所有参数，集成一个对象
-      function getAllUrlQuery(url) {
+      window.getAllUrlQuery = function(url) {
         let _url = url || window.location.href
         // 获取连接后面的参数，微信分享的链接可能会有编码问题，先decodeURI
         let params = decodeURI(_url).split('#')[0].split('?')
@@ -35,13 +35,13 @@
             // 因为直接解析为对象可能会出错，如果value是对象，需要自己用JSON.parse(str)解析
             result[key] = value
           })
+          console.log(result)
           return result
         }
         // 返回一个空对象
         return {}
       }
-      window.urlParams = getAllUrlQuery()
-      console.log(window.urlParams)
+      window.urlParams = window.getAllUrlQuery()
     </script>
     <!-- built files will be auto injected -->
     <% if (htmlWebpackPlugin.options.prod) { %>
