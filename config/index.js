@@ -11,12 +11,12 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/localapi': {
-        target: 'http://127.0.0.1/blogapi/index.php',
+      '/a/': {
+        target: 'http://localhost/blog/index.php',
         changeOrigin: true,
-        pathRewrite: {
-            '^/localapi': ''
-        }
+        // pathRewrite: {
+        //     '^/api': ''
+        // }
       }
     },
 

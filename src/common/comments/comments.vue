@@ -454,6 +454,7 @@ export default {
         font-size: 14px
         color: #555555
         line-height: 16px
+        word-break: break-all
   .comments-children
     margin-left: 12px
     border-left: 2px solid #999999
@@ -494,6 +495,7 @@ export default {
         font-size: 14px
         color: #555555
         line-height: 16px
+        word-break: break-all
 
 .fade-enter-active, .fade-leave-active
   transition: opacity .3s
