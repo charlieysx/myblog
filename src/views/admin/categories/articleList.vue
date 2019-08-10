@@ -169,7 +169,7 @@ export default {
       'deleteArticle'
     ]),
     formatTime(row, column, cellValue, index) {
-      return cellValue ? moment(parseInt(cellValue) * 1000).format('YYYY-MM-DD HH:ss') : '-'
+      return cellValue ? moment(parseInt(cellValue) * 1000).format('YYYY-MM-DD HH:mm') : '-'
     },
     formatStatus(value) {
       return value == '0' ? '已发布' : '-'
