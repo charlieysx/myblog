@@ -1,9 +1,9 @@
 .DS_Store
-node_modules/
-/dist/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+
+node_modules
+dist
+
+.history
 
 # Editor directories and files
 .idea
@@ -12,5 +12,10 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
+*.sw?
 
-yarn.lock
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
