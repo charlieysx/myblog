@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title></title>
+    <script>
+      window.__loadAssetsList = function (type, list, callback) {
+          var loaded = 0;
+          var loadCallcack = function() {
+              loaded++;
+              if (loaded >= list.length) {
+                  callback();
+              } else {
+                  loadNext();
+              }
+          }
+          var loadNext = function() {
+              if (type === 'js') {
+                  window.__loadJs(list[loaded], loadCallcack)
+              } else if (type === 'css') {
+                  window.__loadCss(list[loaded], loadCallcack)
+              } else {
+                  loadNext();
+              }
+          };
+          loadNext();
+      };
+      window.__loadJs = function(src, callback) {
+          var s = document.createElement('script');
+          s.async = false;
+          var st = new Date().getTime()
+          console.log('%c 开始加载js', 'color: #ffffff;background-color: #2a5caa;padding: 5px', src)
+          s.addEventListener('load', function() {
+              var et = new Date().getTime()
+              console.log('%c js加载完成', 'color: #ffffff;background-color: #1d953f;padding: 5px', '耗时：', et - st, '毫秒', src)
+              s.removeEventListener('load', arguments.callee, false);
+              callback();
+          }, false);
+          s.src = src;
+          document.head.appendChild(s);
+      };
+      window.__loadCss = function(url, callback) {
+          var link = document.createElement('link');
+          link.rel = "stylesheet";
+          link.type = "text/css";
+          var st = new Date().getTime()
+          console.log('%c 开始加载css', 'color: #ffffff;background-color: #2a5caa;padding: 5px', url)
+          link.addEventListener('load', function () {
+              var et = new Date().getTime()
+              console.log('%c css加载完成', 'color: #ffffff;background-color: #1d953f;padding: 5px', '耗时：', et - st, '毫秒', url)
+              link.removeEventListener('load', arguments.callee, false);
+              callback();
+          }, false);
+          link.href = url; 
+          document.head.appendChild(link);
+      };
+      (function (doc, win) {
+          const queryList = win.location.search.replace('?', '').split('&')
+          win._query = {}
+          for (let i = 0; i < queryList.length; ++i) {
+              let q = queryList[i].split('=')
+              if (!q[0]) {
+                  continue
+              }
+              win._query[q[0]] = q[1]
+          }
+          let hashQueryList = (win.location.hash.split('?')[1] || '').split('&')
+          win._hQuery = {}
+          for (let i = 0; i < hashQueryList.length; ++i) {
+              let q = hashQueryList[i].split('=')
+              if (!q[0]) {
+                  continue
+              }
+              win._hQuery[q[0]] = q[1]
+          }
+          win._query.debug = win._query.debug === 'true'
+          win._hQuery.debug = win._hQuery.debug === 'true'
+          win._query.debug = win._query.debug || win._hQuery.debug
+          win._hQuery.debug = win._query.debug
+          window.VV = {
+                install(key, useFunc) {
+                    VV[key] = useFunc
+                }
+            }
+      })(document, window);
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <div id="app-dialog"></div>
+    <div id="app-toast"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

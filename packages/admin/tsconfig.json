@@ -1,0 +1,49 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "noImplicitAny": false,
+        "noUnusedParameters": false,
+        "declaration": false,
+        "useDefineForClassFields": true,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "allowJs": false,
+        "strict": true,
+        "baseUrl": ".",
+        "jsx": "preserve",
+        "sourceMap": true,
+        "noUnusedLocals": false,
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
+        "charset": "utf8",
+        "lib": [
+            "esnext", 
+            "dom"
+        ],
+		"paths": {
+			"/@assets/*": ["src/assets/*"],
+			"/@router/*": ["src/router/*"],
+			"/@imgs/*": ["src/assets/imgs/*"],
+			"/@comp/*": ["src/components/*"],
+			"/@utils/*": ["src/utils/*"],
+			"/@store/*": ["src/store/*"],
+			"/@pages/*": ["src/pages/*"],
+			"/@styles/*": ["src/styles/*"],
+			"/@layout/*": ["src/layout/*"]
+		}
+    },
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.d.ts",
+        "src/**/*.tsx",
+        "src/**/*.vue"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "**/*.js",
+        "public/js"
+    ]
+}

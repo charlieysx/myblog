@@ -1,24 +1,26 @@
 {
-  "name": "blog",
-  "version": "1.0.0",
-  "description": "博客",
-  "private": true,
-  "scripts": {
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/CB-ysx/myblog.git"
-  },
-  "author": "codebear",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/CB-ysx/myblog/issues"
-  },
-  "homepage": "https://github.com/CB-ysx/myblog#readme",
-  "devDependencies": {
-    "lerna": "^4.0.0"
-  },
-  "workspaces": [
-    "packages/*"
-  ]
+    "name": "blog",
+    "version": "1.0.0",
+    "description": "博客",
+    "private": true,
+    "scripts": {
+        "preinstall": "npx only-allow yarn"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/CB-ysx/myblog.git"
+    },
+    "author": "codebear",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/CB-ysx/myblog/issues"
+    },
+    "homepage": "https://github.com/CB-ysx/myblog#readme",
+    "devDependencies": {
+        "lerna": "^4.0.0"
+    },
+    "workspaces": [
+        "packages/*",
+        "packages/@cli/*"
+    ]
 }

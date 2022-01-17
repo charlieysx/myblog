@@ -1,0 +1,227 @@
+/**
+ * 测试用，给容器加上外边框
+ */
+ .test-border(@color: black) {
+    outline: 1px solid @color;
+}
+/**
+ * 测试用，给容器添加背景颜色
+ */
+.test-bg(@color: black) {
+    background-color: @color;
+}
+
+.p-a() {
+    position: absolute;
+}
+
+.p-r() {
+    position: relative;
+}
+
+.p-f() {
+    position: fixed;
+}
+
+.page(@color: transparent) {
+    .p-f();
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    background-color: @color;
+}
+
+.bg-page(@img) {
+    .bg-cover(@img);
+    .page();
+}
+
+.wh(@w, @h: @w) {
+    & when (isunit(@w, '')) {
+        width: unit(@w, rem);
+    }
+    & when not (isunit(@w, '')) {
+        width: @w;
+    }
+    & when (isunit(@h, '')) {
+        height: unit(@h, rem);
+    }
+    & when not (isunit(@h, '')) {
+        height: @h;
+    }
+}
+
+.max-wh(@w, @h: @w) {
+    & when (isunit(@w, '')) {
+        max-width: unit(@w, rem);
+    }
+    & when not (isunit(@w, '')) {
+        max-width: @w;
+    }
+    & when (isunit(@h, '')) {
+        max-height: unit(@h, rem);
+    }
+    & when not (isunit(@h, '')) {
+        max-height: @h;
+    }
+}
+
+.min-wh(@w, @h: @w) {
+    & when (isunit(@w, '')) {
+        max-width: unit(@w, rem);
+    }
+    & when not (isunit(@w, '')) {
+        max-width: @w;
+    }
+    & when (isunit(@h, '')) {
+        max-height: unit(@h, rem);
+    }
+    & when not (isunit(@h, '')) {
+        max-height: @h;
+    }
+}
+
+.contain() {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-origin: content-box;
+}
+
+.cover(@position: center) {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: @position;
+    background-origin: content-box;
+}
+
+.bg-img(@img) {
+    background-size: 100% 100%;
+    background-image: url('~@assets/@{img}');
+}
+
+.bg-fill(@img) {
+    .bg-img(@img);
+    .wh(100%);
+}
+
+.bg-cover (@img) {
+    .bg-img(@img);
+    .cover();
+}
+
+.bg-contain (@img) {
+    .bg-img(@img);
+    .contain();
+}
+
+.bg-box(@box: border-box) {
+    box-sizing: @box;
+    background-origin: @box;
+}
+
+.flex(@j: center, @a: center) {
+    display: flex;
+    justify-content: @j;
+    align-items: @a;
+}
+
+.flex-column(@j: center, @a: center) {
+    .flex(@j, @a);
+    flex-direction: column;
+}
+
+.center(@position: 'a', @top: 50%, @left: 50%, @transform: true) {
+    & when (@position = 'a') {
+        .p-a();
+    }
+    & when (@position = 'r') {
+        .p-r();
+    }
+    & when (@position = 'f') {
+        .p-f();
+    }
+    & when (@transform = true) {
+        top: @top;
+        left: @left;
+        transform: translate3d(-50%, -50%, 0);
+    }
+    & when (@transform = false) {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+    }
+}
+
+.center-row(@position: 'a') {
+    & when (@position = 'a') {
+        .p-a();
+    }
+    & when (@position = 'r') {
+        .p-r();
+    }
+    & when (@position = 'f') {
+        .p-f();
+    }
+    left: 50%;
+    transform: translate3d(-50%, 0, 0);
+}
+
+.center-column(@position: 'a') {
+    & when (@position = 'a') {
+        .p-a();
+    }
+    & when (@position = 'r') {
+        .p-r();
+    }
+    & when (@position = 'f') {
+        .p-f();
+    }
+    top: 50%;
+    transform: translate3d(0, -50%, 0);
+}
+
+.text-line(@line: 1) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+    & when (@line <= 1) {
+        white-space: nowrap;
+    }
+
+    & when (@line > 1) {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: @line;
+    }
+}
+
+.scroll(@nobal: true) {
+    -webkit-overflow-scrolling: touch;
+    overflow: scroll;
+
+    & when (@nobal = true) {
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+}
+
+.scroll-x(@nobal: true) {
+    -webkit-overflow-scrolling: touch;
+    overflow-x: scroll;
+
+    & when (@nobal = true) {
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+}
+
+.bold() {
+    font-weight: bold;
+}

@@ -1,0 +1,70 @@
+<template>
+    <div class="tab-view">
+        <div class="tab" v-for="(tab, index) in tabs" :key="index" @click="$emit('tab-click', tab)">
+            <component :is="tab.icon"></component>
+            <span class="name">{{ tab.name }}</span>
+        </div>
+    </div>
+</template>
+
+<script lang="ts">
+import { defineComponent, PropType } from 'vue'
+export default defineComponent({
+    name: 'TabView',
+    props: {
+        tabs: {
+            type: Array as PropType<
+                Array<{
+                    icon: string
+                    name: string
+                }>
+            >,
+            default: () => {
+                return []
+            }
+        }
+    },
+    emits: ['tab-click']
+})
+</script>
+
+<style lang="less" scoped>
+@import '/@styles/less/g-mixin.less';
+.tab-view {
+    .p-r();
+    font-size: 14px;
+    cursor: default;
+    animation: show 0.5s;
+    > .tab {
+        padding: 5px 8px;
+        display: inline-block;
+        cursor: pointer;
+        -webkit-tap-highlight-color: var(--color-bg-2);
+        color: var(--color-text-1);
+        background-color: var(--color-bg-2);
+        transition: all 0.5s;
+        border-radius: 5px;
+        margin-right: 12px;
+        &:last-child {
+            margin-right: 0px;
+        }
+        &:hover {
+            color: var(--color-bg-2);
+            background-color: var(--color-text-1);
+        }
+        .name {
+            margin-left: 5px;
+        }
+    }
+}
+@keyframes show {
+    from {
+        margin-top: -30px;
+        opacity: 0;
+    }
+    to {
+        margin-top: 0px;
+        opacity: 1;
+    }
+}
+</style>
