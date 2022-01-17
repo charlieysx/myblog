@@ -55,7 +55,7 @@ export default defineComponent({
         })
 
         const publishTime = computed(() => {
-            return dayjs(props.info.article.publishTime).format('YYYY年MM月DD日')
+            return dayjs(props.info.article.publishTime * 1000).format('YYYY年MM月DD日')
         })
 
         const { router } = VV.useRouter()
