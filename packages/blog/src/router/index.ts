@@ -1,4 +1,4 @@
-import { RouteRecordRaw, createRouter, createWebHashHistory } from 'vue-router'
+import { RouteRecordRaw, createRouter, createWebHistory } from 'vue-router'
 import EmptyLayout from '/@layout/EmptyLayout/index.vue'
 import PageLayout from '/@layout/PageLayout/index.vue'
 
@@ -20,6 +20,14 @@ const routes: RouteRecordRaw[] = [
                 }
             },
             {
+                path: '/categories',
+                name: 'Categories',
+                component: () => import('/@pages/Categories/index.vue'),
+                meta: {
+                    title: '分类/标签'
+                }
+            },
+            {
                 path: '/about',
                 name: 'About',
                 component: () => import('/@pages/Hello/index.vue'),
@@ -35,7 +43,7 @@ const router = createRouter({
     scrollBehavior() {
         return { top: 0 }
     },
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     routes
 })
 

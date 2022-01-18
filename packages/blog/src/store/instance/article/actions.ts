@@ -9,6 +9,24 @@ const getArticleList = async (params) => {
     return []
 }
 
+const getCategoryList = async () => {
+    const res = await api.getCategoryList().catch(() => {})
+    if (res?.data) {
+        return res.data
+    }
+    return []
+}
+
+const getTagList = async () => {
+    const res = await api.getTagList().catch(() => {})
+    if (res?.data) {
+        return res.data
+    }
+    return []
+}
+
 export default {
-    getArticleList
+    getArticleList,
+    getCategoryList,
+    getTagList
 }

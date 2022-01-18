@@ -215,6 +215,7 @@ export default defineComponent({
     .p-r();
     .wh(100%, auto);
     background-color: var(--color-bg-2);
+    z-index: 999;
     // box-shadow: 0 0 10px 2px var(--color-border);
     > .nav-wrap {
         .p-r();
