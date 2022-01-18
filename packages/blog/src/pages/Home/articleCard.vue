@@ -6,9 +6,10 @@
                 :style="{
                     backgroundImage: 'url(' + cover + ')'
                 }"
+                @click="showArticle"
             >
                 <div class="article-title">
-                    <span @click="showArticle">{{ info.article.title }}</span>
+                    <span>{{ info.article.title }}</span>
                 </div>
             </div>
             <div class="article-info">
@@ -110,13 +111,14 @@ export default defineComponent({
             width: 100%;
             background-position: center;
             background-size: cover;
+            cursor: pointer;
             &:before {
                 top: 0;
                 left: 0;
                 width: 100%;
                 padding-top: 50%;
                 content: ' ';
-                background: rgba(0, 0, 0, 0.4);
+                background: rgba(0, 0, 0, 0.5);
                 display: block;
             }
             .article-title {
@@ -135,7 +137,6 @@ export default defineComponent({
                 padding: 10px;
                 span {
                     position: relative;
-                    cursor: pointer;
                     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
                     &:after {
                         content: '';
@@ -150,7 +151,12 @@ export default defineComponent({
                         transition-duration: 0.2s;
                         transition-timing-function: ease;
                     }
-                    &:hover {
+                }
+            }
+
+            &:hover {
+                .article-title {
+                    span {
                         &:after {
                             visibility: visible;
                             transform: scaleX(1);
