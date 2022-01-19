@@ -25,8 +25,20 @@ const getTagList = async () => {
     return []
 }
 
+const getArchives = async (params) => {
+    const res = await api.getArchives(params).catch(() => {})
+    if (res?.data) {
+        return res.data
+    }
+    return {
+        count: 0,
+        list: []
+    }
+}
+
 export default {
     getArticleList,
     getCategoryList,
-    getTagList
+    getTagList,
+    getArchives
 }

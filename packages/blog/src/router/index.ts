@@ -20,6 +20,14 @@ const routes: RouteRecordRaw[] = [
                 }
             },
             {
+                path: '/archives',
+                name: 'Archives',
+                component: () => import('/@pages/Archives/index.vue'),
+                meta: {
+                    title: '归档'
+                }
+            },
+            {
                 path: '/categories',
                 name: 'Categories',
                 component: () => import('/@pages/Categories/index.vue'),

@@ -14,4 +14,8 @@ const getTagList = async () => {
     return await get('/w/tag/list')
 }
 
-export { getArticleList, getCategoryList, getTagList }
+const getArchives = async (params) => {
+    return await get('/w/article/archives', { params })
+}
+
+export { getArticleList, getCategoryList, getTagList, getArchives }

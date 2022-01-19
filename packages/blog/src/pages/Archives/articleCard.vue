@@ -1,16 +1,8 @@
 <template>
     <div class="article-card">
         <div class="article-card-wrap">
-            <div
-                class="article-cover"
-                :style="{
-                    backgroundImage: 'url(' + cover + ')'
-                }"
-                @click="showArticle"
-            >
-                <div class="article-title">
-                    <span>{{ info.article.title }}</span>
-                </div>
+            <div class="article-title" @click="showArticle">
+                {{ info.article.title }}
             </div>
             <div class="article-info">
                 <i class="iconfont icon-calendar"></i>
@@ -20,17 +12,16 @@
                     {{ info.category.name }}
                 </span>
                 •
-                <icon-eye />
+                <i class="iconfont icon-eye"></i>
                 {{ info.article.pageview }}次围观
             </div>
             <div class="article-sub-message">{{ info.article.subMessage }}</div>
-            <div class="tags" v-if="info.tags.length > 0">
+            <div class="tags">
                 <div v-for="(tag, index) in info.tags" :key="index" class="tag" @click="toList('tag', tag.id)">
-                    <icon-tag />
+                    <i class="iconfont icon-tag"></i>
                     {{ tag.name }}
                 </div>
             </div>
-            <div class="read-more" @click="showArticle">阅读全文 >></div>
         </div>
     </div>
 </template>
@@ -88,6 +79,7 @@ export default defineComponent({
 
 <style lang="less" scoped>
 @import '/@styles/less/g-mixin.less';
+
 .article-card {
     position: relative;
     background-color: var(--color-bg-2);
@@ -96,74 +88,45 @@ export default defineComponent({
     &:last-child {
         margin-bottom: 0px;
     }
-    box-shadow: 0px 0px 4px 0px var(--color-border);
-    min-height: 603px;
+    box-shadow: 0px 0px 2px 0px var(--color-border);
+    min-height: 183px;
     @media (max-width: 768px) {
-        min-height: 285.5px;
+        min-height: 151px;
         padding: 10px;
     }
     line-height: 1.2;
-    animation: show 0.8s;
     .article-card-wrap {
         position: relative;
-        .article-cover {
+        animation: show 0.8s;
+        .article-title {
             position: relative;
-            width: 100%;
-            background-position: center;
-            background-size: cover;
+            display: inline-block;
+            font-size: 22px;
+            color: white;
+            @media (max-width: 768px) {
+                font-size: 18px;
+            }
             cursor: pointer;
-            &:before {
-                top: 0;
-                left: 0;
-                width: 100%;
-                padding-top: 50%;
-                content: ' ';
-                background: rgba(0, 0, 0, 0.5);
-                display: block;
-            }
-            .article-title {
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            &:after {
+                content: '';
                 position: absolute;
-                font-size: 24px;
-                width: 100%;
-                height: 100%;
-                top: 0;
+                bottom: -2px;
                 left: 0;
-                @media (max-width: 768px) {
-                    font-size: 18px;
-                }
-                font-weight: bold;
-                color: white;
-                .flex();
-                padding: 10px;
-                span {
-                    position: relative;
-                    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-                    &:after {
-                        content: '';
-                        position: absolute;
-                        bottom: 0px;
-                        left: 0;
-                        width: 100%;
-                        height: 2px;
-                        background-color: white;
-                        visibility: hidden;
-                        transform: scaleX(0);
-                        transition-duration: 0.2s;
-                        transition-timing-function: ease;
-                    }
-                }
+                width: 100%;
+                height: 1px;
+                background-color: white;
+                visibility: hidden;
+                transform: scaleX(0);
+                transition-duration: 0.2s;
+                transition-timing-function: ease;
             }
-
             &:hover {
-                .article-title {
-                    span {
-                        &:after {
-                            visibility: visible;
-                            transform: scaleX(1);
-                            transition-duration: 0.2s;
-                            transition-timing-function: ease;
-                        }
-                    }
+                &:after {
+                    visibility: visible;
+                    transform: scaleX(1);
+                    transition-duration: 0.2s;
+                    transition-timing-function: ease;
                 }
             }
         }
@@ -173,11 +136,11 @@ export default defineComponent({
             @media (max-width: 768px) {
                 font-size: 12px;
             }
-            margin: 20px 0px;
+            margin: 10px 0px;
             color: var(--color-text-1);
             display: flex;
             flex-direction: row;
-            justify-content: center;
+            justify-content: flex-start;
             flex-wrap: wrap;
             .classify {
                 color: var(--color-text-2);
@@ -208,47 +171,15 @@ export default defineComponent({
             @media (max-width: 768px) {
                 font-size: 14px;
             }
-        }
-        .read-more {
-            .p-r();
-            display: inline-block;
-            font-size: 14px;
-            margin-top: 20px;
-            color: var(--color-text-1);
-            @media (max-width: 768px) {
-                font-size: 12px;
-            }
-            cursor: pointer;
-            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-            &:after {
-                content: '';
-                position: absolute;
-                bottom: -2px;
-                left: 0;
-                width: 100%;
-                height: 1px;
-                background-color: var(--color-text-1);
-                visibility: visible;
-                transform: scale(1, 0.3);
-                transition-duration: 0.2s;
-                transition-timing-function: ease;
-            }
-            &:hover {
-                &:after {
-                    visibility: hidden;
-                    transform: scale(0, 0.3);
-                    transition-duration: 0.2s;
-                    transition-timing-function: ease;
-                }
-            }
+            margin-bottom: 10px;
         }
         .tags {
-            .p-r();
             width: 100%;
             padding: 10px 0px;
-            .flex(flex-start);
+            display: flex;
+            flex-direction: row;
+            align-items: center;
             flex-wrap: wrap;
-            margin-bottom: 10px;
             &:after {
                 .p-a();
                 content: '';
@@ -262,10 +193,9 @@ export default defineComponent({
             .tag {
                 color: var(--color-bg-1);
                 padding: 5px;
-                padding-right: 10px;
                 background-color: var(--color-text-1);
                 font-size: 12px;
-                margin-right: 12px;
+                margin-right: 5px;
                 border-top-right-radius: 5px;
                 border-bottom-right-radius: 5px;
                 transition: all 0.3s;
@@ -292,6 +222,9 @@ export default defineComponent({
                     border-bottom: 11px solid transparent;
                     border-right: 12px solid var(--color-text-1);
                     transition: all 0.3s;
+                }
+                .iconfont {
+                    font-size: 12px;
                 }
             }
         }
