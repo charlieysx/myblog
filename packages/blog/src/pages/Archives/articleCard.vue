@@ -65,7 +65,7 @@ export default defineComponent({
             },
             toList(type, id) {
                 router.push({
-                    name: 'articleList',
+                    name: 'ArticleList',
                     query: {
                         type: type,
                         id: id
@@ -102,7 +102,7 @@ export default defineComponent({
             position: relative;
             display: inline-block;
             font-size: 22px;
-            color: white;
+            color: var(--color-text-1);
             @media (max-width: 768px) {
                 font-size: 18px;
             }
@@ -115,7 +115,7 @@ export default defineComponent({
                 left: 0;
                 width: 100%;
                 height: 1px;
-                background-color: white;
+                background-color: var(--color-text-1);
                 visibility: hidden;
                 transform: scaleX(0);
                 transition-duration: 0.2s;

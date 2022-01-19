@@ -36,6 +36,22 @@ const routes: RouteRecordRaw[] = [
                 }
             },
             {
+                path: '/list',
+                name: 'ArticleList',
+                component: () => import('/@pages/Categories/list.vue'),
+                meta: {
+                    title: '分类/标签'
+                }
+            },
+            {
+                path: '/friends',
+                name: 'Friends',
+                component: () => import('/@pages/Friends/index.vue'),
+                meta: {
+                    title: '友链'
+                }
+            },
+            {
                 path: '/about',
                 name: 'About',
                 component: () => import('/@pages/Hello/index.vue'),

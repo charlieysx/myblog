@@ -74,7 +74,7 @@ export default defineComponent({
             },
             toList(type, id) {
                 router.push({
-                    name: 'articleList',
+                    name: 'ArticleList',
                     query: {
                         type: type,
                         id: id
