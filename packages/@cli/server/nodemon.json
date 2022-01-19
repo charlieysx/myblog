@@ -1,0 +1,9 @@
+{
+    "restartable": "rs",
+    "ignore": [".git", "node_modules/**", "client/*", "dist", ".cache", "logs"],
+    "verbose": true,
+    "exec": "ts-node src/index.ts",
+    "ext": "js json ts",
+    "watch": ["./**"],
+    "legacy-watch": false
+}

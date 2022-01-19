@@ -1,0 +1,23 @@
+{
+	"compileOnSave": false,
+	"compilerOptions": {
+		"sourceMap": true,
+		"noImplicitAny": false,
+		"noUnusedParameters": false,
+		"moduleResolution": "node",
+		"declaration": true,
+		"declarationDir": "dist/types",
+		"allowSyntheticDefaultImports": true,
+		"module": "commonjs",
+		"target": "es5",
+		"baseUrl": "./",
+        "lib": [
+            "esnext",
+            "scripthost"
+        ],
+	},
+	"include": [
+		"src/*", 
+	],
+	"exclude": ["node_modules"],
+}

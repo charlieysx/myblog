@@ -1,0 +1,39 @@
+{
+	"compileOnSave": false,
+	"compilerOptions": {
+		"sourceMap": true,
+		"noImplicitAny": false,
+		"noUnusedParameters": false,
+		"moduleResolution": "node",
+		"declaration": false,
+		"module": "esnext",
+		"target": "esnext",
+		"baseUrl": ".",
+        "lib": [
+            "esnext",
+            "dom",
+            "dom.iterable",
+            "scripthost"
+        ],
+		"paths": {
+			"@/*": ["src/*"],
+			"@assets/*": ["src/assets/*"],
+			"@comp/*": ["src/components/*"],
+			"@store/*": ["src/store/*"],
+			"@imgs/*": ["src/assets/imgs/*"],
+			"@less/*": ["src/assets/less/*"],
+			"@views/*": ["src/views/*"],
+			"@styles/*": ["src/styles/*"]
+		}
+	},
+	"include": [
+        "src/**/*.ts",
+        "src/**/*.tsx",
+        "src/**/*.vue"
+	],
+	"exclude": [
+		"node_modules",
+		"dist",
+		"**/*.js"
+	]
+}
