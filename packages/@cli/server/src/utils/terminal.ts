@@ -35,7 +35,8 @@ function run (task: TerminalTask) {
     let child = execa(task.command, [...args], {
         cwd: task.cwd || process.cwd(),
         stdio: ['inherit', 'pipe', 'pipe'],
-        shell: true
+        shell: true,
+        env: { FORCE_COLOR: 'true' }
     })
     let taskRecord = taskMap.get(task.id)
     if (!taskRecord) {

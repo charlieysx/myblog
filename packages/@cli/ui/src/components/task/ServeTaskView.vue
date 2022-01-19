@@ -151,7 +151,8 @@ export default defineComponent({
         .flex();
         flex-wrap: wrap;
         > .task-terminal-view {
-            .wh(calc(50% - 6px));
+            // .wh(calc(50% - 6px));
+            .wh(100%);
             &:nth-child(2n) {
                 margin-left: 6px;
             }
