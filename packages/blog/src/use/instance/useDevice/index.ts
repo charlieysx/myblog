@@ -1,8 +1,14 @@
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 
 let isMobile = ref(window.innerWidth <= 768)
+let screen = reactive({
+    width: window.innerWidth,
+    height: window.innerHeight
+})
 
 VV.useEventListener(window, 'resize', (e) => {
+    screen.width = window.innerWidth
+    screen.height = window.innerHeight
     if (window.innerWidth <= 768) {
         isMobile.value = true
     } else {
@@ -12,6 +18,7 @@ VV.useEventListener(window, 'resize', (e) => {
 
 function useDevice() {
     return {
+        screen,
         isMobile
     }
 }

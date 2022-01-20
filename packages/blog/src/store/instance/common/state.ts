@@ -10,5 +10,12 @@ export default createState<CommonStore.State>({
         articleCount: 0,
         categoryCount: 0,
         tagCount: 0
+    },
+    showRightNav: false,
+    articleMenu: {
+        show: false,
+        list: [],
+        source: [],
+        tag: '1.'
     }
 })
