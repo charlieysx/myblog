@@ -8,6 +8,15 @@ const initBlogInfo = async () => {
     }
 }
 
+const getAboutMe = async () => {
+    const res = await api.getAboutMe().catch(() => {})
+    if (res?.data) {
+        return res.data
+    }
+    return {}
+}
+
 export default {
-    initBlogInfo
+    initBlogInfo,
+    getAboutMe
 }

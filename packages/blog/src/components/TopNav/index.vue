@@ -171,11 +171,11 @@ export default defineComponent({
                 icon: 'icon-share-alt',
                 to: '/friends'
             },
-            {
-                name: '更多',
-                icon: 'icon-apps',
-                to: '/morefunc'
-            },
+            // {
+            //     name: '更多',
+            //     icon: 'icon-apps',
+            //     to: '/morefunc'
+            // },
             {
                 name: '搜索',
                 icon: 'icon-search',

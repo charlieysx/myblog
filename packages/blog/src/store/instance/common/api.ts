@@ -6,4 +6,8 @@ const getBlogInfo = async () => {
     return await get<CommonStore.BlogInfo>('/w/blogInfo')
 }
 
-export { getBlogInfo }
+const getAboutMe = async () => {
+    return await get('w/getAbout')
+}
+
+export { getBlogInfo, getAboutMe }
