@@ -1,0 +1,90 @@
+<template>
+    <div class="resume">
+        <div class="resume-warp">
+            <div class="resume-message">
+                <p class="resume-title">我的简历</p>
+            </div>
+            <MDPreview :content="state.html" />
+        </div>
+    </div>
+</template>
+
+<script lang="ts">
+import { defineComponent, reactive } from 'vue'
+import MDPreview from '/@comp/MDPreview/index.vue'
+export default defineComponent({
+    name: 'Resume',
+    components: { MDPreview },
+    setup() {
+        const commonStore = VV.useStore('common')
+        const state = reactive<{
+            html: string
+        }>({
+            html: ''
+        })
+        commonStore.getResume().then((res) => {
+            console.log(res)
+            state.html = res.html
+        })
+        return {
+            state
+        }
+    }
+})
+</script>
+
+<style lang="less" scoped>
+@import '/@styles/less/g-mixin.less';
+
+.resume {
+    position: relative;
+    padding: 30px 10px;
+    width: 100%;
+    .resume-warp {
+        position: relative;
+        animation: show 0.8s;
+        padding: 30px;
+        width: 100%;
+        @media (max-width: 768px) {
+            padding: 30px 15px;
+        }
+        background-color: var(--color-bg-1);
+        box-shadow: 0px 0px 5px 0px rgba(38, 42, 48, 0.1);
+        .resume-message {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            .resume-title {
+                font-size: 26px;
+                @media (max-width: 768px) {
+                    font-size: 22px;
+                }
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+.slide-fade-enter-active {
+    transition: all 0.3s ease;
+}
+.slide-fade-leave-active {
+    transition: all 0.3s ease;
+}
+.slide-fade-enter,
+.slide-fade-leave-to {
+    transform: translateY(20px);
+    opacity: 0;
+}
+@keyframes show {
+    from {
+        margin-top: -10px;
+        opacity: 0;
+    }
+    to {
+        margin-top: 0px;
+        opacity: 1;
+    }
+}
+</style>

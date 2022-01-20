@@ -16,7 +16,16 @@ const getAboutMe = async () => {
     return {}
 }
 
+const getResume = async () => {
+    const res = await api.getResume().catch(() => {})
+    if (res?.data) {
+        return res.data
+    }
+    return {}
+}
+
 export default {
     initBlogInfo,
-    getAboutMe
+    getAboutMe,
+    getResume
 }

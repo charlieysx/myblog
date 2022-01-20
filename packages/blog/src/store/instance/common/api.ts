@@ -10,4 +10,8 @@ const getAboutMe = async () => {
     return await get('w/getAbout')
 }
 
-export { getBlogInfo, getAboutMe }
+const getResume = async () => {
+    return await get('w/getResume')
+}
+
+export { getBlogInfo, getAboutMe, getResume }
