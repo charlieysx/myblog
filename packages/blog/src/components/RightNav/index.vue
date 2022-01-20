@@ -15,24 +15,20 @@
             }"
         >
             <div class="menu-info-head" v-if="commonState.articleMenu.show">
-                <span :class="{ active: commonState.articleMenu.show }" @click="commonState.articleMenu.show = true">
-                    文章目录
-                </span>
+                <span :class="{ active: menuTab.state.show }" @click="menuTab.state.show = true">文章目录</span>
                 |
-                <span :class="{ active: !commonState.articleMenu.show }" @click="commonState.articleMenu.show = false">
-                    站点信息
-                </span>
+                <span :class="{ active: !menuTab.state.show }" @click="menuTab.state.show = false">站点信息</span>
             </div>
             <div class="content-wrap">
                 <transition name="slide-fade">
                     <article-menu
                         class="article-menu"
                         :menu="commonState.articleMenu.list"
-                        v-show="commonState.articleMenu.show"
+                        v-show="menuTab.state.show"
                     />
                 </transition>
                 <transition name="slide-fade">
-                    <div class="info-wrap" v-show="!commonState.articleMenu.show">
+                    <div class="info-wrap" v-show="!menuTab.state.show">
                         <img class="avatar" :src="commonState.blogInfo.avatar" />
                         <p class="name">{{ commonState.blogInfo.blogName || '博客' }}</p>
                         <p class="motto">{{ commonState.blogInfo.sign || '-' }}</p>
@@ -163,8 +159,10 @@ function useMenuTab() {
     }
 
     const state = reactive<{
+        show: boolean
         lineData: LineData[]
     }>({
+        show: false,
         lineData: lineStyle.normalLineData
     })
 
@@ -187,6 +185,7 @@ function useMenuTab() {
     watch(
         () => commonState.articleMenu.show,
         () => {
+            state.show = commonState.articleMenu.list.length > 0
             commonState.showRightNav = commonState.articleMenu.show
             state.lineData = commonState.articleMenu.show ? lineStyle.closeLineData : lineStyle.normalLineData
         },
