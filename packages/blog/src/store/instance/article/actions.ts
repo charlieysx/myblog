@@ -9,6 +9,14 @@ const getArticleList = async (params) => {
     return []
 }
 
+const getArticle = async (id: string) => {
+    const res = await api.getArticle(id).catch(() => {})
+    if (res?.data) {
+        return res.data
+    }
+    return []
+}
+
 const getCategoryList = async () => {
     const res = await api.getCategoryList().catch(() => {})
     if (res?.data) {
@@ -38,6 +46,7 @@ const getArchives = async (params) => {
 
 export default {
     getArticleList,
+    getArticle,
     getCategoryList,
     getTagList,
     getArchives

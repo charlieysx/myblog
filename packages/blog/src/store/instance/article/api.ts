@@ -6,6 +6,10 @@ const getArticleList = async (params) => {
     return await get('/w/article/list', { params })
 }
 
+const getArticle = async (id: string) => {
+    return await get('/w/article', { params: { id } })
+}
+
 const getCategoryList = async () => {
     return await get('/w/category/list')
 }
@@ -18,4 +22,4 @@ const getArchives = async (params) => {
     return await get('/w/article/archives', { params })
 }
 
-export { getArticleList, getCategoryList, getTagList, getArchives }
+export { getArticleList, getArticle, getCategoryList, getTagList, getArchives }

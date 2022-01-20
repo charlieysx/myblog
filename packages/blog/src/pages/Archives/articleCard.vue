@@ -18,7 +18,7 @@
             <div class="article-sub-message">{{ info.article.subMessage }}</div>
             <div class="tags">
                 <div v-for="(tag, index) in info.tags" :key="index" class="tag" @click="toList('tag', tag.id)">
-                    <i class="iconfont icon-tag"></i>
+                    <icon-tag />
                     {{ tag.name }}
                 </div>
             </div>
@@ -47,7 +47,7 @@ export default defineComponent({
         })
 
         const publishTime = computed(() => {
-            return dayjs(props.info.article.publishTime * 1000).format('YYYY年MM月DD日')
+            return dayjs(props.info?.article?.publishTime * 1000).format('YYYY年MM月DD日')
         })
 
         const { router } = VV.useRouter()
