@@ -12,6 +12,4 @@ export default defineComponent({
 })
 </script>
 
-<style lang="less">
-@import '/@styles/less/g-mixin.less';
-</style>
+<style lang="less"></style>

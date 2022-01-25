@@ -256,8 +256,6 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-@import '/@styles/less/g-mixin.less';
-
 .right-nav {
     position: relative;
     width: 320px;

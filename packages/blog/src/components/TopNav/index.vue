@@ -210,13 +210,12 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-@import '/@styles/less/g-mixin.less';
 .top-nav {
-    .p-r();
+    .p-f();
     .wh(100%, auto);
-    background-color: var(--color-bg-2);
+    background-color: var(--blog-color-white-1);
     z-index: 999;
-    // box-shadow: 0 0 10px 2px var(--color-border);
+    box-shadow: 0 2px 8px 0 var(--blog-color-shadow);
     > .nav-wrap {
         .p-r();
         max-width: 1000px;
@@ -231,7 +230,7 @@ export default defineComponent({
             font-size: 18px;
             font-weight: bold;
             padding: 25px 0;
-            color: var(--color-text-1);
+            color: var(--blog-color-black-1);
             &:hover {
                 cursor: pointer;
                 > .line {
@@ -243,7 +242,7 @@ export default defineComponent({
                 height: 2px;
                 animation: logo-line 0.5s;
                 transition: width 0.3s;
-                background-color: var(--color-text-1);
+                background-color: var(--blog-color-black-1);
             }
             > .blog-name {
                 animation: logo-name 0.5s;
@@ -263,7 +262,7 @@ export default defineComponent({
                 width: 100%;
                 height: 2px;
                 margin-top: 4px;
-                background-color: var(--color-text-1);
+                background-color: var(--blog-color-black-1);
                 &:first-child {
                     margin-top: 0px;
                 }

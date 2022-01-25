@@ -6,7 +6,9 @@ import ArcoVueIcon from '@arco-design/web-vue/es/icon'
 import App from './App.vue'
 import '@arco-design/web-vue/dist/arco.css'
 import '/@styles/iconfont.css'
-import '/@styles/less/g-global.less'
+import '/@styles/less/global.less'
+import '/@styles/less/theme.less'
+import '/@styles/less/theme.dark.less'
 
 const app = createApp(App)
 app.config.errorHandler = (err: unknown, instance: ComponentPublicInstance | null, info: string) => {

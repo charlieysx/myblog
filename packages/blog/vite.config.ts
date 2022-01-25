@@ -29,6 +29,14 @@ const getAlias = () => {
 export default defineConfig({
     base: envConfig.BASE,
     plugins: [vue()],
+    css: {
+        preprocessorOptions: {
+            less: {
+                javascriptEnabled: true,
+                additionalData: `@import "${resolve(__dirname, 'src/styles/less/mixin.less')}";`
+            }
+        }
+    },
     resolve: {
         alias: getAlias()
     },

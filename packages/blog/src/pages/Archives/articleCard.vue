@@ -78,17 +78,19 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-@import '/@styles/less/g-mixin.less';
-
 .article-card {
     position: relative;
-    background-color: var(--color-bg-2);
+    background-color: var(--blog-color-white-2);
     padding: 20px;
     margin-bottom: 20px;
     &:last-child {
         margin-bottom: 0px;
     }
-    box-shadow: 0px 0px 2px 0px var(--color-border);
+    box-shadow: 0 2px 8px 0 var(--blog-color-shadow);
+    &:hover {
+        box-shadow: 0 2px 12px 5px var(--blog-color-shadow);
+    }
+    transition: all 0.2s linear;
     min-height: 183px;
     @media (max-width: 768px) {
         min-height: 151px;
@@ -102,12 +104,11 @@ export default defineComponent({
             position: relative;
             display: inline-block;
             font-size: 22px;
-            color: var(--color-text-1);
+            color: var(--blog-color-black-1);
             @media (max-width: 768px) {
                 font-size: 18px;
             }
             cursor: pointer;
-            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
             &:after {
                 content: '';
                 position: absolute;
@@ -115,7 +116,7 @@ export default defineComponent({
                 left: 0;
                 width: 100%;
                 height: 1px;
-                background-color: var(--color-text-1);
+                background-color: var(--blog-color-black-1);
                 visibility: hidden;
                 transform: scaleX(0);
                 transition-duration: 0.2s;
@@ -137,19 +138,36 @@ export default defineComponent({
                 font-size: 12px;
             }
             margin: 10px 0px;
-            color: var(--color-text-1);
+            color: var(--blog-color-black-1);
             display: flex;
             flex-direction: row;
             justify-content: flex-start;
             flex-wrap: wrap;
             .classify {
-                color: var(--color-text-2);
-                border-bottom: 1px solid var(--color-text-2);
+                .p-r();
+                color: var(--blog-color-black-1);
                 cursor: pointer;
-                -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
                 margin-right: 5px;
+                &:after {
+                    content: '';
+                    position: absolute;
+                    bottom: -2px;
+                    left: 0;
+                    width: 100%;
+                    height: 1px;
+                    background-color: var(--blog-color-black-1);
+                    visibility: visible;
+                    transform: scale(1, 0.4);
+                    transition-duration: 0.2s;
+                    transition-timing-function: ease;
+                }
                 &:hover {
-                    color: var(--color-text-1);
+                    &:after {
+                        visibility: hidden;
+                        transform: scale(0, 0.4);
+                        transition-duration: 0.2s;
+                        transition-timing-function: ease;
+                    }
                 }
             }
             .iconfont {
@@ -164,8 +182,8 @@ export default defineComponent({
             }
         }
         .article-sub-message {
-            color: var(--color-text-1);
-            border-left: 2px solid var(--color-text-1);
+            color: var(--blog-color-black-1);
+            border-left: 2px solid var(--blog-color-black-4);
             padding-left: 5px;
             font-size: 16px;
             @media (max-width: 768px) {
@@ -185,15 +203,16 @@ export default defineComponent({
                 content: '';
                 width: 100%;
                 height: 1px;
-                transform: scaleY(0.3);
-                background-color: var(--color-text-1);
+                transform: scaleY(0.4);
+                background-color: var(--blog-color-black-1);
                 left: 0;
                 bottom: 0;
             }
             .tag {
-                color: var(--color-bg-1);
+                color: var(--blog-color-white-1);
                 padding: 5px;
-                background-color: var(--color-text-1);
+                padding-left: 8px;
+                background-color: var(--blog-color-black-1);
                 font-size: 12px;
                 margin-right: 5px;
                 border-top-right-radius: 5px;
@@ -204,12 +223,11 @@ export default defineComponent({
                 margin-top: 10px;
                 line-height: 1;
                 cursor: pointer;
-                -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
                 &:hover {
                     &:before {
-                        border-right: 12px solid var(--color-text-1);
+                        border-right: 12px solid var(--blog-color-black-4);
                     }
-                    background-color: var(--color-text-1);
+                    background-color: var(--blog-color-black-4);
                 }
                 &:before {
                     position: absolute;
@@ -220,7 +238,7 @@ export default defineComponent({
                     content: '';
                     border-top: 11px solid transparent;
                     border-bottom: 11px solid transparent;
-                    border-right: 12px solid var(--color-text-1);
+                    border-right: 12px solid var(--blog-color-black-1);
                     transition: all 0.3s;
                 }
                 .iconfont {

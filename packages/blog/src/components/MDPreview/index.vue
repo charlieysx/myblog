@@ -353,8 +353,6 @@ body[arco-theme='dark'] {
 </style>
 
 <style lang="less">
-@import '/@styles/less/g-mixin.less';
-
 .markdown-body {
     color: var(--color-text-2) !important;
     @media (max-width: 768px) {

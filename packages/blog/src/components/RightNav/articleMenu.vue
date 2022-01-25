@@ -46,7 +46,6 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-@import '/@styles/less/g-mixin.less';
 .article-menu {
     width: 100%;
     line-height: 1.8;

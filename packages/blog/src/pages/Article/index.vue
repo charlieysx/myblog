@@ -132,8 +132,6 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-@import '/@styles/less/g-mixin.less';
-
 .article {
     position: relative;
     padding: 30px 10px;

@@ -29,7 +29,6 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-@import '/@styles/less/g-mixin.less';
 .tab-view {
     .p-r();
     font-size: 14px;
@@ -39,9 +38,8 @@ export default defineComponent({
         padding: 5px 8px;
         display: inline-block;
         cursor: pointer;
-        -webkit-tap-highlight-color: var(--color-bg-2);
-        color: var(--color-text-1);
-        background-color: var(--color-bg-2);
+        color: var(--blog-color-black-1);
+        background-color: var(--blog-color-white-1);
         transition: all 0.5s;
         border-radius: 5px;
         margin-right: 12px;
@@ -49,8 +47,8 @@ export default defineComponent({
             margin-right: 0px;
         }
         &:hover {
-            color: var(--color-bg-2);
-            background-color: var(--color-text-1);
+            color: var(--blog-color-white-1);
+            background-color: var(--blog-color-black-1);
         }
         .name {
             margin-left: 5px;

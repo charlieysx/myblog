@@ -62,6 +62,7 @@ export default defineComponent({
             min-width: 320px;
             margin: 0 auto;
             padding: 0 10px;
+            padding-top: 60px;
             transition: width 0.3s;
             min-height: calc(100vh - 120px);
             transition: width 0.3s;
