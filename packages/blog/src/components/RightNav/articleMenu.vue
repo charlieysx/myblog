@@ -30,10 +30,10 @@ export default defineComponent({
             VV.useUtils().scrollToTarget(top)
         }
         function isCurrent(item: CommonStore.ArticleMenuTag) {
-            return item.tag === state.articleMenu.tag
+            return item.tag === state.rightNav.articleMenu.tag
         }
         function isParent(item: CommonStore.ArticleMenuTag) {
-            return state.articleMenu.tag.indexOf(item.tag) === 0
+            return state.rightNav.articleMenu.tag.indexOf(item.tag) === 0
         }
 
         return {

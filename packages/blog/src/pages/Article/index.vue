@@ -103,7 +103,7 @@ export default defineComponent({
             getList()
         }
         watch(() => routes?.query, initData, { immediate: true })
-        function getList() {
+        async function getList() {
             articleStore.getArticle(state.id).then((res) => {
                 state.article = res.article
                 state.article.publishTime = dayjs(state.article.publishTime * 1000).format('YYYY年MM月DD日')

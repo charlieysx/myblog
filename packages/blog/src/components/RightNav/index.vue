@@ -3,18 +3,18 @@
         v-show="state.show"
         class="right-nav"
         :style="{
-            width: commonState.showRightNav ? '320px' : '0px',
+            width: commonState.rightNav.show ? '320px' : '0px',
             transition: 'all .3s'
         }"
     >
         <div
             class="right-nav-wrap"
             :style="{
-                width: commonState.showRightNav ? '320px' : '0px',
+                width: commonState.rightNav.show ? '320px' : '0px',
                 transition: 'all .3s'
             }"
         >
-            <div class="menu-info-head" v-if="commonState.articleMenu.show">
+            <div class="menu-info-head" v-if="commonState.rightNav.articleMenu.show">
                 <span :class="{ active: menuTab.state.show }" @click="menuTab.state.show = true">文章目录</span>
                 |
                 <span :class="{ active: !menuTab.state.show }" @click="menuTab.state.show = false">站点信息</span>
@@ -23,9 +23,11 @@
                 <transition name="slide-fade">
                     <article-menu
                         class="article-menu"
-                        :menu="commonState.articleMenu.list"
+                        :menu="commonState.rightNav.articleMenu.list"
                         v-show="menuTab.state.show"
+                        v-if="!commonState.rightNav.articleMenu.loading"
                     />
+                    <div v-else>加载中...</div>
                 </transition>
                 <transition name="slide-fade">
                     <div class="info-wrap" v-show="!menuTab.state.show">
@@ -167,12 +169,12 @@ function useMenuTab() {
     })
 
     function toggle() {
-        commonState.showRightNav = !commonState.showRightNav
-        state.lineData = commonState.showRightNav ? lineStyle.closeLineData : lineStyle.normalLineData
+        commonState.rightNav.show = !commonState.rightNav.show
+        state.lineData = commonState.rightNav.show ? lineStyle.closeLineData : lineStyle.normalLineData
     }
 
     function setLineData(e) {
-        if (commonState.showRightNav) {
+        if (commonState.rightNav.show) {
             return
         }
         if (e.type === 'mouseover') {
@@ -183,24 +185,25 @@ function useMenuTab() {
     }
 
     watch(
-        () => commonState.articleMenu.show,
+        () => commonState.rightNav.articleMenu.show,
         () => {
-            state.show = commonState.articleMenu.list.length > 0
-            commonState.showRightNav = commonState.articleMenu.show
-            state.lineData = commonState.articleMenu.show ? lineStyle.closeLineData : lineStyle.normalLineData
+            state.show = commonState.rightNav.articleMenu.show
+            commonState.rightNav.show = commonState.rightNav.articleMenu.show
+            state.lineData = commonState.rightNav.articleMenu.show ? lineStyle.closeLineData : lineStyle.normalLineData
         },
         { immediate: true }
     )
 
     const closeListener = VV.useEventListener(window, 'scroll', () => {
         let scrollTop = document.documentElement.scrollTop || document.body.scrollTop
-        if (commonState.articleMenu.list.length > 0) {
-            for (let i = 0, len = commonState.articleMenu.source.length; i < len; ++i) {
-                let item = commonState.articleMenu.source[i]
+        if (commonState.rightNav.articleMenu.show) {
+            console.log('scroll')
+            for (let i = 0, len = commonState.rightNav.articleMenu.source.length; i < len; ++i) {
+                let item = commonState.rightNav.articleMenu.source[i]
                 let top = document.getElementById(item.id)?.getBoundingClientRect().top || 0
                 top += document.body.scrollTop || document.documentElement.scrollTop
                 if (scrollTop <= top + 20) {
-                    commonState.articleMenu.tag = item.tag
+                    commonState.rightNav.articleMenu.tag = item.tag
                     break
                 }
             }

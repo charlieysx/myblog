@@ -1,12 +1,15 @@
 export namespace CommonStore {
     export interface State {
         blogInfo: BlogInfo
-        showRightNav: boolean
-        articleMenu: {
+        rightNav: {
             show: boolean
-            list: ArticleMenuTag[]
-            source: any[]
-            tag: string
+            articleMenu: {
+                loading: boolean
+                show: boolean
+                list: ArticleMenuTag[]
+                source: any[]
+                tag: string
+            }
         }
     }
 

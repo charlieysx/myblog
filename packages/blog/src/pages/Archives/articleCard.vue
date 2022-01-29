@@ -145,7 +145,7 @@ export default defineComponent({
             flex-wrap: wrap;
             .classify {
                 .p-r();
-                color: var(--blog-color-black-1);
+                color: var(--blog-color-black-3);
                 cursor: pointer;
                 margin-right: 5px;
                 &:after {
@@ -162,6 +162,7 @@ export default defineComponent({
                     transition-timing-function: ease;
                 }
                 &:hover {
+                    color: var(--blog-color-black-1);
                     &:after {
                         visibility: hidden;
                         transform: scale(0, 0.4);

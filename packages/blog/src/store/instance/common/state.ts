@@ -11,11 +11,14 @@ export default createState<CommonStore.State>({
         categoryCount: 0,
         tagCount: 0
     },
-    showRightNav: false,
-    articleMenu: {
+    rightNav: {
         show: false,
-        list: [],
-        source: [],
-        tag: '1.'
+        articleMenu: {
+            loading: true,
+            show: false,
+            list: [],
+            source: [],
+            tag: '1.'
+        }
     }
 })

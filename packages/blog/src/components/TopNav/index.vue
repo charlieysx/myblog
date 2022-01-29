@@ -1,5 +1,5 @@
 <template>
-    <div class="top-nav">
+    <div class="top-nav" :style="{ width }">
         <div class="nav-wrap">
             <div
                 class="logo"
@@ -128,6 +128,12 @@ function useMobileTab() {
 export default defineComponent({
     components: { tabView },
     name: 'TopNav',
+    props: {
+        width: {
+            type: String,
+            default: '100%'
+        }
+    },
     setup() {
         const { isMobile } = VV.useDevice()
         const commonStore = VV.useStore('common')
