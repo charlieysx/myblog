@@ -1,9 +1,10 @@
 <template>
-    <div>view</div>
+    <div class="hello"></div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
+
 export default defineComponent({
     name: 'HelloVue',
     setup() {
@@ -12,4 +13,10 @@ export default defineComponent({
 })
 </script>
 
-<style lang="less"></style>
+<style lang="less" scoped>
+.hello {
+    .preview-content {
+        .wh(750, 1206);
+    }
+}
+</style>

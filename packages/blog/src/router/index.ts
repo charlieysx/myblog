@@ -74,6 +74,14 @@ const routes: RouteRecordRaw[] = [
                 meta: {
                     title: '我的简历'
                 }
+            },
+            {
+                path: '/hello',
+                name: 'Hello',
+                component: () => import('/@pages/Hello/index.vue'),
+                meta: {
+                    title: 'Hello'
+                }
             }
         ]
     }
