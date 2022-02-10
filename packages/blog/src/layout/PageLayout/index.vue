@@ -1,8 +1,8 @@
 <template>
     <div class="app-index">
-        <div class="content-wrap">
-            <top-nav :width="viewWrapWidth" />
-            <div class="page-view" :style="{ width: viewWrapWidth }">
+        <div class="content-wrap" :width="viewWrapWidth">
+            <top-nav />
+            <div class="page-view">
                 <router-view />
             </div>
         </div>
@@ -30,9 +30,9 @@ export default defineComponent({
         watch(
             () => [screen.width, commonState.rightNav.show],
             () => {
-                let temp = 20
-                if (screen.width > 990 && commonState.rightNav.show) {
-                    temp = 340
+                let temp = 0
+                if (screen.width > 768 && commonState.rightNav.show) {
+                    temp = 320
                 }
                 viewWrapWidth.value = screen.width - temp + 'px'
             },

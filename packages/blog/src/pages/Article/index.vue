@@ -19,7 +19,7 @@
                 <div class="article-sub-message">{{ state.article.subMessage }}</div>
             </div>
             <MDPreview :content="state.article.htmlContent" />
-            <div class="money-wrap" v-if="state.qrcode">
+            <!-- <div class="money-wrap" v-if="state.qrcode">
                 <p>如果我的文章对您有帮助！有钱的捧个钱场，没钱的捧个人场，谢谢您！</p>
                 <div class="money-btn" @click="state.showQrcode = !state.showQrcode">赞赏支持</div>
                 <transition name="slide-fade">
@@ -34,7 +34,7 @@
                         </span>
                     </div>
                 </transition>
-            </div>
+            </div> -->
             <div class="tags">
                 <div
                     v-for="(tag, index) in state.tags"
@@ -52,7 +52,7 @@
                     v-if="state.pn.pre"
                     @click="$router.push({ name: 'article', query: { id: state.pn.pre.id } })"
                 >
-                    <i class="el-icon-arrow-left"></i>
+                    <icon-left />
                     {{ state.pn.pre.title }}
                 </span>
                 <span
@@ -61,7 +61,7 @@
                     @click="$router.push({ name: 'article', query: { id: state.pn.next.id } })"
                 >
                     {{ state.pn.next.title }}
-                    <i class="el-icon-arrow-right"></i>
+                    <icon-right />
                 </span>
             </div>
         </div>
@@ -148,7 +148,7 @@ export default defineComponent({
             padding: 30px 15px;
         }
         background-color: var(--color-bg-1);
-        box-shadow: 0px 0px 5px 0px rgba(38, 42, 48, 0.1);
+        box-shadow: 0 2px 8px 0 var(--blog-color-shadow);
         .article-message {
             display: flex;
             flex-direction: column;
@@ -158,7 +158,7 @@ export default defineComponent({
                 font-size: 26px;
                 color: var(--color-text-1);
                 @media (max-width: 768px) {
-                    font-size: 22px;
+                    font-size: 18px;
                 }
                 font-weight: bold;
             }
@@ -258,6 +258,7 @@ export default defineComponent({
             }
         }
         .tags {
+            .p-r();
             width: 100%;
             padding: 10px 0px;
             display: flex;
@@ -332,7 +333,6 @@ export default defineComponent({
             .next-wrap {
                 flex: 1;
                 cursor: pointer;
-                -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
                 &:hover {
                     color: var(--color-text-3);
                 }

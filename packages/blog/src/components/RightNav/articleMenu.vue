@@ -5,13 +5,12 @@
                 {{ item.tag }} {{ item.title }}
             </span>
             <article-menu :menu="item.children" v-show="isParent(item)" />
-            <!-- <article-menu :menu="item.children" /> -->
         </li>
     </ul>
 </template>
 
 <script lang="ts">
-import { defineComponent, onUnmounted, PropType } from 'vue'
+import { defineComponent, PropType } from 'vue'
 import { CommonStore } from '/@store/instance/common/type'
 
 export default defineComponent({
@@ -58,10 +57,9 @@ export default defineComponent({
         > span {
             cursor: pointer;
             transition: all 0.3s;
-            border-bottom: 1px solid #555555;
             &.active,
             &:hover {
-                color: var(--color-bg-1);
+                color: white;
             }
         }
     }

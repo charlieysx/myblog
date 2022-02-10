@@ -70,6 +70,10 @@ const showRightNav = () => {
     state.rightNav.show = true
 }
 
+const hideRightNav = () => {
+    state.rightNav.show = false
+}
+
 const clearArticleMenu = () => {
     state.rightNav.articleMenu.show = false
     state.rightNav.articleMenu.list = []
@@ -119,6 +123,7 @@ export default {
     getAboutMe,
     getResume,
     showRightNav,
+    hideRightNav,
     parseArticleMenu,
     clearArticleMenu
 }

@@ -1,88 +1,98 @@
 <template>
-    <div
-        v-show="state.show"
-        class="right-nav"
-        :style="{
-            width: commonState.rightNav.show ? '320px' : '0px',
-            transition: 'all .3s'
-        }"
-    >
+    <transition name="right-nav-fade">
         <div
-            class="right-nav-wrap"
+            v-show="state.show"
+            class="right-nav-container"
             :style="{
-                width: commonState.rightNav.show ? '320px' : '0px',
-                transition: 'all .3s'
+                width: commonState.rightNav.show ? '320px' : '0px'
             }"
         >
-            <div class="menu-info-head" v-if="commonState.rightNav.articleMenu.show">
-                <span :class="{ active: menuTab.state.show }" @click="menuTab.state.show = true">文章目录</span>
-                |
-                <span :class="{ active: !menuTab.state.show }" @click="menuTab.state.show = false">站点信息</span>
-            </div>
-            <div class="content-wrap">
-                <transition name="slide-fade">
-                    <article-menu
-                        class="article-menu"
-                        :menu="commonState.rightNav.articleMenu.list"
-                        v-show="menuTab.state.show"
-                        v-if="!commonState.rightNav.articleMenu.loading"
-                    />
-                    <div v-else>加载中...</div>
-                </transition>
-                <transition name="slide-fade">
-                    <div class="info-wrap" v-show="!menuTab.state.show">
-                        <img class="avatar" :src="commonState.blogInfo.avatar" />
-                        <p class="name">{{ commonState.blogInfo.blogName || '博客' }}</p>
-                        <p class="motto">{{ commonState.blogInfo.sign || '-' }}</p>
-                        <div class="menu-wrap">
-                            <span class="menu-item" @click="toView('Archives')">
-                                <p class="count">{{ commonState.blogInfo.articleCount || 0 }}</p>
-                                <p>文章</p>
-                            </span>
-                            <span class="menu-item" @click="toView('Categories')">
-                                <p class="count">{{ commonState.blogInfo.categoryCount || 0 }}</p>
-                                <p>分类</p>
-                            </span>
-                            <span class="menu-item" @click="toView('Categories')">
-                                <p class="count">{{ commonState.blogInfo.tagCount || 0 }}</p>
-                                <p>标签</p>
-                            </span>
-                        </div>
-                        <div class="social-wrap">
-                            <a
-                                class="social-item"
-                                :href="commonState.blogInfo.github"
-                                target="_blank"
-                                v-if="commonState.blogInfo.github"
-                            >
-                                <i class="iconfont icon-github"></i>
-                                github
-                            </a>
-                        </div>
-                    </div>
-                </transition>
-            </div>
-        </div>
-        <div class="toggle" @click="menuTab.toggle" @mouseover="menuTab.setLineData" @mouseout="menuTab.setLineData">
-            <span
-                class="toggle-line"
-                v-for="(line, index) in menuTab.state.lineData"
-                :key="index"
+            <div
+                class="right-nav-wrap"
                 :style="{
-                    width: line.width,
-                    top: line.top,
-                    transform: line.transform,
-                    opacity: line.opacity,
-                    transition: 'all .3s'
+                    right: commonState.rightNav.show ? '0px' : '-320px'
                 }"
-            ></span>
+            >
+                <div class="menu-info-head" v-if="commonState.rightNav.articleMenu.show">
+                    <span :class="{ active: menuTab.state.show }" @click="menuTab.state.show = true">文章目录</span>
+                    |
+                    <span :class="{ active: !menuTab.state.show }" @click="menuTab.state.show = false">站点信息</span>
+                </div>
+                <div class="content-wrap">
+                    <transition name="slide-fade">
+                        <article-menu
+                            class="article-menu"
+                            :menu="commonState.rightNav.articleMenu.list"
+                            v-show="menuTab.state.show"
+                            v-if="!commonState.rightNav.articleMenu.loading"
+                        />
+                        <div v-else>加载中...</div>
+                    </transition>
+                    <transition name="slide-fade">
+                        <div class="info-wrap" v-show="!menuTab.state.show">
+                            <img class="avatar" :src="commonState.blogInfo.avatar" />
+                            <p class="name">{{ commonState.blogInfo.blogName || '博客' }}</p>
+                            <p class="motto">{{ commonState.blogInfo.sign || '-' }}</p>
+                            <div class="menu-wrap">
+                                <span class="menu-item" @click="toView('Archives')">
+                                    <p class="count">{{ commonState.blogInfo.articleCount || 0 }}</p>
+                                    <p>文章</p>
+                                </span>
+                                <span class="menu-item" @click="toView('Categories')">
+                                    <p class="count">{{ commonState.blogInfo.categoryCount || 0 }}</p>
+                                    <p>分类</p>
+                                </span>
+                                <span class="menu-item" @click="toView('Categories')">
+                                    <p class="count">{{ commonState.blogInfo.tagCount || 0 }}</p>
+                                    <p>标签</p>
+                                </span>
+                            </div>
+                            <div class="social-wrap">
+                                <a
+                                    class="social-item"
+                                    :href="commonState.blogInfo.github"
+                                    target="_blank"
+                                    v-if="commonState.blogInfo.github"
+                                >
+                                    <i class="iconfont icon-github"></i>
+                                    github
+                                </a>
+                            </div>
+                        </div>
+                    </transition>
+                </div>
+            </div>
         </div>
+    </transition>
+    <div
+        class="toggle"
+        @click="menuTab.toggle"
+        @mouseover="menuTab.setLineData"
+        @mouseout="menuTab.setLineData"
+        v-show="state.show"
+    >
+        <span
+            class="toggle-line"
+            v-for="(line, index) in menuTab.state.lineData"
+            :key="index"
+            :style="{
+                width: line.width,
+                top: line.top,
+                transform: line.transform,
+                opacity: line.opacity,
+                transition: 'all .3s'
+            }"
+        ></span>
+    </div>
+    <div class="icon-container" @click="change">
+        <icon-moon-fill v-if="theme === 'light'" />
+        <icon-sun-fill v-else />
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onUnmounted, reactive, watch } from 'vue'
-import articleMenu from './articleMenu.vue'
+import { defineComponent, onUnmounted, reactive, ref, watch } from 'vue'
+import ArticleMenu from './articleMenu.vue'
 
 function useMenuTab() {
     interface LineData {
@@ -223,7 +233,7 @@ function useMenuTab() {
 
 export default defineComponent({
     name: 'RightNav',
-    components: { articleMenu },
+    components: { ArticleMenu },
     setup() {
         const { screen } = VV.useDevice()
         const { router } = VV.useRouter()
@@ -239,17 +249,35 @@ export default defineComponent({
             () => {
                 state.show = true
 
-                if (screen.width <= 990) {
+                if (screen.width <= 768) {
                     state.show = false
                 }
             },
             { immediate: true }
         )
 
+        const { load, save } = VV.useStorage()
+        const defaultTheme = load('theme', 'light')
+        const theme = ref(defaultTheme)
+        function changeTheme() {
+            if (theme.value === 'dark') {
+                document.body.setAttribute('arco-theme', 'dark')
+            } else {
+                document.body.removeAttribute('arco-theme')
+            }
+        }
+        changeTheme()
+
         return {
             commonState,
             state,
             menuTab,
+            theme,
+            change() {
+                theme.value = theme.value === 'light' ? 'dark' : 'light'
+                save('theme', theme.value)
+                changeTheme()
+            },
             toView(name: string) {
                 router.push({ name })
             }
@@ -259,25 +287,41 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-.right-nav {
+.right-nav-container {
     position: relative;
     width: 320px;
+    transition: width 0.3s;
+    // box-shadow: -1px 0px 4px 0 var(--blog-color-shadow);
+    &::before {
+        .p-a();
+        content: ' ';
+        width: 1px;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background-color: white;
+        z-index: 99999;
+        transform: scaleX(0.1);
+    }
     .right-nav-wrap {
         position: fixed;
         right: 0;
         top: 0;
         bottom: 0;
         width: 320px;
-        background-color: var(--color-text-1);
-        color: var(--color-bg-1);
+        background-color: #17181a;
+        color: white;
         z-index: 1000;
         display: flex;
         flex-direction: column;
         align-items: center;
         padding-top: 30px;
+        padding-top: 90px;
         overflow: hidden;
+        transition: right 0.3s;
         .menu-info-head {
             margin-bottom: 10px;
+            color: white;
             > span {
                 color: #999999;
                 padding: 5px;
@@ -285,7 +329,7 @@ export default defineComponent({
                 cursor: pointer;
                 &:hover,
                 &.active {
-                    color: var(--color-bg-1);
+                    color: white;
                 }
             }
         }
@@ -307,17 +351,16 @@ export default defineComponent({
                 left: 0;
                 top: 0;
                 width: 100%;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
+                .flex-column();
+                padding-top: 12px;
                 .avatar {
-                    border: 4px solid var(--color-bg-1);
+                    border: 2px solid white;
                     border-radius: 50%;
                     width: 100px;
                     height: 100px;
                 }
                 .name {
-                    color: var(--color-bg-1);
+                    color: white;
                     padding: 15px;
                     font-size: 18px;
                     font-weight: bold;
@@ -349,7 +392,7 @@ export default defineComponent({
                             border-right: 0px;
                         }
                         &:hover {
-                            color: var(--color-bg-1);
+                            color: white;
                         }
                         .count {
                             margin-bottom: 5px;
@@ -384,35 +427,56 @@ export default defineComponent({
             }
         }
     }
+}
 
-    .toggle {
-        position: fixed;
-        width: 24px;
-        height: 24px;
-        background-color: transparent;
-        right: 10px;
-        bottom: 45px;
-        padding: 5px;
-        z-index: 1050;
-        cursor: pointer;
-        line-height: 0;
-        .toggle-line {
-            position: relative;
-            display: inline-block;
-            vertical-align: top;
-            width: 100%;
-            height: 2px;
-            margin-top: 4px;
-            background-color: var(--color-text-1);
-            &:first-child {
-                margin-top: 0px;
-            }
+.toggle {
+    position: fixed;
+    width: 24px;
+    height: 24px;
+    background-color: transparent;
+    background-color: var(--blog-color-black-1);
+    right: 10px;
+    bottom: 45px;
+    padding: 5px;
+    z-index: 1050;
+    cursor: pointer;
+    line-height: 0;
+    .toggle-line {
+        position: relative;
+        display: inline-block;
+        vertical-align: top;
+        width: 100%;
+        height: 2px;
+        margin-top: 4px;
+        background-color: var(--blog-color-white-1);
+        &:first-child {
+            margin-top: 0px;
         }
     }
 }
 
-.slide-fade-enter,
-.slide-fade-leave-to {
+.icon-container {
+    .p-f();
+    right: 10px;
+    bottom: 80px;
+    z-index: 1050;
+    width: 24px;
+    height: 24px;
+    background-color: var(--blog-color-black-1);
+    color: var(--blog-color-white-1);
+    .flex();
+    cursor: pointer;
+}
+</style>
+<style>
+.right-nav-fade-enter-active {
+    transition: all 0.3s;
+}
+.right-nav-fade-leave-active {
+    transition: all 0.3s;
+}
+.right-nav-fade-enter-from,
+.right-nav-fade-leave-to {
     opacity: 0;
 }
 </style>

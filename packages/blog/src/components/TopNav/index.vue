@@ -1,5 +1,5 @@
 <template>
-    <div class="top-nav" :style="{ width }">
+    <div class="top-nav">
         <div class="nav-wrap">
             <div
                 class="logo"
@@ -35,15 +35,6 @@
                 <component :is="tab.icon"></component>
                 <span>{{ tab.name }}</span>
             </div>
-        </div>
-
-        <div class="icon-container">
-            <a-button class="nav-btn" type="outline" shape="circle" @click="change" style="font-size: 20px">
-                <template #icon>
-                    <icon-moon-fill v-if="theme === 'light'" />
-                    <icon-sun-fill v-else />
-                </template>
-            </a-button>
         </div>
     </div>
 </template>
@@ -139,18 +130,6 @@ export default defineComponent({
         const commonStore = VV.useStore('common')
         commonStore.initBlogInfo()
 
-        const { load, save } = VV.useStorage()
-        const defaultTheme = load('theme', 'light')
-        const theme = ref(defaultTheme)
-        function changeTheme() {
-            if (theme.value === 'dark') {
-                document.body.setAttribute('arco-theme', 'dark')
-            } else {
-                document.body.removeAttribute('arco-theme')
-            }
-        }
-        changeTheme()
-
         const tabs = [
             {
                 name: '首页',
@@ -194,13 +173,7 @@ export default defineComponent({
 
         return {
             isMobile,
-            theme,
             mobileTabs,
-            change() {
-                theme.value = theme.value === 'light' ? 'dark' : 'light'
-                save('theme', theme.value)
-                changeTheme()
-            },
             blogInfo: commonStore.state.blogInfo,
             tabs,
             selectTab(tab) {
@@ -220,8 +193,9 @@ export default defineComponent({
     .p-f();
     .wh(100%, auto);
     background-color: var(--blog-color-white-1);
-    z-index: 999;
+    z-index: 999999;
     box-shadow: 0 2px 8px 0 var(--blog-color-shadow);
+    transition: width 0.3s;
     > .nav-wrap {
         .p-r();
         max-width: 1000px;
@@ -286,18 +260,8 @@ export default defineComponent({
             padding: 8px 15px;
             font-size: 12px;
             line-height: 1;
-            color: var(--color-text-1);
-        }
-    }
-
-    > .icon-container {
-        .p-f();
-        right: 12px;
-        bottom: 100px;
-        .nav-btn {
-            border-color: rgb(var(--gray-2));
-            color: rgb(var(--gray-8));
-            font-size: 16px;
+            color: var(--blog-color-black-1);
+            cursor: pointer;
         }
     }
 }
