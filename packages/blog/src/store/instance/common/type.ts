@@ -1,5 +1,6 @@
 export namespace CommonStore {
     export interface State {
+        theme: BlogTheme
         blogInfo: BlogInfo
         rightNav: {
             show: boolean
@@ -11,6 +12,11 @@ export namespace CommonStore {
                 tag: string
             }
         }
+    }
+
+    export enum BlogTheme {
+        light = 'light',
+        dark = 'dark'
     }
 
     export interface BlogInfo {

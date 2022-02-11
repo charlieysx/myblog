@@ -1,7 +1,7 @@
 <template>
     <div class="top-nav" :style="{ width }">
         <div class="bg" :style="{ opacity }"></div>
-        <div class="nav-wrap">
+        <div class="nav-wrap" :style="{ color }">
             <div
                 class="logo"
                 :style="{
@@ -10,9 +10,9 @@
                 }"
                 @click="toHomeFromLogo"
             >
-                <p class="line" v-if="!isMobile"></p>
+                <p class="line" v-if="!isMobile" :style="{ backgroundColor: color }"></p>
                 <p class="blog-name">{{ blogInfo.blogName || '博客' }}</p>
-                <p class="line" v-if="!isMobile"></p>
+                <p class="line" v-if="!isMobile" :style="{ backgroundColor: color }"></p>
             </div>
             <tab-view v-if="!isMobile" :tabs="tabs" @tab-click="selectTab" />
             <div class="toggle" v-if="isMobile" @click="mobileTabs.toggle">
@@ -41,8 +41,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from 'vue'
+import { defineComponent, reactive, ref, watch } from 'vue'
 import tabView from './tabView.vue'
+import { CommonStore } from '/@store/instance/common/type'
 
 function useMobileTab() {
     interface LineData {
@@ -173,13 +174,28 @@ export default defineComponent({
         const mobileTabs = useMobileTab()
 
         const opacity = ref(0)
+        const color = ref('rgb(255, 255, 255)')
+
+        function changeFontColor() {
+            if (commonStore.state.theme === CommonStore.BlogTheme.dark) {
+                color.value = 'rgb(255, 255, 255)'
+                return
+            }
+            const rgb = 255 * (1 - opacity.value)
+            color.value = `rgb(${rgb}, ${rgb}, ${rgb})`
+        }
 
         VV.useEventListener(window, 'scroll', () => {
             // console.log(window.scrollY)
-            opacity.value = window.scrollY / window.innerHeight
+            const rate = window.scrollY / window.innerHeight
+            opacity.value = rate
+            changeFontColor()
         })
 
+        watch(() => commonStore.state.theme, changeFontColor)
+
         return {
+            color,
             opacity,
             isMobile,
             mobileTabs,
@@ -228,7 +244,7 @@ export default defineComponent({
             font-size: 18px;
             font-weight: bold;
             padding: 25px 0;
-            color: var(--blog-color-black-1);
+            // color: var(--blog-color-black-1);
             &:hover {
                 cursor: pointer;
                 > .line {

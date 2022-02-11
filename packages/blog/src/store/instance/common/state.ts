@@ -2,6 +2,7 @@ import { createState } from '../../base/index'
 import { CommonStore } from './type'
 
 export default createState<CommonStore.State>({
+    theme: CommonStore.BlogTheme.light,
     blogInfo: {
         avatar: '',
         blogName: '',

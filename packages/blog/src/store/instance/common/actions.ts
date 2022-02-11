@@ -3,6 +3,19 @@ import * as api from './api'
 import { CommonStore } from './type'
 import { nextTick } from 'vue'
 
+const initTheme = () => {
+    const { load } = VV.useStorage()
+    state.theme = load<CommonStore.BlogTheme>('theme', CommonStore.BlogTheme.light)
+    document.body.setAttribute('arco-theme', state.theme)
+}
+
+function changeTheme() {
+    const { save } = VV.useStorage()
+    state.theme = state.theme === CommonStore.BlogTheme.light ? CommonStore.BlogTheme.dark : CommonStore.BlogTheme.light
+    save('theme', state.theme)
+    document.body.setAttribute('arco-theme', state.theme)
+}
+
 const initBlogInfo = async () => {
     const res = await api.getBlogInfo().catch(() => {})
     if (res?.data) {
@@ -119,6 +132,8 @@ const parseArticleMenu = async () => {
 }
 
 export default {
+    initTheme,
+    changeTheme,
     initBlogInfo,
     getAboutMe,
     getResume,

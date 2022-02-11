@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, PropType, ref } from 'vue'
 export default defineComponent({
     name: 'TabView',
     props: {
@@ -38,7 +38,7 @@ export default defineComponent({
         padding: 5px 8px;
         display: inline-block;
         cursor: pointer;
-        color: var(--blog-color-black-1);
+        // color: var(--blog-color-black-1);
         transition: all 0.5s;
         border-radius: 5px;
         margin-right: 12px;

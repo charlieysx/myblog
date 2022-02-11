@@ -84,8 +84,8 @@
             }"
         ></span>
     </div>
-    <div class="icon-container" @click="change">
-        <icon-moon-fill v-if="theme === 'light'" />
+    <div class="icon-container" @click="$store.common.changeTheme">
+        <icon-moon-fill v-if="$store.common.state.theme === 'light'" />
         <icon-sun-fill v-else />
     </div>
 </template>
@@ -237,7 +237,7 @@ export default defineComponent({
     setup() {
         const { screen } = VV.useDevice()
         const { router } = VV.useRouter()
-        const { state: commonState } = VV.useStore('common')
+        const { state: commonState, initTheme } = VV.useStore('common')
         const menuTab = useMenuTab()
 
         const state = reactive({
@@ -256,28 +256,12 @@ export default defineComponent({
             { immediate: true }
         )
 
-        const { load, save } = VV.useStorage()
-        const defaultTheme = load('theme', 'light')
-        const theme = ref(defaultTheme)
-        function changeTheme() {
-            if (theme.value === 'dark') {
-                document.body.setAttribute('arco-theme', 'dark')
-            } else {
-                document.body.removeAttribute('arco-theme')
-            }
-        }
-        changeTheme()
+        initTheme()
 
         return {
             commonState,
             state,
             menuTab,
-            theme,
-            change() {
-                theme.value = theme.value === 'light' ? 'dark' : 'light'
-                save('theme', theme.value)
-                changeTheme()
-            },
             toView(name: string) {
                 router.push({ name })
             }
