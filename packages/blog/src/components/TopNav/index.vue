@@ -139,22 +139,22 @@ export default defineComponent({
             },
             {
                 name: '分类/标签',
-                icon: 'icon-tag',
+                icon: 'icon-tags',
                 to: '/categories'
             },
             {
                 name: '归档',
-                icon: 'icon-calendar',
+                icon: 'icon-archives',
                 to: '/archives'
             },
             {
                 name: '关于',
-                icon: 'icon-user',
+                icon: 'icon-about',
                 to: '/about'
             },
             {
                 name: '友链',
-                icon: 'icon-share-alt',
+                icon: 'icon-friend',
                 to: '/friends'
             },
             // {
