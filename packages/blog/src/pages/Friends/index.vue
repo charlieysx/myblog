@@ -44,8 +44,8 @@ export default defineComponent({
     animation: show 0.8s;
     .type-wrap {
         > p {
-            border-left: 4px solid var(--color-text-3);
-            color: var(--color-text-1);
+            border-left: 4px solid var(--blog-color-black-3);
+            color: var(--blog-color-black-1);
             padding: 5px 10px;
             font-weight: bold;
             font-size: 16px;
@@ -57,15 +57,15 @@ export default defineComponent({
             flex-wrap: wrap;
             font-size: 14px;
             a {
-                color: var(--color-bg-1);
+                color: var(--blog-color-white-1);
                 padding: 5px 10px;
-                background-color: var(--color-text-1);
+                background-color: var(--blog-color-black-1);
                 border-radius: 5px;
                 margin: 5px;
                 transition: background-color 0.3s;
                 text-decoration: none;
                 &:hover {
-                    background-color: var(--color-text-3);
+                    background-color: var(--blog-color-black-3);
                 }
             }
         }

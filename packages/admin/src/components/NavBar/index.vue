@@ -82,7 +82,7 @@ export default defineComponent({
 .navbar {
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--blog-color-black-4);
     box-sizing: border-box;
     background-color: var(--color-bg-2);
     height: 100%;
@@ -107,7 +107,7 @@ export default defineComponent({
 
     a {
         text-decoration: none;
-        color: var(--color-text-1);
+        color: var(--blog-color-black-1);
     }
 }
 </style>

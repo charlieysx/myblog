@@ -89,7 +89,7 @@ export default defineComponent({
 @import '/@styles/less/g-mixin.less';
 .auth-container {
     position: relative;
-    background-color: var(--color-bg-1);
+    background-color: var(--blog-color-white-1);
     height: 100vh;
     width: 100vw;
     .flex();
@@ -103,7 +103,7 @@ export default defineComponent({
     &-title {
         font-size: 24px;
         font-weight: 500;
-        color: var(--color-text-1);
+        color: var(--blog-color-black-1);
         line-height: 32px;
         margin-bottom: 16px;
     }
@@ -111,7 +111,7 @@ export default defineComponent({
     &-sub-title {
         font-size: 16px;
         line-height: 24px;
-        color: var(--color-text-3);
+        color: var(--blog-color-black-3);
     }
 
     &-error-msg {

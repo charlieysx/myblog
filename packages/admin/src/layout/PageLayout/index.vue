@@ -158,7 +158,7 @@ export default defineComponent({
         right: -1px;
         width: 1px;
         height: 100%;
-        background-color: var(--color-border);
+        background-color: var(--blog-color-black-4);
     }
 
     > :global(.arco-layout-sider-children) {
@@ -169,7 +169,7 @@ export default defineComponent({
         height: 24px;
         width: 24px;
         background-color: var(--color-fill-1);
-        color: var(--color-text-3);
+        color: var(--blog-color-black-3);
         border-radius: 2px;
         cursor: pointer;
         display: flex;

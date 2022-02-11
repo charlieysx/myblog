@@ -275,7 +275,7 @@ export default defineComponent({
                 bottom: 0;
             }
             .tag {
-                color: var(--color-bg-1);
+                color: var(--blog-color-white-1);
                 padding: 5px;
                 padding-right: 10px;
                 background-color: var(--blog-color-black-1);

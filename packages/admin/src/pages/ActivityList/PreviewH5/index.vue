@@ -31,7 +31,7 @@ export default defineComponent({
     .p-r();
     width: calc(750 / 1206 * 80vh);
     height: 80vh;
-    background-color: var(--color-bg-1);
+    background-color: var(--blog-color-white-1);
 
     > .title {
         .p-a();
@@ -42,8 +42,8 @@ export default defineComponent({
         left: 0;
         top: 0;
         transform: translateY(-100%);
-        background-color: var(--color-bg-1);
-        color: var(--color-text-1);
+        background-color: var(--blog-color-white-1);
+        color: var(--blog-color-black-1);
     }
     > .preview-iframe {
         .p-r();

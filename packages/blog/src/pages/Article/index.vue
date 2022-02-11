@@ -147,7 +147,7 @@ export default defineComponent({
         @media (max-width: 768px) {
             padding: 30px 15px;
         }
-        background-color: var(--color-bg-1);
+        background-color: var(--blog-color-white-1);
         box-shadow: 0 2px 8px 0 var(--blog-color-shadow);
         .article-message {
             display: flex;
@@ -156,7 +156,7 @@ export default defineComponent({
             align-items: center;
             .article-title {
                 font-size: 26px;
-                color: var(--color-text-1);
+                color: var(--blog-color-black-1);
                 @media (max-width: 768px) {
                     font-size: 18px;
                 }
@@ -175,12 +175,12 @@ export default defineComponent({
                 flex-wrap: wrap;
                 .classify {
                     color: #444444;
-                    border-bottom: 1px solid var(--color-text-1);
+                    border-bottom: 1px solid var(--blog-color-black-1);
                     cursor: pointer;
                     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
                     margin-right: 5px;
                     &:hover {
-                        color: var(--color-text-1);
+                        color: var(--blog-color-black-1);
                     }
                 }
                 .iconfont {
@@ -219,14 +219,14 @@ export default defineComponent({
                 padding: 10px 24px;
                 background-color: #f44336;
                 border-radius: 5px;
-                color: var(--color-bg-1);
+                color: var(--blog-color-white-1);
                 font-size: 16px;
                 font-weight: bold;
                 cursor: pointer;
                 -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
                 transition: background-color 0.3s;
                 &:hover {
-                    background-color: var(--color-text-1);
+                    background-color: var(--blog-color-black-1);
                 }
             }
             .qrcode-wrap {
@@ -271,14 +271,14 @@ export default defineComponent({
                 width: 100%;
                 height: 1px;
                 transform: scaleY(0.3);
-                background-color: var(--color-text-1);
+                background-color: var(--blog-color-black-1);
                 left: 0;
                 bottom: 0;
             }
             .tag {
-                color: var(--color-bg-1);
+                color: var(--blog-color-white-1);
                 padding: 5px;
-                background-color: var(--color-text-1);
+                background-color: var(--blog-color-black-1);
                 font-size: 12px;
                 margin-right: 5px;
                 border-top-right-radius: 5px;
@@ -292,9 +292,9 @@ export default defineComponent({
                 -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
                 &:hover {
                     &:before {
-                        border-right: 12px solid var(--color-text-1);
+                        border-right: 12px solid var(--blog-color-black-1);
                     }
-                    background-color: var(--color-text-1);
+                    background-color: var(--blog-color-black-1);
                 }
                 &:before {
                     position: absolute;
@@ -305,7 +305,7 @@ export default defineComponent({
                     content: '';
                     border-top: 11px solid transparent;
                     border-bottom: 11px solid transparent;
-                    border-right: 12px solid var(--color-text-1);
+                    border-right: 12px solid var(--blog-color-black-1);
                     transition: all 0.3s;
                 }
                 .iconfont {
@@ -334,7 +334,7 @@ export default defineComponent({
                 flex: 1;
                 cursor: pointer;
                 &:hover {
-                    color: var(--color-text-3);
+                    color: var(--blog-color-black-3);
                 }
             }
         }

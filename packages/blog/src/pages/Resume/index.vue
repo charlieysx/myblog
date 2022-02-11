@@ -46,7 +46,7 @@ export default defineComponent({
         @media (max-width: 768px) {
             padding: 30px 15px;
         }
-        background-color: var(--color-bg-1);
+        background-color: var(--blog-color-white-1);
         box-shadow: 0px 0px 5px 0px rgba(38, 42, 48, 0.1);
         .resume-message {
             display: flex;

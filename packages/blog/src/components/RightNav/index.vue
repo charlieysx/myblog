@@ -299,7 +299,7 @@ export default defineComponent({
         height: 100%;
         left: 0;
         top: 0;
-        background-color: white;
+        background-color: var(--blog-color-shadow);
         z-index: 99999;
         transform: scaleX(0.1);
     }
@@ -417,7 +417,7 @@ export default defineComponent({
                         cursor: pointer;
                         &:hover {
                             background-color: #fc6423;
-                            color: var(--color-bg-1);
+                            color: var(--blog-color-white-1);
                         }
                         .iconfont {
                             font-size: 14px;

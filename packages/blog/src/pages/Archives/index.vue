@@ -50,7 +50,7 @@ export default defineComponent({
         display: -webkit-flex;
         flex-direction: row;
         justify-content: center;
-        background-color: var(--color-bg-1);
+        background-color: var(--blog-color-white-1);
     }
     .archives-wrap {
         position: relative;
@@ -69,12 +69,12 @@ export default defineComponent({
             top: 15px;
             bottom: 0;
             width: 2px;
-            background-color: var(--color-border);
+            background-color: var(--blog-color-black-4);
         }
         .list-content {
             .normal-node {
                 position: relative;
-                color: var(--color-text-2);
+                color: var(--blog-color-black-2);
                 padding: 0 15px;
                 font-size: 16px;
                 margin-bottom: 20px;
@@ -89,7 +89,7 @@ export default defineComponent({
                     width: 10px;
                     height: 10px;
                     border-radius: 10px;
-                    background-color: var(--color-text-3);
+                    background-color: var(--blog-color-black-3);
                     @media (max-width: 768px) {
                         left: -3px;
                         top: 4px;
@@ -101,7 +101,7 @@ export default defineComponent({
             }
             .bold-node {
                 position: relative;
-                color: var(--color-text-2);
+                color: var(--blog-color-black-2);
                 padding: 0 15px;
                 font-size: 28px;
                 margin-bottom: 20px;
@@ -116,7 +116,7 @@ export default defineComponent({
                     width: 10px;
                     height: 10px;
                     border-radius: 10px;
-                    background-color: var(--color-text-3);
+                    background-color: var(--blog-color-black-3);
                     @media (max-width: 768px) {
                         left: -3px;
                         top: 8px;
@@ -129,7 +129,7 @@ export default defineComponent({
                     margin-bottom: 20px;
                 }
                 .month {
-                    color: var(--color-text-2);
+                    color: var(--blog-color-black-2);
                     font-size: 26px;
                     @media (max-width: 768px) {
                         font-size: 20px;

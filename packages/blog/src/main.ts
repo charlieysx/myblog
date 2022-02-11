@@ -1,10 +1,7 @@
 import './use'
 import store from './use/instance/useStore'
 import { createApp, ComponentPublicInstance } from 'vue'
-import ArcoVue from '@arco-design/web-vue'
-import ArcoVueIcon from '@arco-design/web-vue/es/icon'
 import App from './App.vue'
-import '@arco-design/web-vue/dist/arco.css'
 import '/@styles/iconfont.css'
 import '/@styles/less/global.less'
 import '/@styles/less/theme.less'
@@ -21,4 +18,4 @@ const dialogApp = VV.useDialog().app
 Object.assign(app._context.components, dialogApp._context.components)
 dialogApp._context.components = app._context.components
 dialogApp._context.config.globalProperties = app._context.config.globalProperties
-app.use(router).use(ArcoVue).use(ArcoVueIcon).mount('#app')
+app.use(router).mount('#app')

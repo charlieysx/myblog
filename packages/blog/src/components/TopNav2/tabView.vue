@@ -39,6 +39,7 @@ export default defineComponent({
         display: inline-block;
         cursor: pointer;
         color: var(--blog-color-black-1);
+        background-color: var(--blog-color-white-1);
         transition: all 0.5s;
         border-radius: 5px;
         margin-right: 12px;

@@ -67,7 +67,7 @@ export default defineComponent({
         @media (max-width: 768px) {
             padding: 30px 15px;
         }
-        background-color: var(--color-bg-1);
+        background-color: var(--blog-color-white-1);
         box-shadow: 0px 0px 5px 0px rgba(38, 42, 48, 0.1);
         .about-message {
             display: flex;
@@ -101,7 +101,7 @@ export default defineComponent({
                 padding: 10px 24px;
                 background-color: #f44336;
                 border-radius: 5px;
-                color: var(--color-bg-1);
+                color: var(--blog-color-white-1);
                 font-size: 16px;
                 font-weight: bold;
                 cursor: pointer;

@@ -104,7 +104,7 @@ export default defineComponent({
     animation: show 0.8s;
     .title {
         font-size: 22px;
-        color: var(--color-text-1);
+        color: var(--blog-color-black-1);
         @media (max-width: 768px) {
             font-size: 18px;
         }
@@ -122,11 +122,11 @@ export default defineComponent({
         .category-item {
             padding: 5px 10px;
             margin: 5px;
-            border: 1px solid var(--color-text-4);
+            border: 1px solid var(--blog-color-black-4);
             border-radius: 5px;
             cursor: pointer;
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-            color: var(--color-text-1);
+            color: var(--blog-color-black-1);
             transition: all 0.3s;
             font-size: 16px;
             @media (max-width: 768px) {
@@ -137,8 +137,8 @@ export default defineComponent({
                 color: #999999;
             }
             &:hover {
-                background-color: var(--color-text-1);
-                color: var(--color-bg-1);
+                background-color: var(--blog-color-black-1);
+                color: var(--blog-color-white-1);
             }
         }
     }
@@ -156,7 +156,7 @@ export default defineComponent({
             margin: 5px;
             cursor: pointer;
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-            color: var(--color-text-1);
+            color: var(--blog-color-black-1);
             &:after {
                 content: '';
                 position: absolute;
@@ -164,7 +164,7 @@ export default defineComponent({
                 left: 0;
                 width: 100%;
                 height: 2px;
-                background-color: var(--color-text-1);
+                background-color: var(--blog-color-black-1);
                 visibility: hidden;
                 transform: scaleX(0);
                 transition-duration: 0.2s;

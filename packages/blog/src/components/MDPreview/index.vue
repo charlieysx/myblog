@@ -168,7 +168,7 @@ body[arco-theme='dark'] {
     h4,
     h5,
     h6 {
-        color: var(--color-text-1);
+        color: var(--blog-color-black-1);
     }
     pre code.hljs {
         display: block;
@@ -275,7 +275,7 @@ body[arco-theme='dark'] {
 
 <style lang="less">
 .markdown-body {
-    color: var(--color-text-2) !important;
+    color: var(--blog-color-black-2) !important;
     @media (max-width: 768px) {
         font-size: 12px !important;
     }
@@ -288,7 +288,7 @@ body[arco-theme='dark'] {
             width: 100%;
             height: 1px;
             transform: scaleY(0.3);
-            background-color: var(--color-text-3);
+            background-color: var(--blog-color-black-3);
             left: 0;
             bottom: 0;
         }
@@ -296,8 +296,8 @@ body[arco-theme='dark'] {
     img {
         max-width: calc(100% - 10px) !important;
         padding: 4px;
-        background-color: var(--color-bg-1) !important;
-        border: 1px solid var(--color-border) !important;
+        background-color: var(--blog-color-white-1) !important;
+        border: 1px solid var(--blog-color-black-4) !important;
         cursor: zoom-in;
     }
     li {

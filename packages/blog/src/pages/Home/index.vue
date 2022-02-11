@@ -28,6 +28,7 @@ export default defineComponent({
 .home {
     position: relative;
     padding: 30px 10px;
+    padding-top: 0;
     min-height: 100px;
 }
 </style>

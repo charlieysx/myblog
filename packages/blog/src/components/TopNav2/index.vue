@@ -1,6 +1,5 @@
 <template>
-    <div class="top-nav" :style="{ width }">
-        <div class="bg" :style="{ opacity }"></div>
+    <div class="top-nav">
         <div class="nav-wrap">
             <div
                 class="logo"
@@ -120,12 +119,6 @@ function useMobileTab() {
 export default defineComponent({
     components: { tabView },
     name: 'TopNav',
-    props: {
-        width: {
-            type: String,
-            default: '100%'
-        }
-    },
     setup() {
         const { isMobile } = VV.useDevice()
         const commonStore = VV.useStore('common')
@@ -172,15 +165,7 @@ export default defineComponent({
 
         const mobileTabs = useMobileTab()
 
-        const opacity = ref(0)
-
-        VV.useEventListener(window, 'scroll', () => {
-            // console.log(window.scrollY)
-            opacity.value = window.scrollY / window.innerHeight
-        })
-
         return {
-            opacity,
             isMobile,
             mobileTabs,
             blogInfo: commonStore.state.blogInfo,
@@ -199,23 +184,14 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .top-nav {
-    .p-f();
+    .p-r();
     .wh(100%, auto);
+    background-color: var(--blog-color-white-1);
     z-index: 999999;
+    box-shadow: -8px 2px 8px 0 var(--blog-color-shadow);
     transition: width 0.3s;
-    > .bg {
-        .p-a();
-        .wh(100%);
-        z-index: 1;
-        top: 0;
-        left: 0;
-        background-color: var(--blog-color-white-1);
-        box-shadow: -8px 2px 8px 0 var(--blog-color-shadow);
-        // opacity: 0;
-    }
     > .nav-wrap {
         .p-r();
-        z-index: 2;
         max-width: 1000px;
         flex: 1;
         padding: 0 10px;

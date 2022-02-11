@@ -23,7 +23,6 @@
     "vue-router": "^4.0.12"
   },
   "devDependencies": {
-    "@arco-design/web-vue": "^2.15.1",
     "@types/node": "^16.11.7",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",

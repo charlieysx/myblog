@@ -29,7 +29,7 @@ body {
     font-size: 14px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: var(--color-bg-1);
+    background-color: var(--blog-color-white-1);
     width: 100vw;
     height: 100%;
 }
