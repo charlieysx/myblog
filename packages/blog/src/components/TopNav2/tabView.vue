@@ -1,7 +1,7 @@
 <template>
     <div class="tab-view">
         <div class="tab" v-for="(tab, index) in tabs" :key="index" @click="$emit('tab-click', tab)">
-            <component :is="tab.icon"></component>
+            <i :class="['iconfont', tab.icon]"></i>
             <span class="name">{{ tab.name }}</span>
         </div>
     </div>

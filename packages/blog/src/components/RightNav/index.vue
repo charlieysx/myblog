@@ -85,8 +85,7 @@
         ></span>
     </div>
     <div class="icon-container" @click="$store.common.changeTheme">
-        <icon-moon-fill v-if="$store.common.state.theme === 'light'" />
-        <icon-sun-fill v-else />
+        <i :class="['iconfont', $store.common.state.theme === 'light' ? 'icon-moon' : 'icon-sun']"></i>
     </div>
 </template>
 

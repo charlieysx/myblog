@@ -33,7 +33,7 @@
 
         <div class="mobile-tab-wrap" v-show="isMobile && mobileTabs.state.show">
             <div class="tab" v-for="(tab, index) in tabs" :key="index" @click="selectTab(tab)">
-                <component :is="tab.icon"></component>
+                <i :class="['iconfont', tab.icon]"></i>
                 <span>{{ tab.name }}</span>
             </div>
         </div>

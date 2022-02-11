@@ -18,7 +18,7 @@
             <div class="article-sub-message">{{ info.article.subMessage }}</div>
             <div class="tags">
                 <div v-for="(tag, index) in info.tags" :key="index" class="tag" @click="toList('tag', tag.id)">
-                    <icon-tag />
+                    <i class="iconfont icon-tags"></i>
                     {{ tag.name }}
                 </div>
             </div>

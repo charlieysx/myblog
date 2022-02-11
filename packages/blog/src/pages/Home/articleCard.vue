@@ -20,13 +20,13 @@
                     {{ info.category.name }}
                 </span>
                 •
-                <icon-eye />
+                <i class="iconfont icon-eye"></i>
                 {{ info.article.pageview }}次围观
             </div>
             <div class="article-sub-message">{{ info.article.subMessage }}</div>
             <div class="tags" v-if="info.tags.length > 0">
                 <div v-for="(tag, index) in info.tags" :key="index" class="tag" @click="toList('tag', tag.id)">
-                    <icon-tag />
+                    <i class="iconfont icon-tags"></i>
                     {{ tag.name }}
                 </div>
             </div>
@@ -205,7 +205,7 @@ export default defineComponent({
                     }
                 }
             }
-            .iconfont {
+            > .iconfont {
                 font-size: 14px;
                 @media (max-width: 768px) {
                     font-size: 12px;
@@ -303,7 +303,7 @@ export default defineComponent({
                     height: 0;
                     content: '';
                     border-top: 11px solid transparent;
-                    border-bottom: 11px solid transparent;
+                    border-bottom: 15px solid transparent;
                     border-right: 12px solid var(--blog-color-black-1);
                     transition: all 0.3s;
                 }
