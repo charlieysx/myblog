@@ -12,6 +12,9 @@ app.config.errorHandler = (err: unknown, instance: ComponentPublicInstance | nul
     console.error('app-catch-error', err, instance, info)
 }
 
+const { initTheme } = VV.useStore('common')
+initTheme()
+
 const { router } = VV.useRouter()
 store.install(app)
 const dialogApp = VV.useDialog().app

@@ -237,7 +237,7 @@ export default defineComponent({
     setup() {
         const { screen } = VV.useDevice()
         const { router } = VV.useRouter()
-        const { state: commonState, initTheme } = VV.useStore('common')
+        const { state: commonState } = VV.useStore('common')
         const menuTab = useMenuTab()
 
         const state = reactive({
@@ -255,8 +255,6 @@ export default defineComponent({
             },
             { immediate: true }
         )
-
-        initTheme()
 
         return {
             commonState,
