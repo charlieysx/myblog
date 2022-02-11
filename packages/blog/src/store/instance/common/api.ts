@@ -1,6 +1,6 @@
 import { CommonStore } from './type'
 
-const { get } = VV.useApi()
+const { get } = CC.useApi()
 
 const getBlogInfo = async () => {
     return await get<CommonStore.BlogInfo>('/w/blogInfo')

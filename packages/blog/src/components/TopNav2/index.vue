@@ -120,8 +120,8 @@ export default defineComponent({
     components: { tabView },
     name: 'TopNav',
     setup() {
-        const { isMobile } = VV.useDevice()
-        const commonStore = VV.useStore('common')
+        const { isMobile } = CC.useDevice()
+        const commonStore = CC.useStore('common')
         commonStore.initBlogInfo()
 
         const tabs = [
@@ -161,7 +161,7 @@ export default defineComponent({
                 to: '/search'
             }
         ]
-        const { router } = VV.useRouter()
+        const { router } = CC.useRouter()
 
         const mobileTabs = useMobileTab()
 

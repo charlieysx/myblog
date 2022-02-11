@@ -28,8 +28,8 @@ export default defineComponent({
     setup() {
         const viewWrapWidth = ref('1000px')
 
-        const { screen } = VV.useDevice()
-        const { state: commonState } = VV.useStore('common')
+        const { screen } = CC.useDevice()
+        const { state: commonState } = CC.useStore('common')
 
         watch(
             () => [screen.width, commonState.rightNav.show],

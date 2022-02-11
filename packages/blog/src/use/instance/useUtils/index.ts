@@ -120,4 +120,4 @@ function useUtils() {
 
 export type UseUtilsReturnValue = ReturnType<typeof useUtils>
 
-VV.install('useUtils', useUtils)
+CC.install('useUtils', useUtils)

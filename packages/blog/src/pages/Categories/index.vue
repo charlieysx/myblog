@@ -35,7 +35,7 @@ import { defineComponent, ref } from 'vue'
 export default defineComponent({
     name: 'Categories',
     setup() {
-        const articleStore = VV.useStore('article')
+        const articleStore = CC.useStore('article')
         const categories = ref<any[]>([])
         articleStore.getCategoryList().then((res) => {
             categories.value = res.list
@@ -45,7 +45,7 @@ export default defineComponent({
             tags.value = res.list
         })
 
-        const { router } = VV.useRouter()
+        const { router } = CC.useRouter()
 
         return {
             categories,

@@ -1,6 +1,6 @@
 import { ArticleStore } from './type'
 
-const { get } = VV.useApi()
+const { get } = CC.useApi()
 
 const getArticleList = async (params) => {
     return await get('/w/article/list', { params })

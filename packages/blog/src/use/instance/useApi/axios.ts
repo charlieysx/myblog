@@ -2,7 +2,7 @@ import config from './config'
 import Axios, { Method, AxiosResponse } from 'axios'
 import { UseApi } from './type'
 
-const { md5 } = VV.useUtils()
+const { md5 } = CC.useUtils()
 
 const axios = Axios.create({
     baseURL: config.host,

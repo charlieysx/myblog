@@ -11,7 +11,7 @@ export default defineComponent({
     components: { articleCard },
     name: 'Home',
     setup() {
-        const articleStore = VV.useStore('article')
+        const articleStore = CC.useStore('article')
         const list = ref<any[]>([])
         articleStore.getArticleList({}).then((res) => {
             console.log(res)

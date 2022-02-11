@@ -1,6 +1,6 @@
 let host = 'https://t01.platform.backend.via.cool'
 
-const { API_HOST } = VV.useEnvConfig()
+const { API_HOST } = CC.useEnvConfig()
 
 if (API_HOST) {
     host = API_HOST as string

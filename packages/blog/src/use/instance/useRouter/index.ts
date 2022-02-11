@@ -14,4 +14,4 @@ function useRouter() {
 
 export type UseRouterReturnValue = ReturnType<typeof useRouter>
 
-VV.install('useRouter', useRouter)
+CC.install('useRouter', useRouter)

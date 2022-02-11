@@ -128,8 +128,8 @@ export default defineComponent({
         }
     },
     setup() {
-        const { isMobile } = VV.useDevice()
-        const commonStore = VV.useStore('common')
+        const { isMobile } = CC.useDevice()
+        const commonStore = CC.useStore('common')
         commonStore.initBlogInfo()
 
         const tabs = [
@@ -169,7 +169,7 @@ export default defineComponent({
                 to: '/search'
             }
         ]
-        const { router } = VV.useRouter()
+        const { router } = CC.useRouter()
 
         const mobileTabs = useMobileTab()
 
@@ -185,7 +185,7 @@ export default defineComponent({
             color.value = `rgb(${rgb}, ${rgb}, ${rgb})`
         }
 
-        VV.useEventListener(window, 'scroll', () => {
+        CC.useEventListener(window, 'scroll', () => {
             // console.log(window.scrollY)
             const rate = window.scrollY / window.innerHeight
             opacity.value = rate

@@ -5,7 +5,7 @@ import config from './config'
 
 const authRequest = async <T = any>(method: Method, url: string, opts?: UseApi.AxiosParams): Promise<T> => {
     const options = Object.assign({ params: {}, headers: {}, data: {} }, opts)
-    const commonStore = VV.useStore('common')
+    const commonStore = CC.useStore('common')
     if (commonStore.state.jwt) {
         options.headers.Authorization = `Bear ${commonStore.state.jwt}`
     }
@@ -37,4 +37,4 @@ function useApi() {
 
 export type UseApiReturnValue = ReturnType<typeof useApi>
 
-VV.install('useApi', useApi)
+CC.install('useApi', useApi)

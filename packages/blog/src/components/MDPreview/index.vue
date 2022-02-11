@@ -19,11 +19,11 @@ export default defineComponent({
         }
     },
     setup(props) {
-        const { parseArticleMenu, clearArticleMenu } = VV.useStore('common')
+        const { parseArticleMenu, clearArticleMenu } = CC.useStore('common')
         const container = ref<HTMLElement>()
 
         function init() {
-            VV.useUtils().scrollToTarget(0, false)
+            CC.useUtils().scrollToTarget(0, false)
             parseArticleMenu()
             nextTick(() => {
                 let blocks = container.value?.querySelectorAll('pre code') as unknown as HTMLElement[]

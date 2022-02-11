@@ -76,7 +76,7 @@ export default defineComponent({
     name: 'Article',
     components: { MDPreview },
     setup() {
-        const { routes } = VV.useRouter()
+        const { routes } = CC.useRouter()
         const state = reactive<{
             id: string
             article: Record<string, any>
@@ -94,7 +94,7 @@ export default defineComponent({
             pn: {},
             showQrcode: false
         })
-        const articleStore = VV.useStore('article')
+        const articleStore = CC.useStore('article')
         function initData() {
             if (!routes) {
                 return
@@ -117,7 +117,7 @@ export default defineComponent({
                 console.log(res)
             })
         }
-        const { router } = VV.useRouter()
+        const { router } = CC.useRouter()
         return {
             state,
             toList(type, id) {

@@ -12,12 +12,12 @@ app.config.errorHandler = (err: unknown, instance: ComponentPublicInstance | nul
     console.error('app-catch-error', err, instance, info)
 }
 
-const { initTheme } = VV.useStore('common')
+const { initTheme } = CC.useStore('common')
 initTheme()
 
-const { router } = VV.useRouter()
+const { router } = CC.useRouter()
 store.install(app)
-const dialogApp = VV.useDialog().app
+const dialogApp = CC.useDialog().app
 Object.assign(app._context.components, dialogApp._context.components)
 dialogApp._context.components = app._context.components
 dialogApp._context.config.globalProperties = app._context.config.globalProperties

@@ -13,7 +13,7 @@ export default defineComponent({
     components: { articleCard },
     name: 'List',
     setup() {
-        const { routes } = VV.useRouter()
+        const { routes } = CC.useRouter()
         const state = reactive<{
             type: string
             id: string
@@ -23,7 +23,7 @@ export default defineComponent({
             id: '',
             list: []
         })
-        const articleStore = VV.useStore('article')
+        const articleStore = CC.useStore('article')
         function initData() {
             if (!routes) {
                 return

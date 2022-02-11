@@ -14,8 +14,8 @@ if ('hidden' in document) {
 
 if (hiddenProperty) {
     const visibilityChangeEvent = hiddenProperty.replace(/hidden/i, 'visibilitychange')
-    const { emit } = VV.useEventBus()
-    VV.useEventListener(document, visibilityChangeEvent, (e) => {
+    const { emit } = CC.useEventBus()
+    CC.useEventListener(document, visibilityChangeEvent, (e) => {
         if (!hiddenProperty) {
             return
         }
@@ -37,4 +37,4 @@ function usePageVisibility() {
 
 export type UsePageVisibilityReturnValue = ReturnType<typeof usePageVisibility>
 
-VV.install('usePageVisibility', usePageVisibility)
+CC.install('usePageVisibility', usePageVisibility)

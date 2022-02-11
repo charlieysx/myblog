@@ -35,7 +35,7 @@ export class Dialog<T extends Record<string, any>> {
     public beforeCloseFn = async () => false
 
     constructor(isSingle: boolean, parent: ComponentInternalInstance | null, name: string, opts?: UseDialog.DialogOpt) {
-        VV.useEventBus().register(this)
+        CC.useEventBus().register(this)
         this.isSingle = isSingle
         this.state.uuid = `Dialog-${new Date().getTime()}-${Math.floor(Math.random() * 1000000)}`
         this.state.name = name
@@ -94,7 +94,7 @@ export class Dialog<T extends Record<string, any>> {
             setTimeout(() => {
                 const index = state.showList.findIndex((item) => item.uuid === this.state.uuid)
                 index >= 0 && state.showList.splice(index, 1)
-                VV.useEventBus().unregister(this)
+                CC.useEventBus().unregister(this)
                 if (this.isSingle) {
                     rawState.singleDialogMap.delete(this.state.name)
                 } else {
@@ -110,14 +110,14 @@ export class Dialog<T extends Record<string, any>> {
     }
 
     public on(type: string, handler: any) {
-        VV.useEventBus().on(type, handler, this)
+        CC.useEventBus().on(type, handler, this)
     }
 
     public off(type: string, handler: any) {
-        VV.useEventBus().off(type, handler, this)
+        CC.useEventBus().off(type, handler, this)
     }
 
     public emit(type: string, ...params: any) {
-        VV.useEventBus().emitToInstance(type, this, ...params)
+        CC.useEventBus().emitToInstance(type, this, ...params)
     }
 }

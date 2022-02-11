@@ -18,4 +18,4 @@ function useEnvConfig() {
     return envConfig
 }
 
-VV.install('useEnvConfig', useEnvConfig)
+CC.install('useEnvConfig', useEnvConfig)

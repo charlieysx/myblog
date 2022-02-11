@@ -166,4 +166,4 @@ function useEventBus() {
 
 export type UseEventBusReturnValue = ReturnType<typeof useEventBus>
 
-VV.install('useEventBus', useEventBus)
+CC.install('useEventBus', useEventBus)

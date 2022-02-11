@@ -23,7 +23,7 @@ export default defineComponent({
     name: 'Archives',
     components: { articleCard },
     setup() {
-        const articleStore = VV.useStore('article')
+        const articleStore = CC.useStore('article')
         const list = ref<any[]>([])
         const total = ref(0)
         articleStore.getArchives({}).then((res) => {

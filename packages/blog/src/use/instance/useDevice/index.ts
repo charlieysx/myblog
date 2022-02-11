@@ -6,7 +6,7 @@ let screen = reactive({
     height: window.innerHeight
 })
 
-VV.useEventListener(window, 'resize', (e) => {
+CC.useEventListener(window, 'resize', (e) => {
     screen.width = window.innerWidth
     screen.height = window.innerHeight
     if (window.innerWidth <= 768) {
@@ -25,4 +25,4 @@ function useDevice() {
 
 export type UseDeviceReturnValue = ReturnType<typeof useDevice>
 
-VV.install('useDevice', useDevice)
+CC.install('useDevice', useDevice)

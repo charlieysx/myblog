@@ -22,4 +22,4 @@ function useWindow() {
 
 export type UseWindowReturnValue = ReturnType<typeof useWindow>
 
-VV.install('useWindow', useWindow)
+CC.install('useWindow', useWindow)

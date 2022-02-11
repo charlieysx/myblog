@@ -30,4 +30,4 @@ function useEventListener(
 
 export type UseEventListenerReturnValue = typeof useEventListener
 
-VV.install('useEventListener', useEventListener)
+CC.install('useEventListener', useEventListener)

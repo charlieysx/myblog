@@ -16,7 +16,7 @@ export default defineComponent({
     name: 'Resume',
     components: { MDPreview },
     setup() {
-        const commonStore = VV.useStore('common')
+        const commonStore = CC.useStore('common')
         const state = reactive<{
             html: string
         }>({

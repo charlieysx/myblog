@@ -20,8 +20,8 @@ commonStore?.store?.forEach((store) => {
     store.install(_store)
 })
 
-VV.install('useStore', useStore)
-VV.install('useAllStore', useAllStore)
+CC.install('useStore', useStore)
+CC.install('useAllStore', useAllStore)
 
 export default {
     install: (app: App) => {

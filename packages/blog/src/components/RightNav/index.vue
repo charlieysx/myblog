@@ -102,7 +102,7 @@ function useMenuTab() {
         opacity: string
     }
 
-    const { state: commonState } = VV.useStore('common')
+    const { state: commonState } = CC.useStore('common')
     const lineStyle: {
         normalLineData: LineData[]
         closeLineData: LineData[]
@@ -204,7 +204,7 @@ function useMenuTab() {
         { immediate: true }
     )
 
-    const closeListener = VV.useEventListener(window, 'scroll', () => {
+    const closeListener = CC.useEventListener(window, 'scroll', () => {
         let scrollTop = document.documentElement.scrollTop || document.body.scrollTop
         if (commonState.rightNav.articleMenu.show) {
             console.log('scroll')
@@ -235,9 +235,9 @@ export default defineComponent({
     name: 'RightNav',
     components: { ArticleMenu },
     setup() {
-        const { screen } = VV.useDevice()
-        const { router } = VV.useRouter()
-        const { state: commonState } = VV.useStore('common')
+        const { screen } = CC.useDevice()
+        const { router } = CC.useRouter()
+        const { state: commonState } = CC.useStore('common')
         const menuTab = useMenuTab()
 
         const state = reactive({

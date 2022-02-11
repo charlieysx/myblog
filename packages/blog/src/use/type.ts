@@ -33,5 +33,5 @@ interface UseFunc {
 }
 
 declare global {
-    const VV: UseFunc
+    const CC: UseFunc
 }

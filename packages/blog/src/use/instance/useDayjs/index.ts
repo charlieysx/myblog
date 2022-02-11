@@ -24,4 +24,4 @@ function useDayjs(
     }
 }
 
-VV.install('useDayjs', useDayjs)
+CC.install('useDayjs', useDayjs)

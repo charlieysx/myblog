@@ -4,13 +4,13 @@ import { CommonStore } from './type'
 import { nextTick } from 'vue'
 
 const initTheme = () => {
-    const { load } = VV.useStorage()
+    const { load } = CC.useStorage()
     state.theme = load<CommonStore.BlogTheme>('theme', CommonStore.BlogTheme.light)
     document.body.setAttribute('arco-theme', state.theme)
 }
 
 function changeTheme() {
-    const { save } = VV.useStorage()
+    const { save } = CC.useStorage()
     state.theme = state.theme === CommonStore.BlogTheme.light ? CommonStore.BlogTheme.dark : CommonStore.BlogTheme.light
     save('theme', state.theme)
     document.body.setAttribute('arco-theme', state.theme)

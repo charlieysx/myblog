@@ -1,5 +1,5 @@
-const { CDN_URL, BASE_URL } = VV.useEnvConfig()
-const { md5 } = VV.useUtils()
+const { CDN_URL, BASE_URL } = CC.useEnvConfig()
+const { md5 } = CC.useUtils()
 
 const baseUrl = BASE_URL.replace(/\/$/, '')
 
@@ -197,4 +197,4 @@ function useLoadUrl() {
 
 export type UseLoadUrlReturnValue = ReturnType<typeof useLoadUrl>
 
-VV.install('useLoadUrl', useLoadUrl)
+CC.install('useLoadUrl', useLoadUrl)

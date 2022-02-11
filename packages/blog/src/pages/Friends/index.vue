@@ -16,7 +16,7 @@ import { defineComponent, ref } from 'vue'
 export default defineComponent({
     name: 'Friends',
     setup() {
-        const friendStore = VV.useStore('friend')
+        const friendStore = CC.useStore('friend')
         const list = ref<
             Array<
                 Record<string, any> & {

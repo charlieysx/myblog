@@ -44,4 +44,4 @@ export function useDialog() {
     }
 }
 
-VV.install('useDialog', useDialog)
+CC.install('useDialog', useDialog)

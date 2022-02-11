@@ -53,14 +53,14 @@ export default defineComponent({
                     return
                 }
             }
-            const dialog = VV.useDialog()
+            const dialog = CC.useDialog()
             dialog.getInstance(item.uuid)?.close()
         }
         return {
             state,
             close,
             createRef(el, item) {
-                const instance = VV.useDialog().getInstance(item.uuid)
+                const instance = CC.useDialog().getInstance(item.uuid)
                 instance && (instance.el = el)
             }
         }

@@ -49,7 +49,7 @@ export default defineComponent({
         }
     },
     setup(props) {
-        const { dayjs } = VV.useDayjs()
+        const { dayjs } = CC.useDayjs()
 
         const cover = computed(() => {
             return props.info?.article?.cover || 'http://blogimg.codebear.cn/FrTy2sZVtGZGYMFj6PAuNe7T6g3__water'
@@ -59,7 +59,7 @@ export default defineComponent({
             return dayjs(props.info.article?.publishTime * 1000).format('YYYY年MM月DD日')
         })
 
-        const { router } = VV.useRouter()
+        const { router } = CC.useRouter()
 
         return {
             cover,

@@ -91,4 +91,4 @@ function useStorage() {
 
 export type UseStorageReturnValue = ReturnType<typeof useStorage>
 
-VV.install('useStorage', useStorage)
+CC.install('useStorage', useStorage)

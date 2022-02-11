@@ -22,11 +22,11 @@ export default defineComponent({
         }
     },
     setup() {
-        const { state } = VV.useStore('common')
+        const { state } = CC.useStore('common')
         function toMenu(item: CommonStore.ArticleMenuTag) {
             let top = document.getElementById(item.id)?.getBoundingClientRect()?.top || 0
             top += document.body.scrollTop || document.documentElement.scrollTop
-            VV.useUtils().scrollToTarget(top)
+            CC.useUtils().scrollToTarget(top)
         }
         function isCurrent(item: CommonStore.ArticleMenuTag) {
             return item.tag === state.rightNav.articleMenu.tag
