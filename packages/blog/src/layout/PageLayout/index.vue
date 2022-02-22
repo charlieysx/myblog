@@ -3,6 +3,10 @@
         <div class="left-content">
             <top-nav :width="viewWrapWidth" />
             <div class="home-banner">
+                <div class="shooting-star-box">
+                    <div v-for="(item, index) in stars" :key="index" class="star" :style="item"></div>
+                </div>
+                <div class="banner-front"></div>
                 <div class="text">学无止境</div>
                 <div class="desc">{{ desc.join('') }}</div>
             </div>
@@ -69,9 +73,25 @@ export default defineComponent({
         }
         draw()
 
+        const stars = ref<Array<{ top: string; left: string; animationDelay: string }>>([])
+
+        for (let i = 0; i < 40; i++) {
+            stars.value.push({
+                top: randomDistance(0, -100),
+                left: randomDistance(window.innerWidth * 1.5, 300),
+                animationDelay: i % 6 == 0 ? '0s' : i * 0.8 + 's'
+            })
+        }
+
+        function randomDistance(max: number, min: number) {
+            var distance = Math.floor(Math.random() * (max - min + 1) + min)
+            return distance + 'px'
+        }
+
         return {
             viewWrapWidth,
-            desc
+            desc,
+            stars
         }
     }
 })
@@ -93,8 +113,38 @@ export default defineComponent({
             .p-r();
             .wh(100%, 100vh);
             .cover();
-            // margin-top: -60px;
-            background-image: url(/@imgs/bg.jpeg);
+            background-image: url(/@imgs/bg-behind.jpeg);
+            > .shooting-star-box {
+                .p-a();
+                .wh(100%);
+                overflow: hidden;
+                > .star {
+                    display: block;
+                    width: 1px;
+                    background: transparent;
+                    position: relative;
+                    opacity: 0;
+                    animation: star-fall 5s linear infinite;
+                    &:after {
+                        content: '';
+                        display: block;
+                        border: 0px solid #fff;
+                        border-width: 0px 90px 2px 90px;
+                        border-color: transparent transparent transparent rgba(255, 255, 255, 0.5);
+                        box-shadow: 0 0 1px 0 rgba(255, 255, 255, 0.1);
+                        transform: rotate(-45deg) translate3d(1px, 3px, 0);
+                        transform-origin: 0% 100%;
+                    }
+                }
+            }
+            > .banner-front {
+                .p-a();
+                bottom: 0;
+                left: 0;
+                .wh(100%, 100vh);
+                .cover();
+                background-image: url(/@imgs/bg-front.png);
+            }
             &:after {
                 .p-a();
                 content: '';
@@ -142,6 +192,20 @@ export default defineComponent({
     }
     to {
         opacity: 0;
+    }
+}
+@keyframes star-fall {
+    0% {
+        opacity: 0;
+        transform: scale(0.5) translate3d(0, 0, 0);
+    }
+    50% {
+        opacity: 1;
+        transform: translate3d(-400px, 400px, 0);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1.2) translate3d(-800px, 800px, 0);
     }
 }
 </style>

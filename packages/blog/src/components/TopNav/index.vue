@@ -187,7 +187,7 @@ export default defineComponent({
 
         CC.useEventListener(window, 'scroll', () => {
             // console.log(window.scrollY)
-            const rate = window.scrollY / window.innerHeight
+            const rate = Math.min(1, window.scrollY / window.innerHeight)
             opacity.value = rate
             changeFontColor()
         })
@@ -225,8 +225,8 @@ export default defineComponent({
         z-index: 1;
         top: 0;
         left: 0;
-        background-color: var(--blog-color-white-1);
-        box-shadow: -8px 2px 8px 0 var(--blog-color-shadow);
+        background-color: var(--blog-top-bg);
+        box-shadow: 0px 2px 8px 0 var(--blog-color-shadow);
         // opacity: 0;
     }
     > .nav-wrap {

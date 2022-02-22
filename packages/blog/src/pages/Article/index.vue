@@ -139,16 +139,18 @@ export default defineComponent({
     position: relative;
     padding: 30px 10px;
     width: 100%;
+    z-index: 10;
     .article-warp {
         position: relative;
+        // margin-top: -200px;
         animation: show 0.8s;
         padding: 30px;
         width: 100%;
         @media (max-width: 768px) {
             padding: 30px 15px;
         }
-        background-color: var(--blog-color-white-1);
-        box-shadow: 0 2px 8px 0 var(--blog-color-shadow);
+        background-color: var(--blog-article-bg);
+        box-shadow: 0 0 10px 2px var(--blog-color-shadow);
         .article-message {
             display: flex;
             flex-direction: column;

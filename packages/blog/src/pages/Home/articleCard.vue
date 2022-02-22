@@ -89,13 +89,13 @@ export default defineComponent({
 <style lang="less" scoped>
 .article-card {
     position: relative;
-    background-color: var(--blog-color-white-2);
+    background-color: var(--blog-article-card-bg);
     padding: 20px;
     margin-bottom: 20px;
     &:last-child {
         margin-bottom: 0px;
     }
-    box-shadow: 0 2px 8px 0 var(--blog-color-shadow);
+    box-shadow: 0 0 10px 2px var(--blog-color-shadow);
     min-height: 603px;
     @media (max-width: 768px) {
         min-height: 285.5px;
