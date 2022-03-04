@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "serve": "vite --mode dev",
-    "build": "yarn tsc && vite build",
+    "build": "yarn tsc && vite build --mode production",
     "tsc": "vue-tsc --noEmit"
   },
   "dependencies": {

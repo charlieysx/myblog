@@ -85,7 +85,7 @@
         ></span>
     </div>
     <div class="icon-container" @click="$store.common.changeTheme">
-        <i :class="['iconfont', $store.common.state.theme === 'light' ? 'icon-moon' : 'icon-sun']"></i>
+        <i :class="['iconfont', $store.common.state.theme === 'light' ? 'icon-sun' : 'icon-moon']"></i>
     </div>
 </template>
 
@@ -206,7 +206,6 @@ function useMenuTab() {
     const closeListener = CC.useEventListener(window, 'scroll', () => {
         let scrollTop = document.documentElement.scrollTop || document.body.scrollTop
         if (commonState.rightNav.articleMenu.show) {
-            console.log('scroll')
             for (let i = 0, len = commonState.rightNav.articleMenu.source.length; i < len; ++i) {
                 let item = commonState.rightNav.articleMenu.source[i]
                 let top = document.getElementById(item.id)?.getBoundingClientRect().top || 0

@@ -3,45 +3,32 @@ import * as api from './api'
 
 const getArticleList = async (params) => {
     const res = await api.getArticleList(params).catch(() => {})
-    if (res?.data) {
-        return res.data
-    }
-    return []
+    return res?.data || []
 }
 
 const getArticle = async (id: string) => {
     const res = await api.getArticle(id).catch(() => {})
-    if (res?.data) {
-        return res.data
-    }
-    return []
+    return res?.data || []
 }
 
 const getCategoryList = async () => {
     const res = await api.getCategoryList().catch(() => {})
-    if (res?.data) {
-        return res.data
-    }
-    return []
+    return res?.data || []
 }
 
 const getTagList = async () => {
     const res = await api.getTagList().catch(() => {})
-    if (res?.data) {
-        return res.data
-    }
-    return []
+    return res?.data || []
 }
 
 const getArchives = async (params) => {
     const res = await api.getArchives(params).catch(() => {})
-    if (res?.data) {
-        return res.data
-    }
-    return {
-        count: 0,
-        list: []
-    }
+    return (
+        res?.data || {
+            count: 0,
+            list: []
+        }
+    )
 }
 
 export default {

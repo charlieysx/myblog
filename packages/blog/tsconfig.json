@@ -11,7 +11,7 @@
         "strict": true,
         "baseUrl": ".",
         "jsx": "preserve",
-        "sourceMap": true,
+        "sourceMap": false,
         "noUnusedLocals": false,
         "resolveJsonModule": true,
         "esModuleInterop": true,

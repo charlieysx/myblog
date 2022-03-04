@@ -25,18 +25,12 @@ const initBlogInfo = async () => {
 
 const getAboutMe = async () => {
     const res = await api.getAboutMe().catch(() => {})
-    if (res?.data) {
-        return res.data
-    }
-    return {}
+    return res?.data || {}
 }
 
 const getResume = async () => {
     const res = await api.getResume().catch(() => {})
-    if (res?.data) {
-        return res.data
-    }
-    return {}
+    return res?.data || {}
 }
 
 function treeify(data: CommonStore.ArticleMenuTag[], tag: string) {

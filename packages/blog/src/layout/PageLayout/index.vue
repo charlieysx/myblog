@@ -98,6 +98,15 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
+body[arco-theme='dark'] {
+    .left-content {
+        > .home-banner {
+            &:after {
+                background-color: rgba(0, 0, 0, 0.7);
+            }
+        }
+    }
+}
 .page-layout {
     width: 100vw;
     min-height: 100vh;
@@ -153,6 +162,7 @@ export default defineComponent({
                 .wh(100%);
                 z-index: 1;
                 background-color: rgba(0, 0, 0, 0.6);
+                transition: background-color 0.3s linear;
             }
             > .text {
                 .center();

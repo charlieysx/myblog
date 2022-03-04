@@ -90,6 +90,7 @@ export default defineComponent({
 .article-card {
     position: relative;
     background-color: var(--blog-article-card-bg);
+    transition: background-color 0.3s linear;
     padding: 20px;
     margin-bottom: 20px;
     &:last-child {
@@ -289,6 +290,10 @@ export default defineComponent({
                 margin-top: 10px;
                 line-height: 1;
                 cursor: pointer;
+                .flex();
+                > .iconfont {
+                    margin-right: 4px;
+                }
                 &:hover {
                     &:before {
                         border-right: 12px solid var(--blog-color-black-4);

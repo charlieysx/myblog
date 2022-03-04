@@ -42,7 +42,7 @@
                     class="tag"
                     @click="$router.push({ name: 'articleList', query: { type: 'tag', id: tag.id } })"
                 >
-                    <icon-tag />
+                    <i class="iconfont icon-tags"></i>
                     {{ tag.name }}
                 </div>
             </div>
@@ -52,7 +52,7 @@
                     v-if="state.pn.pre"
                     @click="$router.push({ name: 'article', query: { id: state.pn.pre.id } })"
                 >
-                    <icon-left />
+                    <i class="iconfont icon-arrow-left"></i>
                     {{ state.pn.pre.title }}
                 </span>
                 <span
@@ -61,7 +61,7 @@
                     @click="$router.push({ name: 'article', query: { id: state.pn.next.id } })"
                 >
                     {{ state.pn.next.title }}
-                    <icon-right />
+                    <i class="iconfont icon-arrow-right"></i>
                 </span>
             </div>
         </div>
@@ -291,7 +291,10 @@ export default defineComponent({
                 margin-top: 10px;
                 line-height: 1;
                 cursor: pointer;
-                -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+                .flex();
+                > .iconfont {
+                    margin-right: 4px;
+                }
                 &:hover {
                     &:before {
                         border-right: 12px solid var(--blog-color-black-1);
@@ -321,15 +324,18 @@ export default defineComponent({
             display: flex;
             flex-direction: row;
             font-size: 14px;
-            color: #555555;
+            color: var(--blog-article-next-color);
             font-weight: bold;
+            line-height: 1;
             .pre-wrap {
                 padding-right: 10px;
                 text-align: left;
+                .flex(flex-start);
             }
             .next-wrap {
                 padding-left: 10px;
                 text-align: right;
+                .flex(flex-end);
             }
             .pre-wrap,
             .next-wrap {
