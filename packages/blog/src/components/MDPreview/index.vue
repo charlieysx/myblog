@@ -274,10 +274,21 @@ body[arco-theme='dark'] {
 </style>
 
 <style lang="less">
+body[arco-theme='dark'] {
+    .markdown-body {
+        blockquote {
+            color: #aaa;
+            font-weight: bold;
+        }
+    }
+}
 .markdown-body {
     color: var(--blog-color-black-2) !important;
     @media (max-width: 768px) {
         font-size: 12px !important;
+    }
+    blockquote {
+        color: #777;
     }
     h2 {
         .p-r();

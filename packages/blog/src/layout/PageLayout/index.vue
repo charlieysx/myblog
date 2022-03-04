@@ -10,7 +10,12 @@
                 <div class="text">学无止境</div>
                 <div class="desc">{{ desc.join('') }}</div>
             </div>
-            <div class="page-view">
+            <div
+                class="page-view"
+                :style="{
+                    width: viewWrapWidth
+                }"
+            >
                 <router-view />
             </div>
         </div>
@@ -39,7 +44,7 @@ export default defineComponent({
             () => [screen.width, commonState.rightNav.show],
             () => {
                 let temp = 0
-                if (screen.width > 768 && commonState.rightNav.show) {
+                if (screen.width > 960 && commonState.rightNav.show) {
                     temp = 320
                 }
                 viewWrapWidth.value = screen.width - temp + 'px'
@@ -108,12 +113,11 @@ body[arco-theme='dark'] {
     }
 }
 .page-layout {
+    position: relative;
     width: 100vw;
     min-height: 100vh;
     min-width: 320px;
     display: flex;
-    flex-direction: row;
-    position: relative;
     .left-content {
         flex: 1;
         position: relative;

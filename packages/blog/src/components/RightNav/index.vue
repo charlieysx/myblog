@@ -247,7 +247,7 @@ export default defineComponent({
             () => {
                 state.show = true
 
-                if (screen.width <= 768) {
+                if (screen.width <= 960) {
                     state.show = false
                 }
             },
@@ -295,7 +295,6 @@ export default defineComponent({
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding-top: 30px;
         padding-top: 90px;
         overflow: hidden;
         transition: right 0.3s;

@@ -218,7 +218,7 @@ export default defineComponent({
     .p-f();
     .wh(100%, auto);
     z-index: 999999;
-    transition: width 0.3s;
+    // transition: width 0.1s;
     > .bg {
         .p-a();
         .wh(100%);

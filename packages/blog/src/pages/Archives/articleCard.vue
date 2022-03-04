@@ -80,7 +80,7 @@ export default defineComponent({
 <style lang="less" scoped>
 .article-card {
     position: relative;
-    background-color: var(--blog-color-white-2);
+    background-color: var(--blog-article-bg);
     padding: 20px;
     margin-bottom: 20px;
     &:last-child {

@@ -170,13 +170,13 @@ export default defineComponent({
                     font-size: 12px;
                 }
                 margin: 20px 0px;
-                color: #666666;
+                color: var(--blog-color-black-1);
                 display: flex;
                 flex-direction: row;
                 justify-content: center;
                 flex-wrap: wrap;
                 .classify {
-                    color: #444444;
+                    color: var(--blog-color-black-3);
                     border-bottom: 1px solid var(--blog-color-black-1);
                     cursor: pointer;
                     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -198,7 +198,7 @@ export default defineComponent({
             }
             .article-sub-message {
                 font-size: 14px;
-                color: #999999;
+                color: var(--blog-color-black-1);
                 margin-bottom: 20px;
             }
         }
