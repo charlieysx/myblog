@@ -82,15 +82,15 @@ const routes: RouteRecordRaw[] = [
                     title: '我的简历',
                     halfFirstScreen: true
                 }
-            },
-            {
-                path: '/hello',
-                name: 'Hello',
-                component: () => import('/@pages/Hello/index.vue'),
-                meta: {
-                    title: 'Hello'
-                }
             }
+            // {
+            //     path: '/hello',
+            //     name: 'Hello',
+            //     component: () => import('/@pages/Hello/index.vue'),
+            //     meta: {
+            //         title: 'Hello'
+            //     }
+            // }
         ]
     }
 ]
