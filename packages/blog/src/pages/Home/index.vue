@@ -14,7 +14,6 @@ export default defineComponent({
         const articleStore = CC.useStore('article')
         const list = ref<any[]>([])
         articleStore.getArticleList({}).then((res) => {
-            console.log(res)
             list.value = res.list
         })
         return {

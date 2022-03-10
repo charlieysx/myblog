@@ -19,7 +19,7 @@
                 <div class="article-sub-message">{{ state.article.subMessage }}</div>
             </div>
             <MDPreview :content="state.article.htmlContent" />
-            <!-- <div class="money-wrap" v-if="state.qrcode">
+            <div class="money-wrap" v-if="state.qrcode">
                 <p>如果我的文章对您有帮助！有钱的捧个钱场，没钱的捧个人场，谢谢您！</p>
                 <div class="money-btn" @click="state.showQrcode = !state.showQrcode">赞赏支持</div>
                 <transition name="slide-fade">
@@ -34,7 +34,7 @@
                         </span>
                     </div>
                 </transition>
-            </div> -->
+            </div>
             <div class="tags">
                 <div
                     v-for="(tag, index) in state.tags"

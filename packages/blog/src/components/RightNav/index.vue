@@ -68,6 +68,7 @@
     </transition>
     <icon-toggle v-show="state.show" :isClose="commonState.rightNav.show" @click="toggleRightNav" />
     <icon-theme />
+    <icon-to-top />
 </template>
 
 <script lang="ts">
@@ -75,6 +76,7 @@ import { defineComponent, onUnmounted, reactive, ref, toRaw, toRef, watch } from
 import ArticleDirectory from './articleDirectory.vue'
 import IconTheme from './iconTheme.vue'
 import IconToggle from './iconToggle.vue'
+import IconToTop from './iconToTop.vue'
 
 function useDirectory() {
     const { state: commonState } = CC.useStore('common')
@@ -123,7 +125,7 @@ function useDirectory() {
 
 export default defineComponent({
     name: 'RightNav',
-    components: { ArticleDirectory, IconTheme, IconToggle },
+    components: { ArticleDirectory, IconTheme, IconToggle, IconToTop },
     setup() {
         const { screen } = CC.useDevice()
         const { router } = CC.useRouter()

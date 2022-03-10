@@ -16,7 +16,8 @@ const routes: RouteRecordRaw[] = [
                 name: 'Home',
                 component: () => import('/@pages/Home/index.vue'),
                 meta: {
-                    title: '首页'
+                    title: '首页',
+                    showBtn: true
                 }
             },
             {
@@ -24,7 +25,8 @@ const routes: RouteRecordRaw[] = [
                 name: 'Archives',
                 component: () => import('/@pages/Archives/index.vue'),
                 meta: {
-                    title: '归档'
+                    title: '归档',
+                    scrollFirstScreen: true
                 }
             },
             {
@@ -32,7 +34,8 @@ const routes: RouteRecordRaw[] = [
                 name: 'Categories',
                 component: () => import('/@pages/Categories/index.vue'),
                 meta: {
-                    title: '分类/标签'
+                    title: '分类/标签',
+                    scrollFirstScreen: true
                 }
             },
             {
@@ -40,7 +43,8 @@ const routes: RouteRecordRaw[] = [
                 name: 'ArticleList',
                 component: () => import('/@pages/Categories/list.vue'),
                 meta: {
-                    title: '分类/标签'
+                    title: '分类/标签',
+                    scrollFirstScreen: true
                 }
             },
             {
@@ -48,7 +52,8 @@ const routes: RouteRecordRaw[] = [
                 name: 'article',
                 component: () => import('/@pages/Article/index.vue'),
                 meta: {
-                    title: '文章详情'
+                    title: '文章详情',
+                    halfFirstScreen: true
                 }
             },
             {
@@ -56,7 +61,8 @@ const routes: RouteRecordRaw[] = [
                 name: 'Friends',
                 component: () => import('/@pages/Friends/index.vue'),
                 meta: {
-                    title: '友链'
+                    title: '友链',
+                    scrollFirstScreen: true
                 }
             },
             {
@@ -64,7 +70,8 @@ const routes: RouteRecordRaw[] = [
                 name: 'About',
                 component: () => import('/@pages/About/index.vue'),
                 meta: {
-                    title: '关于'
+                    title: '关于',
+                    halfFirstScreen: true
                 }
             },
             {
@@ -72,7 +79,8 @@ const routes: RouteRecordRaw[] = [
                 name: 'Resume',
                 component: () => import('/@pages/Resume/index.vue'),
                 meta: {
-                    title: '我的简历'
+                    title: '我的简历',
+                    halfFirstScreen: true
                 }
             },
             {
@@ -88,11 +96,17 @@ const routes: RouteRecordRaw[] = [
 ]
 
 const router = createRouter({
-    scrollBehavior() {
-        return { left: 0, top: 0 }
+    scrollBehavior(to) {
+        const top = to.meta?.scrollFirstScreen ? window.innerHeight : 0
+        return { left: 0, top }
     },
     history: createWebHistory(),
     routes
 })
+
+// router.afterEach((to) => {
+//     const top = to.meta?.scrollFirstScreen ? window.innerHeight : 0
+//     CC.useUtils().scrollToTarget(top)
+// })
 
 export { router }

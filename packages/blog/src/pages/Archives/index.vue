@@ -24,10 +24,9 @@ export default defineComponent({
     components: { articleCard },
     setup() {
         const articleStore = CC.useStore('article')
-        const list = ref<any[]>([])
+        const list = ref<Record<string, Record<string, Array<{ article: any; category: any; tags: Array<any> }>>>>({})
         const total = ref(0)
         articleStore.getArchives({}).then((res) => {
-            console.log(res)
             total.value = res.count
             list.value = res.list
         })
@@ -43,6 +42,7 @@ export default defineComponent({
 .archives {
     position: relative;
     padding: 30px 10px;
+    z-index: 10;
     .pagination {
         width: 100%;
         padding: 10px 0;

@@ -2,16 +2,18 @@
     <div class="page-layout">
         <div class="left-content">
             <top-nav :width="viewWrapWidth" />
-            <div class="home-banner">
+            <div class="page-banner" :class="{ half: halfFirstScreen }">
                 <div class="shooting-star-box">
                     <div v-for="(item, index) in stars" :key="index" class="star" :style="item"></div>
                 </div>
                 <div class="banner-front"></div>
                 <div class="text">学无止境</div>
                 <div class="desc">{{ desc.join('') }}</div>
+                <div class="read-btn" v-if="showBtn" @click="startRead">开始阅读</div>
             </div>
             <div
                 class="page-view"
+                :class="{ half: halfFirstScreen }"
                 :style="{
                     width: viewWrapWidth
                 }"
@@ -24,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from 'vue'
+import { computed, defineComponent, ref, watch } from 'vue'
 import TopNav from '/@comp/TopNav/index.vue'
 import RightNav from '/@comp/RightNav/index.vue'
 
@@ -39,6 +41,10 @@ export default defineComponent({
 
         const { screen } = CC.useDevice()
         const { state: commonState } = CC.useStore('common')
+        const { routes } = CC.useRouter()
+
+        const halfFirstScreen = computed(() => routes?.meta.halfFirstScreen)
+        const showBtn = computed(() => routes?.meta.showBtn)
 
         watch(
             () => [screen.width, commonState.rightNav.show],
@@ -94,9 +100,14 @@ export default defineComponent({
         }
 
         return {
+            halfFirstScreen,
+            showBtn,
             viewWrapWidth,
             desc,
-            stars
+            stars,
+            startRead() {
+                CC.useUtils().scrollToTarget(window.innerHeight)
+            }
         }
     }
 })
@@ -105,7 +116,7 @@ export default defineComponent({
 <style lang="less" scoped>
 body[arco-theme='dark'] {
     .left-content {
-        > .home-banner {
+        > .page-banner {
             &:after {
                 background-color: rgba(0, 0, 0, 0.7);
             }
@@ -122,11 +133,16 @@ body[arco-theme='dark'] {
         flex: 1;
         position: relative;
         transition: width 0.3s;
-        > .home-banner {
+        > .page-banner {
             .p-r();
             .wh(100%, 100vh);
             .cover();
             background-image: url(/@imgs/bg-behind.jpeg);
+            z-index: 1;
+            transition: height 0.3s linear;
+            &.half {
+                height: 50vh;
+            }
             > .shooting-star-box {
                 .p-a();
                 .wh(100%);
@@ -186,6 +202,22 @@ body[arco-theme='dark'] {
                     animation: flashing 0.75s infinite;
                 }
             }
+            > .read-btn {
+                .center-row();
+                z-index: 2;
+                bottom: 10vh;
+                font-size: 14px;
+                color: white;
+                border: 1px solid white;
+                padding: 5px 12px;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: all 0.3s linear;
+                &:hover {
+                    background-color: white;
+                    color: black;
+                }
+            }
         }
         .page-view {
             max-width: 1000px;
@@ -194,6 +226,10 @@ body[arco-theme='dark'] {
             padding: 0 10px;
             padding-top: 60px;
             min-height: calc(100vh - 120px);
+            z-index: 10;
+            &.half {
+                margin-top: -15vh;
+            }
         }
     }
 }

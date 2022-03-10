@@ -130,7 +130,6 @@ export default defineComponent({
     position: fixed;
     width: 24px;
     height: 24px;
-    background-color: transparent;
     background-color: var(--blog-color-black-1);
     right: 10px;
     bottom: 45px;

@@ -43,7 +43,6 @@ export default defineComponent({
             showQrcode: false
         })
         commonStore.getAboutMe().then((res) => {
-            console.log(res)
             state.html = res.html
             state.qrcode = res.qrcode
         })
@@ -59,6 +58,7 @@ export default defineComponent({
     position: relative;
     padding: 30px 10px;
     width: 100%;
+    z-index: 10;
     .about-warp {
         position: relative;
         animation: show 0.8s;
