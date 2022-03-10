@@ -33,8 +33,8 @@ const getResume = async () => {
     return res?.data || {}
 }
 
-function treeify(data: CommonStore.ArticleMenuTag[], tag: string) {
-    let tree: CommonStore.ArticleMenuTag[] = []
+function treeify(data: CommonStore.ArticleDirectoryTag[], tag: string) {
+    let tree: CommonStore.ArticleDirectoryTag[] = []
     let index = 0
     data.forEach((item) => {
         item.children = []
@@ -81,22 +81,23 @@ const hideRightNav = () => {
     state.rightNav.show = false
 }
 
-const clearArticleMenu = () => {
-    state.rightNav.articleMenu.show = false
-    state.rightNav.articleMenu.list = []
-    state.rightNav.articleMenu.source = []
+const clearArticleDirectory = () => {
+    state.rightNav.articleDirectory.show = false
+    state.rightNav.articleDirectory.list = []
+    state.rightNav.articleDirectory.source = []
 }
 
-const parseArticleMenu = async () => {
-    const articleMenu = state.rightNav.articleMenu
-    articleMenu.loading = true
-    articleMenu.show = true
+const parseArticleDirectory = async () => {
+    const articleDirectory = state.rightNav.articleDirectory
+    articleDirectory.loading = true
+    articleDirectory.show = true
     showRightNav()
 
-    async function parse() {
-        let headNodes = document.getElementById('markdown-preview-body')?.getElementsByClassName('my-blog-head')
-        let headList: CommonStore.ArticleMenuTag[] = []
-        Array.prototype.forEach.call(headNodes, (item) => {
+    async function start() {
+        let headNodes = document.getElementById('markdown-preview-body')?.getElementsByClassName('my-blog-head') || []
+        let headList: CommonStore.ArticleDirectoryTag[] = []
+        for (let i = 0; i < headNodes.length; ++i) {
+            const item = headNodes[i] as HTMLElement
             headList.push({
                 id: item.id,
                 index: Number(item.tagName.replace('H', '')),
@@ -104,7 +105,7 @@ const parseArticleMenu = async () => {
                 tag: '',
                 children: []
             })
-        })
+        }
         let tree = treeify(headList, '')
         if (tree.length === 0) {
             tree = []
@@ -114,14 +115,14 @@ const parseArticleMenu = async () => {
             item.children = []
         })
 
-        articleMenu.tag = '1.'
-        articleMenu.source = source
-        articleMenu.list = tree
+        articleDirectory.tag = '1.'
+        articleDirectory.source = source
+        articleDirectory.list = tree
     }
 
     nextTick(async () => {
-        await parse()
-        articleMenu.loading = false
+        await start()
+        articleDirectory.loading = false
     })
 }
 
@@ -133,6 +134,6 @@ export default {
     getResume,
     showRightNav,
     hideRightNav,
-    parseArticleMenu,
-    clearArticleMenu
+    parseArticleDirectory,
+    clearArticleDirectory
 }

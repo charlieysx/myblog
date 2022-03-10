@@ -14,7 +14,7 @@ export default createState<CommonStore.State>({
     },
     rightNav: {
         show: false,
-        articleMenu: {
+        articleDirectory: {
             loading: true,
             show: false,
             list: [],

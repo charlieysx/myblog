@@ -1,10 +1,10 @@
 <template>
-    <ul class="article-menu">
-        <li v-for="item in menu" :key="item.tag">
-            <span @click="toMenu(item)" :class="{ active: isCurrent(item) || isParent(item) }">
+    <ul class="article-directory">
+        <li v-for="item in directory" :key="item.tag">
+            <span @click="toDirectory(item)" :class="{ active: isCurrent(item) || isParent(item) }">
                 {{ item.tag }} {{ item.title }}
             </span>
-            <article-menu :menu="item.children" v-show="isParent(item)" />
+            <article-directory :directory="item.children" v-show="isParent(item)" />
         </li>
     </ul>
 </template>
@@ -14,29 +14,29 @@ import { defineComponent, PropType } from 'vue'
 import { CommonStore } from '/@store/instance/common/type'
 
 export default defineComponent({
-    name: 'ArticleMenu',
+    name: 'ArticleDirectory',
     props: {
-        menu: {
-            type: Array as PropType<CommonStore.ArticleMenuTag[]>,
+        directory: {
+            type: Array as PropType<CommonStore.ArticleDirectoryTag[]>,
             default: () => []
         }
     },
     setup() {
         const { state } = CC.useStore('common')
-        function toMenu(item: CommonStore.ArticleMenuTag) {
+        function toDirectory(item: CommonStore.ArticleDirectoryTag) {
             let top = document.getElementById(item.id)?.getBoundingClientRect()?.top || 0
             top += document.body.scrollTop || document.documentElement.scrollTop
             CC.useUtils().scrollToTarget(top)
         }
-        function isCurrent(item: CommonStore.ArticleMenuTag) {
-            return item.tag === state.rightNav.articleMenu.tag
+        function isCurrent(item: CommonStore.ArticleDirectoryTag) {
+            return item.tag === state.rightNav.articleDirectory.tag
         }
-        function isParent(item: CommonStore.ArticleMenuTag) {
-            return state.rightNav.articleMenu.tag.indexOf(item.tag) === 0
+        function isParent(item: CommonStore.ArticleDirectoryTag) {
+            return state.rightNav.articleDirectory.tag.indexOf(item.tag) === 0
         }
 
         return {
-            toMenu,
+            toDirectory,
             isCurrent,
             isParent
         }
@@ -45,7 +45,7 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-.article-menu {
+.article-directory {
     width: 100%;
     line-height: 1.8;
     font-weight: bold;

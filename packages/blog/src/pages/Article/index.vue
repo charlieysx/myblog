@@ -100,10 +100,10 @@ export default defineComponent({
                 return
             }
             state.id = routes.query.id as string
-            getList()
+            getArticle()
         }
         watch(() => routes?.query, initData, { immediate: true })
-        async function getList() {
+        async function getArticle() {
             if (!state.id) {
                 return
             }
@@ -114,19 +114,15 @@ export default defineComponent({
                 state.tags = res.tags
                 state.qrcode = res.qrcode
                 state.pn = res.pn
-                console.log(res)
             })
         }
         const { router } = CC.useRouter()
         return {
             state,
-            toList(type, id) {
+            toList(type: string, id: string) {
                 router.push({
                     name: 'ArticleList',
-                    query: {
-                        type: type,
-                        id: id
-                    }
+                    query: { type, id }
                 })
             }
         }

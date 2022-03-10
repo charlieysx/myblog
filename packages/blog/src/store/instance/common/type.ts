@@ -4,10 +4,10 @@ export namespace CommonStore {
         blogInfo: BlogInfo
         rightNav: {
             show: boolean
-            articleMenu: {
+            articleDirectory: {
                 loading: boolean
                 show: boolean
-                list: ArticleMenuTag[]
+                list: ArticleDirectoryTag[]
                 source: any[]
                 tag: string
             }
@@ -29,11 +29,11 @@ export namespace CommonStore {
         tagCount: number
     }
 
-    export interface ArticleMenuTag {
+    export interface ArticleDirectoryTag {
         id: string
         index: number
         title: string
         tag: string
-        children: ArticleMenuTag[]
+        children: ArticleDirectoryTag[]
     }
 }

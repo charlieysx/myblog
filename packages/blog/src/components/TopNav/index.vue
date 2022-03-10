@@ -186,7 +186,6 @@ export default defineComponent({
         }
 
         CC.useEventListener(window, 'scroll', () => {
-            // console.log(window.scrollY)
             const rate = Math.min(1, window.scrollY / window.innerHeight)
             opacity.value = rate
             changeFontColor()

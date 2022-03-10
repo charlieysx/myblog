@@ -13,23 +13,25 @@
                     right: commonState.rightNav.show ? '0px' : '-320px'
                 }"
             >
-                <div class="menu-info-head" v-if="commonState.rightNav.articleMenu.show">
-                    <span :class="{ active: menuTab.state.show }" @click="menuTab.state.show = true">文章目录</span>
+                <div class="menu-info-head" v-if="commonState.rightNav.articleDirectory.show">
+                    <span :class="{ active: directory.state.show }" @click="directory.changeShow(true)">文章目录</span>
                     |
-                    <span :class="{ active: !menuTab.state.show }" @click="menuTab.state.show = false">站点信息</span>
+                    <span :class="{ active: !directory.state.show }" @click="directory.changeShow(false)">
+                        站点信息
+                    </span>
                 </div>
                 <div class="content-wrap">
                     <transition name="slide-fade">
-                        <article-menu
+                        <article-directory
                             class="article-menu"
-                            :menu="commonState.rightNav.articleMenu.list"
-                            v-show="menuTab.state.show"
-                            v-if="!commonState.rightNav.articleMenu.loading"
+                            :directory="commonState.rightNav.articleDirectory.list"
+                            v-show="directory.state.show"
+                            v-if="!commonState.rightNav.articleDirectory.loading"
                         />
-                        <div v-else>加载中...</div>
+                        <div v-else v-show="directory.state.show">加载中...</div>
                     </transition>
                     <transition name="slide-fade">
-                        <div class="info-wrap" v-show="!menuTab.state.show">
+                        <div class="info-wrap" v-show="!directory.state.show">
                             <img class="avatar" :src="commonState.blogInfo.avatar" />
                             <p class="name">{{ commonState.blogInfo.blogName || '博客' }}</p>
                             <p class="motto">{{ commonState.blogInfo.sign || '-' }}</p>
@@ -64,154 +66,45 @@
             </div>
         </div>
     </transition>
-    <div
-        class="toggle"
-        @click="menuTab.toggle"
-        @mouseover="menuTab.setLineData"
-        @mouseout="menuTab.setLineData"
-        v-show="state.show"
-    >
-        <span
-            class="toggle-line"
-            v-for="(line, index) in menuTab.state.lineData"
-            :key="index"
-            :style="{
-                width: line.width,
-                top: line.top,
-                transform: line.transform,
-                opacity: line.opacity,
-                transition: 'all .3s'
-            }"
-        ></span>
-    </div>
-    <div class="icon-container" @click="$store.common.changeTheme">
-        <i :class="['iconfont', $store.common.state.theme === 'light' ? 'icon-sun' : 'icon-moon']"></i>
-    </div>
+    <icon-toggle v-show="state.show" :isClose="commonState.rightNav.show" @click="toggleRightNav" />
+    <icon-theme />
 </template>
 
 <script lang="ts">
-import { defineComponent, onUnmounted, reactive, ref, watch } from 'vue'
-import ArticleMenu from './articleMenu.vue'
+import { defineComponent, onUnmounted, reactive, ref, toRaw, toRef, watch } from 'vue'
+import ArticleDirectory from './articleDirectory.vue'
+import IconTheme from './iconTheme.vue'
+import IconToggle from './iconToggle.vue'
 
-function useMenuTab() {
-    interface LineData {
-        width: string
-        top: string
-        transform: string
-        opacity: string
-    }
-
+function useDirectory() {
     const { state: commonState } = CC.useStore('common')
-    const lineStyle: {
-        normalLineData: LineData[]
-        closeLineData: LineData[]
-        arrowLineData: LineData[]
-    } = {
-        normalLineData: [
-            {
-                width: '100%',
-                top: '0px',
-                transform: 'rotateZ(0deg)',
-                opacity: '1'
-            },
-            {
-                width: '100%',
-                top: '0px',
-                transform: 'rotateZ(0deg)',
-                opacity: '1'
-            },
-            {
-                width: '100%',
-                top: '0px',
-                transform: 'rotateZ(0deg)',
-                opacity: '1'
-            }
-        ],
-        closeLineData: [
-            {
-                width: '100%',
-                top: '6px',
-                transform: 'rotateZ(-45deg)',
-                opacity: '1'
-            },
-            {
-                width: '100%',
-                top: '0px',
-                transform: 'rotateZ(0deg)',
-                opacity: '0'
-            },
-            {
-                width: '100%',
-                top: '-6px',
-                transform: 'rotateZ(45deg)',
-                opacity: '1'
-            }
-        ],
-        arrowLineData: [
-            {
-                width: '50%',
-                top: '3px',
-                transform: 'rotateZ(-45deg)',
-                opacity: '1'
-            },
-            {
-                width: '100%',
-                top: '0px',
-                transform: 'rotateZ(0deg)',
-                opacity: '1'
-            },
-            {
-                width: '50%',
-                top: '-3px',
-                transform: 'rotateZ(45deg)',
-                opacity: '1'
-            }
-        ]
-    }
 
-    const state = reactive<{
-        show: boolean
-        lineData: LineData[]
-    }>({
-        show: false,
-        lineData: lineStyle.normalLineData
+    const state = reactive({
+        show: false
     })
 
-    function toggle() {
-        commonState.rightNav.show = !commonState.rightNav.show
-        state.lineData = commonState.rightNav.show ? lineStyle.closeLineData : lineStyle.normalLineData
-    }
-
-    function setLineData(e) {
-        if (commonState.rightNav.show) {
-            return
-        }
-        if (e.type === 'mouseover') {
-            state.lineData = lineStyle.arrowLineData
-        } else {
-            state.lineData = lineStyle.normalLineData
-        }
+    function changeShow(isShow: boolean) {
+        state.show = isShow
     }
 
     watch(
-        () => commonState.rightNav.articleMenu.show,
-        () => {
-            state.show = commonState.rightNav.articleMenu.show
-            commonState.rightNav.show = commonState.rightNav.articleMenu.show
-            state.lineData = commonState.rightNav.articleMenu.show ? lineStyle.closeLineData : lineStyle.normalLineData
+        () => commonState.rightNav.articleDirectory.show,
+        (value) => {
+            changeShow(value)
+            commonState.rightNav.show = value
         },
         { immediate: true }
     )
 
     const closeListener = CC.useEventListener(window, 'scroll', () => {
         let scrollTop = document.documentElement.scrollTop || document.body.scrollTop
-        if (commonState.rightNav.articleMenu.show) {
-            for (let i = 0, len = commonState.rightNav.articleMenu.source.length; i < len; ++i) {
-                let item = commonState.rightNav.articleMenu.source[i]
+        if (commonState.rightNav.articleDirectory.show) {
+            for (let i = 0, len = commonState.rightNav.articleDirectory.source.length; i < len; ++i) {
+                let item = commonState.rightNav.articleDirectory.source[i]
                 let top = document.getElementById(item.id)?.getBoundingClientRect().top || 0
                 top += document.body.scrollTop || document.documentElement.scrollTop
                 if (scrollTop <= top + 20) {
-                    commonState.rightNav.articleMenu.tag = item.tag
+                    commonState.rightNav.articleDirectory.tag = item.tag
                     break
                 }
             }
@@ -224,19 +117,18 @@ function useMenuTab() {
 
     return {
         state,
-        toggle,
-        setLineData
+        changeShow
     }
 }
 
 export default defineComponent({
     name: 'RightNav',
-    components: { ArticleMenu },
+    components: { ArticleDirectory, IconTheme, IconToggle },
     setup() {
         const { screen } = CC.useDevice()
         const { router } = CC.useRouter()
         const { state: commonState } = CC.useStore('common')
-        const menuTab = useMenuTab()
+        const directory = useDirectory()
 
         const state = reactive({
             show: false
@@ -254,10 +146,15 @@ export default defineComponent({
             { immediate: true }
         )
 
+        function toggleRightNav() {
+            commonState.rightNav.show = !commonState.rightNav.show
+        }
+
         return {
             commonState,
             state,
-            menuTab,
+            directory,
+            toggleRightNav,
             toView(name: string) {
                 router.push({ name })
             }
@@ -406,45 +303,6 @@ export default defineComponent({
             }
         }
     }
-}
-
-.toggle {
-    position: fixed;
-    width: 24px;
-    height: 24px;
-    background-color: transparent;
-    background-color: var(--blog-color-black-1);
-    right: 10px;
-    bottom: 45px;
-    padding: 5px;
-    z-index: 1050;
-    cursor: pointer;
-    line-height: 0;
-    .toggle-line {
-        position: relative;
-        display: inline-block;
-        vertical-align: top;
-        width: 100%;
-        height: 2px;
-        margin-top: 4px;
-        background-color: var(--blog-color-white-1);
-        &:first-child {
-            margin-top: 0px;
-        }
-    }
-}
-
-.icon-container {
-    .p-f();
-    right: 10px;
-    bottom: 80px;
-    z-index: 1050;
-    width: 24px;
-    height: 24px;
-    background-color: var(--blog-color-black-1);
-    color: var(--blog-color-white-1);
-    .flex();
-    cursor: pointer;
 }
 </style>
 <style>

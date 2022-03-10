@@ -19,16 +19,18 @@ export default defineComponent({
         }
     },
     setup(props) {
-        const { parseArticleMenu, clearArticleMenu } = CC.useStore('common')
+        const { parseArticleDirectory, clearArticleDirectory } = CC.useStore('common')
         const container = ref<HTMLElement>()
 
         function init() {
             CC.useUtils().scrollToTarget(0, false)
-            parseArticleMenu()
-            nextTick(() => {
+            parseArticleDirectory()
+            nextTick(async () => {
                 let blocks = container.value?.querySelectorAll('pre code') as unknown as HTMLElement[]
-                blocks?.forEach((block) => {
-                    hljs.highlightBlock(block)
+                blocks?.forEach(async (block) => {
+                    setTimeout(() => {
+                        hljs.highlightElement(block)
+                    }, 0)
                 })
             })
         }
@@ -42,7 +44,7 @@ export default defineComponent({
         )
 
         onUnmounted(() => {
-            clearArticleMenu()
+            clearArticleDirectory()
         })
 
         return {
