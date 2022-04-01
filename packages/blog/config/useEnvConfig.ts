@@ -5,7 +5,7 @@ const envConfig: Record<string, Record<string, string>> = {
     },
     production: {
         API_HOST: 'http://blogapi.codebear.cn/index.php',
-        BASE: './'
+        BASE: '//oss.codebear.cn/blog/'
     }
 }
 

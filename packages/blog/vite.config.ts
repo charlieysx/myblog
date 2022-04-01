@@ -5,7 +5,6 @@ import { useAlias } from './config/useAlias'
 import { useEnvConfig } from './config/useEnvConfig'
 
 const envConfig = useEnvConfig()
-console.log(envConfig)
 
 // https://vitejs.dev/config/
 export default defineConfig({
