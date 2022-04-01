@@ -5,11 +5,11 @@
                 <p class="about-title">关于我</p>
             </div>
             <MDPreview :content="state.html" />
-            <div class="money-wrap" v-if="state.qrcode">
+            <div v-if="state.qrcode" class="money-wrap">
                 <p>如果我的文章对您有帮助！有钱的捧个钱场，没钱的捧个人场，谢谢您！</p>
                 <div class="money-btn" @click="state.showQrcode = !state.showQrcode">赞赏支持</div>
                 <transition name="slide-fade">
-                    <div class="qrcode-wrap" v-show="state.showQrcode">
+                    <div v-show="state.showQrcode" class="qrcode-wrap">
                         <span class="qrcode">
                             <img :src="state.qrcode.wxpayQrcode" />
                             <p>微信支付</p>

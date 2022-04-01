@@ -10,8 +10,8 @@
 import { defineComponent, reactive, watch } from 'vue'
 import articleCard from '../Archives/articleCard.vue'
 export default defineComponent({
-    components: { articleCard },
     name: 'List',
+    components: { articleCard },
     setup() {
         const { routes } = CC.useRouter()
         const state = reactive<{

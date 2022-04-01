@@ -1,6 +1,6 @@
 <template>
     <div class="tab-view">
-        <div class="tab" v-for="(tab, index) in tabs" :key="index" @click="$emit('tab-click', tab)">
+        <div v-for="(tab, index) in tabs" :key="index" class="tab" @click="$emit('tab-click', tab)">
             <i :class="['iconfont', tab.icon]"></i>
             <span class="name">{{ tab.name }}</span>
         </div>

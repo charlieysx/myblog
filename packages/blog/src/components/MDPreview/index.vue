@@ -1,5 +1,5 @@
 <template>
-    <div class="md-preview" ref="container">
+    <div ref="container" class="md-preview">
         <link href="//cdn.bootcss.com/github-markdown-css/2.4.1/github-markdown.css" rel="stylesheet" />
         <section id="markdown-preview-body" class="preview markdown-body" v-html="content"></section>
     </div>

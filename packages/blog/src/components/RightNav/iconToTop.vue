@@ -1,10 +1,10 @@
 <template>
     <transition name="slide-fade">
-        <div class="to-top" @click="scrollToTop" v-show="show">
+        <div v-show="show" class="to-top" @click="scrollToTop">
             <span
-                class="to-top-line"
                 v-for="(line, index) in lineData"
                 :key="index"
+                class="to-top-line"
                 :style="{
                     height: line.height,
                     left: line.left,

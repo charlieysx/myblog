@@ -1,6 +1,6 @@
 <template>
     <div class="article">
-        <div class="article-warp" v-if="state.article.id">
+        <div v-if="state.article.id" class="article-warp">
             <div class="article-message">
                 <p class="article-title">
                     {{ state.article.title }}
@@ -19,11 +19,11 @@
                 <div class="article-sub-message">{{ state.article.subMessage }}</div>
             </div>
             <MDPreview :content="state.article.htmlContent" />
-            <div class="money-wrap" v-if="state.qrcode">
+            <div v-if="state.qrcode" class="money-wrap">
                 <p>如果我的文章对您有帮助！有钱的捧个钱场，没钱的捧个人场，谢谢您！</p>
                 <div class="money-btn" @click="state.showQrcode = !state.showQrcode">赞赏支持</div>
                 <transition name="slide-fade">
-                    <div class="qrcode-wrap" v-show="state.showQrcode">
+                    <div v-show="state.showQrcode" class="qrcode-wrap">
                         <span class="qrcode">
                             <img :src="state.qrcode.wxpayQrcode" />
                             <p>微信支付</p>
@@ -48,16 +48,16 @@
             </div>
             <div class="pre-next-wrap">
                 <span
-                    class="pre-wrap"
                     v-if="state.pn.pre"
+                    class="pre-wrap"
                     @click="$router.push({ name: 'article', query: { id: state.pn.pre.id } })"
                 >
                     <i class="iconfont icon-arrow-left"></i>
                     {{ state.pn.pre.title }}
                 </span>
                 <span
-                    class="next-wrap"
                     v-if="state.pn.next"
+                    class="next-wrap"
                     @click="$router.push({ name: 'article', query: { id: state.pn.next.id } })"
                 >
                     {{ state.pn.next.title }}

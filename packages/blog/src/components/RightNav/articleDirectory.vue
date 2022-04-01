@@ -1,10 +1,10 @@
 <template>
     <ul class="article-directory">
         <li v-for="item in directory" :key="item.tag">
-            <span @click="toDirectory(item)" :class="{ active: isCurrent(item) || isParent(item) }">
+            <span :class="{ active: isCurrent(item) || isParent(item) }" @click="toDirectory(item)">
                 {{ item.tag }} {{ item.title }}
             </span>
-            <article-directory :directory="item.children" v-show="isParent(item)" />
+            <article-directory v-show="isParent(item)" :directory="item.children" />
         </li>
     </ul>
 </template>

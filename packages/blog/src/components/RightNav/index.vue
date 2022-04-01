@@ -13,7 +13,7 @@
                     right: commonState.rightNav.show ? '0px' : '-320px'
                 }"
             >
-                <div class="menu-info-head" v-if="commonState.rightNav.articleDirectory.show">
+                <div v-if="commonState.rightNav.articleDirectory.show" class="menu-info-head">
                     <span :class="{ active: directory.state.show }" @click="directory.changeShow(true)">文章目录</span>
                     |
                     <span :class="{ active: !directory.state.show }" @click="directory.changeShow(false)">
@@ -23,15 +23,15 @@
                 <div class="content-wrap">
                     <transition name="slide-fade">
                         <article-directory
-                            class="article-menu"
-                            :directory="commonState.rightNav.articleDirectory.list"
                             v-show="directory.state.show"
                             v-if="!commonState.rightNav.articleDirectory.loading"
+                            class="article-menu"
+                            :directory="commonState.rightNav.articleDirectory.list"
                         />
                         <div v-else v-show="directory.state.show">加载中...</div>
                     </transition>
                     <transition name="slide-fade">
-                        <div class="info-wrap" v-show="!directory.state.show">
+                        <div v-show="!directory.state.show" class="info-wrap">
                             <img class="avatar" :src="commonState.blogInfo.avatar" />
                             <p class="name">{{ commonState.blogInfo.blogName || '博客' }}</p>
                             <p class="motto">{{ commonState.blogInfo.sign || '-' }}</p>
@@ -51,10 +51,10 @@
                             </div>
                             <div class="social-wrap">
                                 <a
+                                    v-if="commonState.blogInfo.github"
                                     class="social-item"
                                     :href="commonState.blogInfo.github"
                                     target="_blank"
-                                    v-if="commonState.blogInfo.github"
                                 >
                                     <i class="iconfont icon-github"></i>
                                     github
@@ -66,7 +66,7 @@
             </div>
         </div>
     </transition>
-    <icon-toggle v-show="state.show" :isClose="commonState.rightNav.show" @click="toggleRightNav" />
+    <icon-toggle v-show="state.show" :is-close="commonState.rightNav.show" @click="toggleRightNav" />
     <icon-theme />
     <icon-to-top />
 </template>

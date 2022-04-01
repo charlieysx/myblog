@@ -24,7 +24,7 @@
                 {{ info.article.pageview }}次围观
             </div>
             <div class="article-sub-message">{{ info.article.subMessage }}</div>
-            <div class="tags" v-if="info.tags.length > 0">
+            <div v-if="info.tags.length > 0" class="tags">
                 <div v-for="(tag, index) in info.tags" :key="index" class="tag" @click="toList('tag', tag.id)">
                     <i class="iconfont icon-tags"></i>
                     {{ tag.name }}

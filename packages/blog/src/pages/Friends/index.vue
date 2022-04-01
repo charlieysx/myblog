@@ -1,9 +1,9 @@
 <template>
     <div class="friends">
-        <div class="type-wrap" v-for="(item, index) in list" :key="index">
+        <div v-for="(item, index) in list" :key="index" class="type-wrap">
             <p>{{ item.name }}</p>
             <div class="friends-wrap">
-                <a v-for="(friend, index) in item.list" :key="index" :href="friend.url" target="_blank">
+                <a v-for="friend in item.list" :key="friend.name" :href="friend.url" target="_blank">
                     {{ friend.name }}
                 </a>
             </div>

@@ -8,8 +8,8 @@
 import { defineComponent, ref } from 'vue'
 import articleCard from './articleCard.vue'
 export default defineComponent({
-    components: { articleCard },
     name: 'Home',
+    components: { articleCard },
     setup() {
         const articleStore = CC.useStore('article')
         const list = ref<any[]>([])

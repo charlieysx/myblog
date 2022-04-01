@@ -26,7 +26,7 @@
                                 :component-props="item.props"
                                 :name="item.name"
                                 :component-name="item.componentName"
-                                @createRef="(el) => createRef(el, item)"
+                                @create-ref="(el) => createRef(el, item)"
                                 @close="close(item)"
                             />
                         </div>

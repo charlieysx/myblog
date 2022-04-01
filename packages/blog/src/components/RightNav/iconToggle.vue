@@ -1,9 +1,9 @@
 <template>
     <div class="toggle" @click="$emit('click')" @mouseover="setLineData" @mouseout="setLineData">
         <span
-            class="toggle-line"
             v-for="(line, index) in lineData"
             :key="index"
+            class="toggle-line"
             :style="{
                 width: line.width,
                 top: line.top,

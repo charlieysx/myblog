@@ -9,7 +9,7 @@
                 <div class="banner-front"></div>
                 <div class="text">学无止境</div>
                 <div class="desc">{{ desc.join('') }}</div>
-                <div class="read-btn" v-if="showBtn" @click="startRead">开始阅读</div>
+                <div v-if="showBtn" class="read-btn" @click="startRead">开始阅读</div>
             </div>
             <div
                 class="page-view"

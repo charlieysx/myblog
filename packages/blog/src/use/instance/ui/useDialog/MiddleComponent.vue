@@ -30,7 +30,7 @@ export default defineComponent({
             default: () => {}
         }
     },
-    emits: ['createRef', 'close'],
+    emits: ['create-ref', 'close'],
     setup(props, ctx) {
         const instance = getCurrentInstance()
         const hadInit = ref(!props.isLocal)
@@ -67,7 +67,7 @@ export default defineComponent({
         return {
             hadInit,
             createRef(el: any) {
-                ctx.emit('createRef', el)
+                ctx.emit('create-ref', el)
             }
         }
     }

@@ -4,11 +4,11 @@
             <div class="time-line"></div>
             <div class="list-content">
                 <p class="normal-node">目前共计 {{ total }} 篇文章~</p>
-                <div class="bold-node" v-for="(year, key, index) in list" :key="index">
-                    <p>{{ key }}</p>
-                    <div class="bold-node month" v-for="(month, key, index) in year" :key="index">
-                        <p>{{ key }}</p>
-                        <article-card v-for="(info, index) in month" :key="index" :info="info" />
+                <div v-for="(monthList, year) in list" :key="year" class="bold-node">
+                    <p>{{ year }}</p>
+                    <div v-for="(articleList, month) in monthList" :key="month" class="bold-node month">
+                        <p>{{ month }}</p>
+                        <article-card v-for="(info, index) in articleList" :key="index" :info="info" />
                     </div>
                 </div>
             </div>

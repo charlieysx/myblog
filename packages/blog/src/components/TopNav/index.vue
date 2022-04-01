@@ -10,16 +10,16 @@
                 }"
                 @click="toHomeFromLogo"
             >
-                <p class="line" v-if="!isMobile" :style="{ backgroundColor: color }"></p>
+                <p v-if="!isMobile" class="line" :style="{ backgroundColor: color }"></p>
                 <p class="blog-name">{{ blogInfo.blogName || '博客' }}</p>
-                <p class="line" v-if="!isMobile" :style="{ backgroundColor: color }"></p>
+                <p v-if="!isMobile" class="line" :style="{ backgroundColor: color }"></p>
             </div>
             <tab-view v-if="!isMobile" :tabs="tabs" @tab-click="selectTab" />
-            <div class="toggle" v-if="isMobile" @click="mobileTabs.toggle">
+            <div v-if="isMobile" class="toggle" @click="mobileTabs.toggle">
                 <span
-                    class="toggle-line"
                     v-for="(line, index) in mobileTabs.state.lineData"
                     :key="index"
+                    class="toggle-line"
                     :style="{
                         width: line.width,
                         top: line.top,
@@ -31,8 +31,8 @@
             </div>
         </div>
 
-        <div class="mobile-tab-wrap" v-show="isMobile && mobileTabs.state.show">
-            <div class="tab" v-for="(tab, index) in tabs" :key="index" @click="selectTab(tab)">
+        <div v-show="isMobile && mobileTabs.state.show" class="mobile-tab-wrap">
+            <div v-for="(tab, index) in tabs" :key="index" class="tab" @click="selectTab(tab)">
                 <i :class="['iconfont', tab.icon]"></i>
                 <span>{{ tab.name }}</span>
             </div>
@@ -119,8 +119,8 @@ function useMobileTab() {
 }
 
 export default defineComponent({
-    components: { tabView },
     name: 'TopNav',
+    components: { tabView },
     props: {
         width: {
             type: String,

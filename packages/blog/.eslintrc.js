@@ -12,11 +12,10 @@ module.exports = {
         sourceType: 'module'
     },
     extends: [
-        'plugin:vue/vue3-essential',
-        'eslint:recommended',
-        '@vue/typescript/recommended',
-        '@vue/prettier',
-        '@vue/prettier/@typescript-eslint'
+        'plugin:vue/vue3-recommended',
+        'prettier',
+        'plugin:prettier/recommended',
+        'plugin:@typescript-eslint/recommended'
     ],
     rules: {
         indent: ['error', 4, { SwitchCase: 1 }],
