@@ -23,18 +23,21 @@
         </div>
         <right-nav />
     </div>
+    <blog-footer />
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, ref, watch } from 'vue'
 import TopNav from '/@comp/TopNav/index.vue'
 import RightNav from '/@comp/RightNav/index.vue'
+import BlogFooter from '/@comp/BlogFooter/index.vue'
 
 export default defineComponent({
     name: 'PageLayout',
     components: {
         TopNav,
-        RightNav
+        RightNav,
+        BlogFooter
     },
     setup() {
         const viewWrapWidth = ref('1000px')

@@ -207,7 +207,7 @@ export default defineComponent({
             justify-content: center;
             > p {
                 line-height: 2;
-                color: #555555;
+                color: #666666;
                 font-size: 14px;
                 margin-top: 20px;
                 text-align: center;
@@ -215,16 +215,16 @@ export default defineComponent({
             .money-btn {
                 margin-top: 10px;
                 padding: 10px 24px;
-                background-color: #f44336;
+                background-color: var(--blog-article-pay-btn-bg);
                 border-radius: 5px;
-                color: var(--blog-color-white-1);
+                color: white;
                 font-size: 16px;
                 font-weight: bold;
                 cursor: pointer;
                 -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
                 transition: background-color 0.3s;
                 &:hover {
-                    background-color: var(--blog-color-black-1);
+                    background-color: var(--blog-article-pay-btn-hover-bg);
                 }
             }
             .qrcode-wrap {

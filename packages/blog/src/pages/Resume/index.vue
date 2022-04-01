@@ -46,8 +46,8 @@ export default defineComponent({
         @media (max-width: 768px) {
             padding: 30px 15px;
         }
-        background-color: var(--blog-color-white-1);
-        box-shadow: 0px 0px 5px 0px rgba(38, 42, 48, 0.1);
+        background-color: var(--blog-article-bg);
+        box-shadow: 0 0 10px 2px var(--blog-color-shadow);
         .resume-message {
             display: flex;
             flex-direction: column;
@@ -55,6 +55,7 @@ export default defineComponent({
             align-items: center;
             .resume-title {
                 font-size: 26px;
+                color: var(--blog-resume-title-color);
                 @media (max-width: 768px) {
                     font-size: 22px;
                 }

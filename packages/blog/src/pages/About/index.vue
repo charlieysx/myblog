@@ -67,8 +67,8 @@ export default defineComponent({
         @media (max-width: 768px) {
             padding: 30px 15px;
         }
-        background-color: var(--blog-color-white-1);
-        box-shadow: 0px 0px 5px 0px rgba(38, 42, 48, 0.1);
+        background-color: var(--blog-article-bg);
+        box-shadow: 0 0 10px 2px var(--blog-color-shadow);
         .about-message {
             display: flex;
             flex-direction: column;
@@ -76,6 +76,7 @@ export default defineComponent({
             align-items: center;
             .about-title {
                 font-size: 26px;
+                color: var(--blog-about-title-color);
                 @media (max-width: 768px) {
                     font-size: 22px;
                 }
@@ -99,16 +100,16 @@ export default defineComponent({
             .money-btn {
                 margin-top: 10px;
                 padding: 10px 24px;
-                background-color: #f44336;
+                background-color: var(--blog-article-pay-btn-bg);
                 border-radius: 5px;
-                color: var(--blog-color-white-1);
+                color: white;
                 font-size: 16px;
                 font-weight: bold;
                 cursor: pointer;
                 -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
                 transition: background-color 0.3s;
                 &:hover {
-                    background-color: rgba(244, 67, 54, 0.3);
+                    background-color: var(--blog-article-pay-btn-hover-bg);
                 }
             }
             .qrcode-wrap {
