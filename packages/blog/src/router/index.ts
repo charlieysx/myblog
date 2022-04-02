@@ -53,7 +53,8 @@ const routes: RouteRecordRaw[] = [
                 component: () => import('/@pages/Article/index.vue'),
                 meta: {
                     title: '文章详情',
-                    halfFirstScreen: true
+                    halfFirstScreen: true,
+                    offsetSecondScreen: true
                 }
             },
             {
@@ -71,7 +72,8 @@ const routes: RouteRecordRaw[] = [
                 component: () => import('/@pages/About/index.vue'),
                 meta: {
                     title: '关于',
-                    halfFirstScreen: true
+                    halfFirstScreen: true,
+                    offsetSecondScreen: true
                 }
             },
             {
@@ -80,17 +82,19 @@ const routes: RouteRecordRaw[] = [
                 component: () => import('/@pages/Resume/index.vue'),
                 meta: {
                     title: '我的简历',
+                    halfFirstScreen: true,
+                    offsetSecondScreen: true
+                }
+            },
+            {
+                path: '/more',
+                name: 'More',
+                component: () => import('/@pages/More/index.vue'),
+                meta: {
+                    title: '更多',
                     halfFirstScreen: true
                 }
             }
-            // {
-            //     path: '/hello',
-            //     name: 'Hello',
-            //     component: () => import('/@pages/Hello/index.vue'),
-            //     meta: {
-            //         title: 'Hello'
-            //     }
-            // }
         ]
     }
 ]

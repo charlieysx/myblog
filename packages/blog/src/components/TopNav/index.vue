@@ -158,16 +158,16 @@ export default defineComponent({
                 icon: 'icon-friend',
                 to: '/friends'
             },
-            // {
-            //     name: '更多',
-            //     icon: 'icon-apps',
-            //     to: '/morefunc'
-            // },
             {
-                name: '搜索',
-                icon: 'icon-search',
-                to: '/search'
+                name: '更多',
+                icon: 'icon-apps',
+                to: '/more'
             }
+            // {
+            //     name: '搜索',
+            //     icon: 'icon-search',
+            //     to: '/search'
+            // }
         ]
         const { router } = CC.useRouter()
 

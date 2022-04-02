@@ -13,7 +13,7 @@
             </div>
             <div
                 class="page-view"
-                :class="{ half: halfFirstScreen }"
+                :class="{ offset: offsetSecondScreen }"
                 :style="{
                     width: viewWrapWidth
                 }"
@@ -47,6 +47,7 @@ export default defineComponent({
         const { routes } = CC.useRouter()
 
         const halfFirstScreen = computed(() => routes?.meta.halfFirstScreen)
+        const offsetSecondScreen = computed(() => routes?.meta.offsetSecondScreen)
         const showBtn = computed(() => routes?.meta.showBtn)
 
         watch(
@@ -104,6 +105,7 @@ export default defineComponent({
 
         return {
             halfFirstScreen,
+            offsetSecondScreen,
             showBtn,
             viewWrapWidth,
             desc,
@@ -230,7 +232,7 @@ body[arco-theme='dark'] {
             padding-top: 60px;
             min-height: calc(100vh - 120px);
             z-index: 10;
-            &.half {
+            &.offset {
                 margin-top: -15vh;
             }
         }

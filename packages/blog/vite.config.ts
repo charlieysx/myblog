@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import externalGlobals from 'rollup-plugin-external-globals'
 import { resolve } from 'path'
 import { useAlias } from './config/useAlias'
 import { useEnvConfig } from './config/useEnvConfig'
@@ -22,7 +23,15 @@ export default defineConfig({
         alias: useAlias()
     },
     build: {
-        outDir: `dist/${envConfig.RUN_ENV}/`
+        outDir: `dist/${envConfig.RUN_ENV}/`,
+        rollupOptions: {
+            external: ['custom-tinymce'],
+            output: {
+                globals: {
+                    'custom-tinymce': 'CustomTinymce'
+                }
+            }
+        }
     },
     server: {
         port: 30035,
