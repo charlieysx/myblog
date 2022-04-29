@@ -20,7 +20,8 @@
     "md5js": "^1.0.7",
     "tinymce": "^6.0.1",
     "vue": "^3.2.31",
-    "vue-router": "^4.0.13"
+    "vue-router": "^4.0.13",
+    "vue3-json-viewer": "^2.2.2"
   },
   "devDependencies": {
     "@types/node": "^16.11.7",

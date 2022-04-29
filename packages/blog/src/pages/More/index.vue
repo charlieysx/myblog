@@ -5,7 +5,7 @@
                 v-model="searchValue"
                 placeholder="输入关键字搜索..."
                 class="search-real-input"
-                @keyup="toSearch()"
+                @keydown="toSearch"
             />
         </div>
         <div v-show="showEditor" class="tinymce-editor">
@@ -14,8 +14,23 @@
     </div>
 </template>
 
+<script lang="ts">
+import Jwt from './jwt.vue'
+
+export default {
+    useDialogs: {
+        Jwt: {
+            component: Jwt,
+            opts: {
+                maskClose: false
+            }
+        }
+    }
+}
+</script>
+
 <script lang="ts" setup>
-import { ref, nextTick, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 const searchValue = ref('')
 const showEditor = ref(false)
@@ -77,17 +92,25 @@ onUnmounted(() => {
     })
 })
 
-function toSearch() {
+const Dialog = CC.useDialog()
+
+function toSearch(event) {
+    if (event.keyCode !== 13) {
+        return
+    }
     showEditor.value = false
     switch (searchValue.value) {
         case '富文本':
             showEditor.value = true
             break
+        case 'jwt':
+            Dialog.get('Jwt').show()
+            break
         default:
             break
     }
 }
-toSearch()
+toSearch({ keyCode: 13 })
 </script>
 
 <style lang="less" scoped>

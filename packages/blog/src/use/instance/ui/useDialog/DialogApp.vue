@@ -48,6 +48,7 @@ export default defineComponent({
     components: { MiddleComponent },
     setup() {
         function close(item: UseDialog.DialogData, isClickMask = false) {
+            console.log(item)
             if (isClickMask) {
                 if (!item.opts.maskClose) {
                     return

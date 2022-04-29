@@ -13939,6 +13939,13 @@ vue-tsc@^0.32.1:
     "@volar/shared" "0.32.1"
     vscode-vue-languageservice "0.32.1"
 
+vue3-json-viewer@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.npmmirror.com/vue3-json-viewer/-/vue3-json-viewer-2.2.2.tgz#43a512f378c602bb6b7f2a72adeaf7d15b443885"
+  integrity sha512-56l3XDGggnpwEqZieXsSMhNT4NhtO6d7zuSAxHo4i0UVxymyY2jRb7UMQOU1ztChKALZCAzX7DlgrsnEhxu77A==
+  dependencies:
+    clipboard "^2.0.10"
+
 vue@^3.2.22, vue@^3.2.31:
   version "3.2.31"
   resolved "https://registry.npmmirror.com/vue/-/vue-3.2.31.tgz#e0c49924335e9f188352816788a4cca10f817ce6"
